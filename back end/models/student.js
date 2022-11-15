@@ -37,6 +37,11 @@ const studentSchema = mongoose.Schema({
 
   }
 });
+
+const StudentModel = mongoose.model("Student", studentSchema);
+
+module.exports = StudentModel
+=======
 const studentModel = mongoose.model('Student', studentSchema)
 
 module.exports = studentModel;
@@ -70,4 +75,4 @@ getById(teacherId, TeacherModel, ["subject"])
 teacher -> [subjects]
 getById(teacherId, TeacherModel, ["subjects"])
 
-*/
+
