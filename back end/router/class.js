@@ -3,6 +3,8 @@ const StudentModel = require("../models/student");
 const TeacherModel = require("../models/teacher");
 const ClassModel = require("../models/class");
 const { get, getById, add, editById, deleteById } = require("../utils/crud");
+const { authen, roles } = require("../middlewear/authen");
+const { endPoint } = require("../endPoint/endPoint");
 
 const router = express.Router();
 
@@ -26,7 +28,7 @@ router.get("/:id", (req, res) => {
     });
 });
 
-router.post("/", (req, res) => {
+router.post("/",authen(endPoint.class.addClass), (req, res) => {
   const classData = req.body;
   console.log(classData);
   add(new ClassModel(classData), ["teacher", "students"])
@@ -36,6 +38,21 @@ router.post("/", (req, res) => {
       res.status(400).json("Error has occured");
     });
 });
+
+// router.post("/",authen(endPoint.class.addClass), async (req, res) => {
+//   const classData = req.body;
+//   console.log(classData);
+//   try {
+//     const clazz = await add(new ClassModel(classData), ["teacher", "students"]);
+//     res.json(clazz);
+//   } catch (e) {
+//     console.log(e);
+//     res.status(400).json("Error has occured");
+//   }
+  
+    
+// });
+
 
 router.put("/:id", (req, res) => {
   const { id } = req.params;
