@@ -5,7 +5,6 @@ const classRouter = require("./router/class");
 const zoomRouter = require("./router/zoomRouter");
 const slotRouter = require("./router/slotRouter");
 const authRouter = require("./router/authRouter");
-const ParentRouter = require('./router/ParentRouter');
 const adminRouter = require("./router/adminRouter");
 const teacherRouter = require("./router/teacherRouter");
 const cors = require('cors');
@@ -15,6 +14,7 @@ const { verifyToken } = require('./utils/token')
 const bodyParser = require('body-parser')
 
 const app = express();
+
 var corsOptions = {
   origin: true,
   credentials: true
@@ -29,6 +29,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 // app.use(express.static("public"));
 // app.use(express.static(path.join(__dirname, "build")));
+app.use("/auth", authRouter);
 // app.use((req, res, next) => {
 //   // const {auth_token} = req.cookies;
 //   const auth_token = req.header('Authorization');
@@ -47,21 +48,19 @@ app.use(express.json());
 app.use("/class", classRouter);
 app.use("/slot", slotRouter);
 app.use("/zoomapi", zoomRouter);
-app.use('/Parent',ParentRouter);
-=======
 app.use("/teacher", teacherRouter);
 app.use("/admin", adminRouter);
 app.use((req, res, next) => {
   // res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 app.use((err, req, res, next) => {
-  console.error(err)
+  console.error(err.stack)
   // res.status(500).redirect('/login.html')
 })
 
 mongoose.connect("mongodb://127.0.0.1:27017/elearning", (err) => {
   if (!err) return console.log("DB Connected Successfully");
-  console.log(err, "now");
+  console.log(err);
 });
 
 app.listen(8000, () => {

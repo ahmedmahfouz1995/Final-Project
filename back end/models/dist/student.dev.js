@@ -1,10 +1,12 @@
-const mongoose = require("mongoose");
-const studentSchema = mongoose.Schema({
+"use strict";
+
+var mongoose = require("mongoose");
+
+var studentSchema = mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    required: true
   },
-
   email: {
     type: String,
     required: true,
@@ -12,40 +14,31 @@ const studentSchema = mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
+    required: true
   },
   DOB: {
-    type: Date,
+    type: Date
   },
   gender: {
     type: String,
-    enum: ['male', 'female'],
-    default: 'male'
+    "enum": ['male', 'female'],
+    "default": 'male'
   },
   phone: {
     type: String
   },
-  student_subjects: [{ // بتاعه المواد id واخد ال 
-
+  student_subjects: [{
+    // بتاعه المواد id واخد ال 
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Class'
-
   }],
   role: {
     type: String,
-    default: 'student'
-
+    "default": 'student'
   }
 });
-
-const StudentModel = mongoose.model("Student", studentSchema);
-
-module.exports = StudentModel
-=======
-const studentModel = mongoose.model('Student', studentSchema)
-
+var studentModel = mongoose.model('Student', studentSchema);
 module.exports = studentModel;
-
 /*
 
 student -> [class]
@@ -75,4 +68,4 @@ getById(teacherId, TeacherModel, ["subject"])
 teacher -> [subjects]
 getById(teacherId, TeacherModel, ["subjects"])
 
-
+*/
