@@ -48,7 +48,6 @@ app.use("/class", classRouter);
 app.use("/slot", slotRouter);
 app.use("/zoomapi", zoomRouter);
 app.use('/Parent',ParentRouter);
-=======
 app.use("/teacher", teacherRouter);
 app.use("/admin", adminRouter);
 app.use((req, res, next) => {

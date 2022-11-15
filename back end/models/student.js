@@ -41,38 +41,38 @@ const studentSchema = mongoose.Schema({
 const StudentModel = mongoose.model("Student", studentSchema);
 
 module.exports = StudentModel
-=======
+
 const studentModel = mongoose.model('Student', studentSchema)
 
 module.exports = studentModel;
 
-/*
 
-student -> [class]
-class -> [students]
 
-create student class: [] -- has id
-create class student: [] -- has id
+// student -> [class]
+// class -> [students]
 
-subject:
-["teacher"]
+// create student class: [] -- has id
+// create class student: [] -- has id
 
-cl
-fetch student id - 
-fetch class id
+// subject:
+// ["teacher"]
 
-student.classes.push("class_id")
-class.student.push("student_id")
+// cl
+// fetch student id - 
+// fetch class id
 
-"->" means refer to:
+// student.classes.push("class_id")
+// class.student.push("student_id")
 
-subject -> teacher:
-getById(subjectid, SubjectModel, ["teacher"])
+// "->" means refer to:
 
-teacher -> subject
-getById(teacherId, TeacherModel, ["subject"])
+// subject -> teacher:
+// getById(subjectid, SubjectModel, ["teacher"])
 
-teacher -> [subjects]
-getById(teacherId, TeacherModel, ["subjects"])
+// teacher -> subject
+// getById(teacherId, TeacherModel, ["subject"])
+
+// teacher -> [subjects]
+// getById(teacherId, TeacherModel, ["subjects"])
 
 

@@ -29,10 +29,8 @@ const teacherSchema = mongoose.Schema({
     type: String
   },
   teacher_subjects: { // بتاعه الماده id واخد ال 
-
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Class'
-
   },
   confirmEmail: {
     type: Boolean,
@@ -41,7 +39,10 @@ const teacherSchema = mongoose.Schema({
   role: {
     type: String,
     default: 'teacher'
-
+  },
+  profile_image:{
+    type: String,
+    default:"https://th.bing.com/th/id/R.6b0022312d41080436c52da571d5c697?rik=ejx13G9ZroRrcg&riu=http%3a%2f%2fpluspng.com%2fimg-png%2fuser-png-icon-young-user-icon-2400.png&ehk=NNF6zZUBr0n5i%2fx0Bh3AMRDRDrzslPXB0ANabkkPyv0%3d&risl=&pid=ImgRaw&r=0"
   }
 });
 

@@ -31,6 +31,8 @@ import ShowChildren from './pages/parent dashboard/ParentComponents/ShowChildren
 import EditParent from './pages/parent dashboard/ParentComponents/EditParent';
 import CreateParent from './pages/parent dashboard/ParentComponents/CreateParent';
 import ShowParent from './pages/parent dashboard/ParentComponents/ShowParent';
+import ShowStudent from './pages/parent dashboard/ParentComponents/ShowStudent';
+import AdminCreate from './pages/admin dashboard/AdminCreate';
 
 function App() {
   // const { activeMenu } = useStateContext();
@@ -74,7 +76,7 @@ function App() {
               <Routes>
                 {/* Dashboard */}
                 <Route path="/" element={<Ecommerce />} />
-                <Route path="/ecommerce" element={<Ecommerce />} />
+                <Route path="/CreateTeacher" element={<AdminCreate />} />
 
                 {/* Pages */}
                 <Route path="/orders" element={<Orders />} />
@@ -85,6 +87,8 @@ function App() {
                 <Route path="/Parent/edit" element={<EditParent />} />
                 <Route path="/Parent/Create" element={<CreateParent />} />
                 <Route path="/Parent/child" element={<ShowChildren/>} />
+                <Route path="/Parent/child/show" element={<ShowStudent/>} />
+                <Route path="/Parent/child/edit" element={<ShowStudent/>} />  
                 </Route>
                 {/* Apps */}
                 <Route path="/kanban" element={<Kanban />} />
