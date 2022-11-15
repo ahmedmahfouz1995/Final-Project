@@ -3,8 +3,8 @@ const studentSchema = mongoose.Schema({
   name: {
     type: String,
     required: true,
-    unique: true,
   },
 });
+const StudentModel = mongoose.model("Student", studentSchema);
 
-module.exports = mongoose.model("Student", studentSchema);
+module.exports = StudentModel

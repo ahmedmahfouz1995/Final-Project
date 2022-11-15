@@ -26,6 +26,12 @@ import { useStateContext } from "./contetxts/ContextProvider";
 import "./App.css";
 import { useDispatch, useSelector } from 'react-redux';
 
+import Parent from './pages/parent dashboard/Parent';
+import ShowChildren from './pages/parent dashboard/ParentComponents/ShowChildren';
+import EditParent from './pages/parent dashboard/ParentComponents/EditParent';
+import CreateParent from './pages/parent dashboard/ParentComponents/CreateParent';
+import ShowParent from './pages/parent dashboard/ParentComponents/ShowParent';
+
 function App() {
   // const { activeMenu } = useStateContext();
   const { activeMenu } = useSelector(state => state.context);
@@ -74,7 +80,12 @@ function App() {
                 <Route path="/orders" element={<Orders />} />
                 <Route path="/employees" element={<Employees {...booksProps} />} />
                 <Route path="/customers" element={<Customers />} />
-
+                <Route path="/Parent" element={<Parent />}>
+                <Route path="/Parent/show" element={<ShowParent />} />
+                <Route path="/Parent/edit" element={<EditParent />} />
+                <Route path="/Parent/Create" element={<CreateParent />} />
+                <Route path="/Parent/child" element={<ShowChildren/>} />
+                </Route>
                 {/* Apps */}
                 <Route path="/kanban" element={<Kanban />} />
                 <Route path="/editor" element={<Editor />} />
