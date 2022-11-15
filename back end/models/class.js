@@ -1,9 +1,8 @@
 const mongoose = require("mongoose");
 const classSchema = mongoose.Schema({
-  name: {
+  title: {
     type: String,
     required: true,
-    unique: true,
   },
 
   teacher: {
@@ -21,11 +20,17 @@ const classSchema = mongoose.Schema({
     type: Date,
     required: true,
   },
+price:{
+type:String,
+required:true,
+default:'10$'
 
+},
   schedule: [
     {
       type: Date,
       required: true,
+      default:[]
     },
   ],
 
@@ -34,8 +39,10 @@ const classSchema = mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: "Student",
       required: true,
+      default:[]
     },
   ],
-});
 
-module.exports = mongoose.model("Class", classSchema);
+});
+const classModel= mongoose.model('Class',classSchema)
+module.exports =classModel
