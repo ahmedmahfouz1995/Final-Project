@@ -9,3 +9,242 @@ body{
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* =========================== Home Page ================ */
+
+a{
+    text-decoration:none;
+  }
+  .primary-color{
+  background: #f6fafb;
+    
+  }
+  .secondary-color{
+  color: #93d1a0;
+    
+  }
+  
+  .headerOne
+  {
+  background:#0f6c76 ;
+  
+  }
+  .headerTwo{
+  color:black ;
+  
+  }
+  .buttons{
+  color: red;
+    transition:all .5s;
+  }
+  .buttons:hover{
+  transform:scale(1.1,1.1);
+  color:#0f6c76;
+  }
+  .registerBtn{
+    background:#0f6c76;
+  }
+  /* homeSection-------------------- */
+  
+  .homeSection{
+  
+    background: #0f6c76;
+  width: 100%;
+  height: 100vh;
+  
+  
+  }
+  
+  .homeH{
+  
+  color: white;
+  font-size:55px;
+  
+  }
+  
+  .homeImg{
+  
+  
+  margin-top: 10%;
+  
+  
+  }
+  .imgBackgroundHome{
+  width:450px;
+  height:450px;
+  border-radius:50%;
+  background: #93d1a0;
+  }
+  /* cpurces*+------------- */
+  .courseSection{
+  
+  background:#f8fbfb ;
+  
+  }
+  .text-lower{
+  
+  font-size:60px;
+  font-weight:bold;
+  color:rgb(237, 244, 244);
+  text-shadow: 2px 2px #bb1f31;
+  letter-spacing: 10px;
+  }
+  .upper-text{
+  
+  font-size:30px;
+  font-weight:900;
+  color:#0f6c76 ;
+  text-shadow: 2px 2px #919794;
+  
+  background: #93d0d1;
+  padding:20px;
+  opacity: .8;
+  }
+  .TransformLeftBox{
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    padding:20px;
+  }
+  .TransformLeftBox h1{
+    font-weight: bold;
+  color: #1d9693;
+  }
+  
+  .imgBackground{
+    position:absolute;
+    width:400px;
+    height:400px;
+    border-radius:50%;
+  }
+  
+  /* edmyard------------------------------- */
+  .emdyCard{
+  
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border-radius:20px;
+  }
+  
+  /* AdvertisementSection---------------------------- */
+  
+  .AdvertisementSection{
+  
+  background: url(./HomePage/assets/Adervert.jpeg) no-repeat center center/cover;
+  width:100%;
+  height:700px;
+  
+  
+  }
+  
+  /* Course Details-----------------------*/
+  
+  
+  .slideCourseBg{
+    background: linear-gradient(96.41deg,#6cc17e 10.61%,#098b99 70.66%);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    padding: 90px;
+  }
+  
+  .course-details-content .best-seller {
+    padding-left: 0;
+    list-style-type: none;
+  }
+  
+  .course-details-content .best-seller li{
+    display: inline-block;
+    margin-right: 30px;
+    position: relative;
+  }
+  
+  .course-details-content .best-seller li:before {
+    content: "";
+    position: absolute;
+    top: 7px;
+    left: -24px;
+    width: 8px;
+    height: 8px;
+    background-color: #098b99;
+    border-radius: 50%;
+  }
+  
+  .course-details-content .admin-info a {
+    color: #098b99;
+    font-size: 15px;
+  }
+  
+  .course-details-content .admin-info img {
+    margin-right: 10px;
+    position: relative;
+    top: -5px;
+    width: 36px;
+    height: 36px;
+    border-radius: 100%;
+  }
+  
+  .course-details-content .admin-info span {
+    font-size: 15px;
+    margin-right: 5px;
+  }
+  
+  .course-details-content .course-tab {
+    text-align: center;
+    background-color: #f2f0ef;
+    padding: 0;
+    border: none;
+    margin: auto auto 30px;
+  }
+  
+  .course-details-content .course-tab .nav-item {
+    border: none;
+  }
+  
+  .course-details-content .course-tab .nav-item .nav-link.active {
+    color: #098b99;
+    background-color: transparent;
+  }
+  
+  .course-details-content .course-tab .nav-item .nav-link {
+    border: none;
+    width: 100%;
+    display: block;
+    padding: 30px 50px;
+    border-radius: 50px;
+    color: #0d0c0c;
+    font-weight: 600;
+    font-size: 18px;
+    position: relative;
+  }
+  .course-details-sidebar .sidebar-futcher .default-btn.buy:hover {
+    color: #fff;
+  }
+  
+  .course-details-sidebar .sidebar-futcher .default-btn.buy {
+    width: 100%;
+    display: block;
+    background: 0 0;
+    border: 1px solid #098b99;
+    color: #098b99;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  
+  /* Auth-----------------------*/
+  .tab-link li button{
+    color: #1d9693;
+    font-weight: bold;
+    font-size: 25px;
+  }
+  
+  .tab-link li button:hover{
+    color: #1d9693;
+    font-weight: bold;
+    font-size: 25px;
+  }
+  
+  .myFormBtn{
+    background-color: #1d9693 !important;
+  }
+  
+  .tab-content{
+    width: 100%
+  }
