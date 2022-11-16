@@ -76,7 +76,7 @@ function App() {
               <Routes>
                 {/* Dashboard */}
                 <Route path="/" element={<Ecommerce />} />
-                <Route path="/CreateTeacher" element={<AdminCreate />} />
+                <Route path="/Create" element={<AdminCreate />} />
 
                 {/* Pages */}
                 <Route path="/orders" element={<Orders />} />

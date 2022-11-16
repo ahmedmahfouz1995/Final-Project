@@ -25,7 +25,7 @@ const studentSchema = mongoose.Schema({
   phone: {
     type: String
   },
-  student_subjects: [{ // بتاعه المواد id واخد ال 
+  subjects: [{ // بتاعه المواد id واخد ال 
 
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Class'
@@ -34,8 +34,12 @@ const studentSchema = mongoose.Schema({
   role: {
     type: String,
     default: 'student'
-
+  },
+  profile_image:{
+    type: String,
+    default:"https://th.bing.com/th/id/R.6b0022312d41080436c52da571d5c697?rik=ejx13G9ZroRrcg&riu=http%3a%2f%2fpluspng.com%2fimg-png%2fuser-png-icon-young-user-icon-2400.png&ehk=NNF6zZUBr0n5i%2fx0Bh3AMRDRDrzslPXB0ANabkkPyv0%3d&risl=&pid=ImgRaw&r=0"
   }
+
 });
 
 const StudentModel = mongoose.model("Student", studentSchema);

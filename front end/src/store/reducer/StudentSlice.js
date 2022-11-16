@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+// import { useDispatch } from "react-redux";
 
 const initialState = {
   ParentId :"6372d5c501038356d4289486",
@@ -131,7 +132,7 @@ const ParentSlice = createSlice({
     // -------Add child
     [creatChildren.pending]: (state, action) => ({...state, isUpdated: false}),
     [creatChildren.fulfilled]: (state, action) => {
-      state.childData=action.payload;
+      state.childData.push(action.payload);
       state.isUpdated = true;
     },
     [creatChildren.rejected]: (state, action) => {

@@ -28,7 +28,7 @@ const teacherSchema = mongoose.Schema({
   phone: {
     type: String
   },
-  teacher_subjects: { // بتاعه الماده id واخد ال 
+  subjects: { // بتاعه الماده id واخد ال 
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Class'
   },

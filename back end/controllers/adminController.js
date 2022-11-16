@@ -320,11 +320,12 @@ res.json({message:'error in findAdmins '})
 //addTeacher  -----------------------------------------------------------------------------
 
 const addTeacher=async (req, res) => {
+    console.log(req.body);
 
 try{
-    const {name,email,password,DOB,gender,phone,teacher_subjects}=req.body
+    const {name,email,password,DOB,gender,phone,subjects}=req.body
     const hashPassword = await bcrypt.hash(password, parseInt(process.env.SALTROUNDS))
-const newTeacher=new teacherModel({name,email,password:hashPassword,DOB,gender,phone,teacher_subjects})
+const newTeacher=new teacherModel({name,email,password:hashPassword,DOB,gender,phone,subjects})
 const savedTeacher=await newTeacher.save()
 res.json({message:savedTeacher})
 

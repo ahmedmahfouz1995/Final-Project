@@ -2,8 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { GridComponent, ColumnsDirective, ColumnDirective, Page, Search, Inject, Toolbar, Edit, Sort } from '@syncfusion/ej2-react-grids'
 import { booksGrid } from '../data/dummy'
 import { Header } from '../components'
-import { useDispatch, useSelector } from 'react-redux';
-import * as booksActions from '../store/reducer/booksSlice'
 import { get, add, put, del } from '../helpers/Crud'
 
 const Employees = (
