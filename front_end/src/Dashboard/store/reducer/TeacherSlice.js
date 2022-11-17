@@ -57,8 +57,6 @@ export const getAllTeachers = createAsyncThunk(
             rejectWithValue
         } = thunkAPI
         try {
-
-
             const response = await axios.get(`http://localhost:8000/admin/getAllTeachers`)
             console.log({
                 response
@@ -88,7 +86,6 @@ export const editTeacher = createAsyncThunk(
             rejectWithValue
         } = thunkAPI;
         try {
-
             const response = await axios.put(`http://localhost:8000/admin/editTeacher/${id}`, data);
             return response.data;
         } catch (error) {
@@ -118,8 +115,6 @@ export const deleteTeacher = createAsyncThunk(
     }
 );
 
-
-
 const TeacherSlice = createSlice({
     name: "Teacher",
     initialState,
@@ -143,25 +138,20 @@ const TeacherSlice = createSlice({
         },
         // -------------------------------------------------all Teacher
         [getAllTeachers.fulfilled]: (state, action) => {
-
             state.TeacherData = action.payload
             state.isUpdated = true;
-
-
         },
         // edit teacher ------------------------------------------------
         [editTeacher.fulfilled]: (state, action) => {
-            const filteredData = state.TeacherData.filter(teacherdata => teacherdata.id !== action.payload.id)
             const foundIndex = state.TeacherData.indexOf(teacherdata => teacherdata.id === action.payload.id)
+            const filteredData = state.TeacherData.filter(teacherdata => teacherdata.id !== action.payload.id)
             state.TeacterData = filteredData.splice(foundIndex, 0, action.payload)
-
             state.isUpdated = true;
         },
         // delete teacher ------------------------------------------------
         [deleteTeacher.fulfilled]: (state, action) => {
             const filteredData = state.TeacherData.filter(teacherdata => teacherdata.id !== action.payload.id)
             state.TeacterData = filteredData
-
             state.isUpdated = true;
         }
 

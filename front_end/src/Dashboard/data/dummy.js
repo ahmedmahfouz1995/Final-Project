@@ -21,7 +21,6 @@ import product4 from './product4.jpg';
 import product5 from './product5.jpg';
 import product6 from './product6.jpg';
 import product7 from './product7.jpg';
-import product8 from './product8.jpg';
 import { ComboBoxComponent } from '@syncfusion/ej2-react-dropdowns';
 
 export const gridOrderImage = (props) => (
@@ -502,16 +501,16 @@ export const booksGrid = [
   }
 ];
 export const teachersGrid = [
-  { headerText: 'id',
+  { headerText: '_id',
     width: '150',
-    field: 'id',
+    field: '_id',
     textAlign: 'Center',
     isPrimaryKey: true
-   },
-  { field: 'name',
-    headerText: 'name',
-    width: '150',
-    textAlign: 'Center',
+},
+{ field: 'name',
+headerText: 'name',
+width: '150',
+textAlign: 'Center',
   },
   { field: 'email',
     headerText: 'email',

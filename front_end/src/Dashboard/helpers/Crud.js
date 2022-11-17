@@ -1,4 +1,4 @@
-const baseUrl = "https://ej2services.syncfusion.com/production/web-services/api";
+
 // get
 export const get = (url) => fetch(url, {
     credentials: 'same-origin',

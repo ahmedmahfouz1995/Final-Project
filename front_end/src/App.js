@@ -50,7 +50,6 @@ function App() {
 const {TeacherData}=useSelector(state=>state.Teachercontx)
   return (
     <div>
-      <BrowserRouter>
         {/* <div className="flex relative dark:bg-main-dark-bg">
           <div className="fixed right-4 bottom-4" style={{ zIndex: "1000" }}>
             <TooltipComponent content="Settings" position="Top">
@@ -130,7 +129,6 @@ const {TeacherData}=useSelector(state=>state.Teachercontx)
           <Route path="/auth" element={<Auth />} />
         </Routes>
         <Footer />
-      </BrowserRouter>
     </div>
   );
 }

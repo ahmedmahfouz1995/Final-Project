@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import './../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import App from "./App";
-import { ContextProvider } from "./Dashboard/contetxts/ContextProvider";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import { store } from "./Dashboard/store/index";
@@ -15,9 +14,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      {/* <BrowserRouter> */}
+      <BrowserRouter>
         <App />
-      {/* </BrowserRouter> */}
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>
 );

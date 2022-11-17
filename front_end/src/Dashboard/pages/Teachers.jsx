@@ -10,82 +10,86 @@ import {
     Edit,
     Sort,
 } from "@syncfusion/ej2-react-grids";
-import { booksGrid, teachersGrid } from "../data/dummy";
+import {  teachersGrid } from "../data/dummy";
 import { Header } from "../components";
-import { useDispatch, useSelector } from "react-redux";
-import * as booksActions from "../store/reducer/booksSlice";
+import {  useSelector } from "react-redux";
 import { get, add, put, del } from "../helpers/Crud";
-import {
-    createTeacher,
-    deleteTeacher,
-    editTeacher,
-    getAllTeachers,
-} from "../store/reducer/TeacherSlice";
+// import {
+//     createTeacher,
+//     deleteTeacher,
+//     editTeacher,
+//     getAllTeachers,
+// } from "../store/reducer/TeacherSlice";
 
-const Teachers = (
-    // {books, isUpdated}
-) => {
+const Teachers = (props) => {
     const { TeacherData } = useSelector((state) => state.Teachercontx);
     const editOptions = {
         allowEditing: true,
         allowAdding: true,
         allowDeleting: true,
     };
-    const toolbarOptions = ["Add", "Edit", "Delete", "Update", "Cancel"];
+
+    const toolbarOptions = ["Add", "Edit", "Delete", "Update", "Cancel","Search"];
 
     const [data, setData] = useState();
-    const dispatch = useDispatch();
 
     const refreshGrid = () => {
-        // get("http://localhost:3030/books").then(newData => {
-        //     // if (newData !== data) {
-        //     setData({ result: newData, count: newData.length });
-        //     // }
-        // });
-        dispatch(getAllTeachers()).then((newData) => {
-            if (newData !== data) {
-                setData({
-                    result: newData,
-                    count: newData.length,
-                });
-            }
-        });
-    };
+        get("http://localhost:8000/admin/getAllTeachers").then(newData => {
+            // if (newData !== data) {
+            setData({ result: newData, count: newData.length });
+            console.log(1)
+            // }
+        });}
+    //     dispatch(getAllTeachers()).then((newData) => {
+    //         if (newData !== data) {
+    //             setData({
+    //                 result: newData,
+    //                 count: newData.length,
+    //             });
+    //         }
+    //     });
+    // };
     const dataSourceChanged = (state) => {
   
         if (state.action === "add") {
             console.log(state)
-            dispatch(createTeacher(state)).then((_) => refreshGrid());
-        }else if (state.action === "edit") {
-            console.log(state.data);
+            add("http://localhost:8000/admin/addTeacher", state.data).then((_) =>
+            refreshGrid()
+        );
+    }else if (state.action === "edit") {
             ref.current.hideSpinner();
-            dispatch(editTeacher({ id: state.data.id, data: state.data }))
+            put(`http://localhost:8000/admin/editTeacher/${state.data._id}`, state.data)
                 .then(() => ref.current.hideSpinner())
                 .then(() => ref.current.endEdit());
+                refreshGrid()
         } else if (state.requestType === "delete") {
-            dispatch(deleteTeacher({ id: state.data.id })).then((_) =>refreshGrid() );
-        } else {
-            console.log(state.action);
+            del(`http://localhost:8000/admin/deleteTeacher/${state.data[0]._id}`).then(
+                (_) => refreshGrid()
+                );
+            } else {
+                console.log(state.action);
         }
     };
-
     
-   
+
+
+
     useEffect(() => {
         refreshGrid();
-    }, []);
+    },[]);
 
     // useEffect(() => {
     console.log("this is hereeee");
     const ref = useRef(null);
     return (
         <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl">
-            <Header category="Page" title="Employees" />
+            <Header category="Page" title="Teachers" />
             {/* <GridComponent ref={grid => this.gridInstance = grid} dataSource={this.props.data1.currentData}  dataStateChange={this.dataStateChange.bind(this)} dataSourceChanged={this.dataSourceChanged.bind(this)} allowSorting={true} editSettings={this.editOptions} toolbar={this.toolbarOptions} allowFiltering={true} allowPaging={true}></GridComponent> */}
             <GridComponent
                 ref={ref}
-                dataSource={TeacherData}
+                dataSource={data}
                 allowPaging={true}
+                allowSorting={true} 
                 pageSettings={{ pageSize: 6 }}
                 editSettings={editOptions}
                 toolbar={toolbarOptions}
@@ -103,7 +107,9 @@ const Teachers = (
     );
 };
 
-       export default Teachers;
+export default Teachers;
+
+
 
 
       // if (state.action === "add") {
