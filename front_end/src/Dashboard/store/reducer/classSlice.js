@@ -9,8 +9,7 @@ import {
 } from 'react-router-dom';
 
 const initialState = {
-    TeacherId: "",
-    TeacherData: [],
+    classData: [],
     isLoading: false,
     error: null,
     isUpdated: false,
@@ -18,10 +17,10 @@ const initialState = {
 };
 
 // with back end 
-export const createTeacher = createAsyncThunk(
-    "Teacher/createTeacher",
-    //   Teacher ----> name of Slice
-    //  createTeacher----> name of fun
+export const createclass = createAsyncThunk(
+    "class/createclass",
+    //   class ----> name of Slice
+    //  createclass----> name of fun
     async (data, thunkAPI) => {
         // {data}: paramaters use it to change state
 
@@ -32,7 +31,7 @@ export const createTeacher = createAsyncThunk(
             //     navigate("logIn")
             // }
             console.log({data});
-            const response = await axios.post(`http://localhost:8000/admin/addTeacher`, data);
+            const response = await axios.post(`http://localhost:8000/admin/addclass`, data);
           console.log("asxasxasxas");
             return response.data;
         } catch (error) {
@@ -42,10 +41,10 @@ export const createTeacher = createAsyncThunk(
 );
 
 
-export const getAllTeachers = createAsyncThunk(
-    "Teacher/getAllTeachers",
-    //   Teacher ----> name of Slice 
-    //  createTeacher----> name of fun
+export const getAllclass = createAsyncThunk(
+    "class/getAllclass",
+    //   class ----> name of Slice 
+    //  createclass----> name of fun
     async (args, thunkAPI) => {
         // {data}: paramaters use it to change state
 
@@ -53,7 +52,7 @@ export const getAllTeachers = createAsyncThunk(
             rejectWithValue
         } = thunkAPI
         try {
-            const response = await axios.get(`http://localhost:8000/admin/getAllTeachers`)
+            const response = await axios.get(`http://localhost:8000/admin/getAllClasses`)
             console.log({
                 response
             });
@@ -68,10 +67,10 @@ export const getAllTeachers = createAsyncThunk(
     }
 );
 
-export const editTeacher = createAsyncThunk(
-    "Teacher/editTeacher",
-    //   Teacher ----> name of Slice
-    //  createTeacher----> name of fun
+export const editclass = createAsyncThunk(
+    "class/editclass",
+    //   class ----> name of Slice
+    //  createclass----> name of fun
     async ({
         data,
         id
@@ -82,17 +81,17 @@ export const editTeacher = createAsyncThunk(
             rejectWithValue
         } = thunkAPI;
         try {
-            const response = await axios.put(`http://localhost:8000/admin/editTeacher/${id}`, data);
+            const response = await axios.put(`http://localhost:8000/admin/editclass/${id}`, data);
             return response.data;
         } catch (error) {
             rejectWithValue(error.message);
         }
     }
 );
-export const deleteTeacher = createAsyncThunk(
-    "Teacher/deleteTeacher",
-    //   Teacher ----> name of Slice
-    //  createTeacher----> name of fun
+export const deleteclass = createAsyncThunk(
+    "class/deleteclass",
+    //   class ----> name of Slice
+    //  createclass----> name of fun
     async ({
         id
     }, thunkAPI) => {
@@ -103,7 +102,7 @@ export const deleteTeacher = createAsyncThunk(
         } = thunkAPI;
         try {
 
-            const response = await axios.delete(`http://localhost:8000/admin/deleteTeacher/${id}`);
+            const response = await axios.delete(`http://localhost:8000/admin/deleteclass/${id}`);
             return response.data;
         } catch (error) {
             rejectWithValue(error.message);
@@ -115,10 +114,10 @@ export const deleteTeacher = createAsyncThunk(
 // RELATED TO GRID COMP-----------------------------------------------------
 
 
-export const showAllTeachers = createAsyncThunk(
-    "Teacher/showAllTeachers",
-    //   Teacher ----> name of Slice 
-    //  createTeacher----> name of fun
+export const showAllclass = createAsyncThunk(
+    "class/showAllclass",
+    //   class ----> name of Slice 
+    //  createclass----> name of fun
     async (args, thunkAPI) => {
         // {data}: paramaters use it to change state
 
@@ -143,49 +142,49 @@ console.log({args});
 
 
 
-const TeacherSlice = createSlice({
-    name: "Teacher",
+const classSlice = createSlice({
+    name: "class",
     initialState,
     reducers: {
         // setUpdated: (state, action) => ({...state, isUpdated: action.payload})
     },
     extraReducers: {
 
-        // get Teacher
-        // -------Add Teacher   --> action =setState <----
-        [createTeacher.pending]: (state, action) => ({
+        // get class
+        // -------Add class   --> action =setState <----
+        [createclass.pending]: (state, action) => ({
             ...state,
             isUpdated: false
         }),
-        [createTeacher.fulfilled]: (state, action) => {
-            state.TeacherData = action.payload; // action.payload--> response.data  or error.message
+        [createclass.fulfilled]: (state, action) => {
+            state.classData = action.payload; // action.payload--> response.data  or error.message
             state.isUpdated = true;
         },
-        [createTeacher.rejected]: (state, action) => {
+        [createclass.rejected]: (state, action) => {
             state.isUpdated = false;
         },
-        // -------------------------------------------------all Teacher
-        [getAllTeachers.fulfilled]: (state, action) => {
-            state.TeacherData = action.payload
+        // -------------------------------------------------all class
+        [getAllclass.fulfilled]: (state, action) => {
+            state.classData = action.payload
             state.isUpdated = true;
         },
-        // edit teacher ------------------------------------------------
-        [editTeacher.fulfilled]: (state, action) => {
-            const foundIndex = state.TeacherData.indexOf(teacherdata => teacherdata.id === action.payload.id)
-            const filteredData = state.TeacherData.filter(teacherdata => teacherdata.id !== action.payload.id)
+        // edit class ------------------------------------------------
+        [editclass.fulfilled]: (state, action) => {
+            const foundIndex = state.classData.indexOf(classdata => classdata.id === action.payload.id)
+            const filteredData = state.classData.filter(classdata => classdata.id !== action.payload.id)
             state.TeacterData = filteredData.splice(foundIndex, 0, action.payload)
             state.isUpdated = true;
         },
-        // delete teacher ------------------------------------------------
-        [deleteTeacher.fulfilled]: (state, action) => {
-            const filteredData = state.TeacherData.filter(teacherdata => teacherdata.id !== action.payload.id)
+        // delete class ------------------------------------------------
+        [deleteclass.fulfilled]: (state, action) => {
+            const filteredData = state.classData.filter(classdata => classdata.id !== action.payload.id)
             state.TeacterData = filteredData
             state.isUpdated = true;
         },
-        // showAllTeachers------------------------------------------------------
-        [showAllTeachers.fulfilled]: (state, action) => {
+        // showAllclasss------------------------------------------------------
+        [showAllclass.fulfilled]: (state, action) => {
             
-            state.TeacherData=action.payload
+            state.classData=action.payload
         },
     },
 });
@@ -194,5 +193,5 @@ const TeacherSlice = createSlice({
 
 
 
-export const TeacherReducer = TeacherSlice.reducer; //initial state
-export const TeacherActions = TeacherSlice.actions; //Reducers or functions like create Teacher
+export const classReducer = classSlice.reducer; //initial state
+export const classActions = classSlice.actions; //Reducers or functions like create Teacher

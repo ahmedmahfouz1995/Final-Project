@@ -8,7 +8,7 @@ import { Provider } from "react-redux";
 import { store } from "./Dashboard/store/index";
 import { BrowserRouter } from "react-router-dom";
 
-var Promise = require('es6-promise').Promise;
+// var Promise = require('es6-promise').Promise;
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

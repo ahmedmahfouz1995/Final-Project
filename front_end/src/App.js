@@ -127,7 +127,8 @@ const {TeacherData}=useSelector(state=>state.Teachercontx)
           <Route path="/" element={<Home />} />
           <Route path="/courses" element={<AllCourses />} />
           <Route path="/course-details" element={<CourseDetails />} />
-          <Route path="/BecomeAnInstructor" element={<Auth />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/teacherDetails/:id" element={<AdminCreate />} />
           <Route path="/CreateTeacher" element={<AdminCreate />} />
           <Route path="/TeacherForm" element={<TeacherForm />} />
           <Route path="/TeacherForm/:id" element={<TeacherForm />} />

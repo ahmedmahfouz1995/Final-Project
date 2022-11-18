@@ -5,29 +5,32 @@ import Form from "react-bootstrap/Form";
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import { useDispatch, useSelector } from "react-redux";
+import { getAllclass } from "../../../Dashboard/store/reducer/classSlice";
 import { createTeacher } from "../../../Dashboard/store/reducer/TeacherSlice";
 import AuthBanner from "./AuthBanner";
 
 export default function Auth() {
 const [formValue,setFormValue]=useState({
-  name:"",
-  email:"",
-  password:"",
-  phone:"",
-  DOB:"",
-  gender:"",
-  subject:"",
   role:"teacher"
 })
-const {TeacherData}=useSelector(state=>state.Teachercontx)
+const [err, setErr] = useState({});
+// const {TeacherData}=useSelector(state=>state.Teachercontx)
 const dispatch=useDispatch()
+const {classData}=useSelector(state=>state.classcontx)
 
 const onChangeHandle=(e)=>{
-
-  setFormValue({...formValue,[e.target.name]:e.target.value})
+    if (e.target.value==="") {
+        setErr({...err,[e.target.id]:`${e.target.id} is required`})
+      } else if(e.target.value.length<5) {
+        setErr({...err,[e.target.id]:`${e.target.id} must be more than 5 letters`})}
+      else{
+        setFormValue({...formValue,[e.target.id]:e.target.value})
+        setErr({[e.target.id]:""})
+      }
+      }
 
   
-}
+
 const submitHandler=(e)=>{
    
 e.preventDefault()
@@ -37,9 +40,8 @@ dispatch(createTeacher(formValue))
 
 }
 useEffect(()=>{
-
- 
-
+    dispatch(getAllclass())
+    console.log(classData);
 },[])
 
 
@@ -130,7 +132,13 @@ useEffect(()=>{
       m-0
       focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example">
         <option value="1" selected >Enter Your Subject</option>
-        <option value="6377108dd827070560ea8322"  >Arabic</option>
+        {classData.map((course)=>{
+            return(
+                <option value={course._id} >{course.title}</option>
+            )
+        })}
+
+        {/* <option value="6377108dd827070560ea8322"  >Arabic</option>
         <option value="637710f4d827070560ea8327">Math</option>
         <option value="637710fdd827070560ea8329">Engilsh</option>
         <option value="63771102d827070560ea832b">Science</option>
@@ -142,7 +150,7 @@ useEffect(()=>{
         <option value="63771122d827070560ea8337">Algebra</option>
         <option value="63771128d827070560ea8339">Geometry</option>
         <option value="6377112dd827070560ea833b">Religion</option>
-        <option value="63771133d827070560ea833d">Pysices</option>
+        <option value="63771133d827070560ea833d">Pysices</option> */}
     </select>
               </Form.Group>              
 

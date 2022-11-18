@@ -385,6 +385,7 @@ res.json({message:"saved",saveClass})
             res.status(409).json({message:"title exists"})
     
         }else{
+            console.log(e);
             res.status(500).json({message:"Error",e})
         }
     
@@ -579,9 +580,23 @@ res.json({message:'error in findStudent '})
 }
 // ---------------------------------------------------------------
 const getAllClasses =async (req, res)=>{
+    try{
+        const findClasses=await classModel.find()
+        res.status(200).json(findClasses);
+                
+        if(!findClasses) {
+            console.log(1);
+            res.json({message:'not fonunded'})
+        } 
+        
+    }catch (e) {
+        
+        console.log(e);
+        res.json({message:'error in findClasse '})
 
-    const findClasses=await classModel.find()
-res.status(200).json(findClasses);
+    }
+
+
 
 }
 const getClassById =async (req, res)=>{
