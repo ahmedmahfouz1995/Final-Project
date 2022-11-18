@@ -132,6 +132,15 @@ const {TeacherData}=useSelector(state=>state.Teachercontx)
           <Route path="/CreateTeacher" element={<AdminCreate />} />
           <Route path="/TeacherForm" element={<TeacherForm />} />
           <Route path="/TeacherForm/:id" element={<TeacherForm />} />
+          <Route path="/Parent" element={<Parent />}>
+                  <Route path="/Parent/show" element={<ShowParent />} />
+                  <Route path="/Parent/edit" element={<EditParent />} />
+                  <Route path="/Parent/Create" element={<CreateParent />} />
+                  <Route path="/Parent/child" element={<ShowChildren />} />
+                  <Route path="/Parent/child/show" element={<ShowStudent />} />
+                  <Route path="/Parent/child/edit" element={<ShowStudent />} />
+                </Route>
+
         </Routes>
         <Footer />
     </div>

@@ -11,6 +11,7 @@ import {
 const initialState = {
     TeacherId: "",
     TeacherData: [],
+    TeacherProfile: {},
     isLoading: false,
     error: null,
     isUpdated: false,
@@ -31,9 +32,7 @@ export const createTeacher = createAsyncThunk(
             //     const navigate = useNavigate()
             //     navigate("logIn")
             // }
-            console.log({data});
             const response = await axios.post(`http://localhost:8000/admin/addTeacher`, data);
-          console.log("asxasxasxas");
             return response.data;
         } catch (error) {
             rejectWithValue(error.message);
@@ -54,10 +53,6 @@ export const getAllTeachers = createAsyncThunk(
         } = thunkAPI
         try {
             const response = await axios.get(`http://localhost:8000/admin/getAllTeachers`)
-            console.log({
-                response
-            });
-            console.log(response.data)
             return response.data;
         } catch (error) {
 
@@ -125,9 +120,27 @@ export const showAllTeachers = createAsyncThunk(
         const {
             rejectWithValue
         } = thunkAPI
-        try {
-console.log({args});      
+        try {     
             return args;
+        } catch (error) {
+
+            rejectWithValue(error.message)
+
+        }
+
+    }
+);
+export const setTeacherProfile = createAsyncThunk(
+    "Teacher/setTeacherProfile",
+    //   Teacher ----> name of Slice 
+    //  createTeacher----> name of fun
+    async (args, thunkAPI) => {
+        // {data}: paramaters use it to change state
+        const {
+            rejectWithValue
+        } = thunkAPI
+        try {   
+            return args
         } catch (error) {
 
             rejectWithValue(error.message)
@@ -184,8 +197,11 @@ const TeacherSlice = createSlice({
         },
         // showAllTeachers------------------------------------------------------
         [showAllTeachers.fulfilled]: (state, action) => {
-            
             state.TeacherData=action.payload
+        },
+        [setTeacherProfile.fulfilled]: (state, action) => {
+            state.TeacherProfile=action.payload
+
         },
     },
 });
