@@ -22,22 +22,22 @@ export const createTeacher = createAsyncThunk(
     "Teacher/createTeacher",
     //   Teacher ----> name of Slice
     //  createTeacher----> name of fun
-    async ({
-        data,
-        isAdmin
-    }, thunkAPI) => {
+    async (
+        data
+    , thunkAPI) => {
         // {data}: paramaters use it to change state
 
         const {
             rejectWithValue
         } = thunkAPI;
         try {
-            if (isAdmin === false) {
-                const navigate = useNavigate()
-                navigate("logIn")
-            }
-            console.log(data);
+            // if (isAdmin === false) {
+            //     const navigate = useNavigate()
+            //     navigate("logIn")
+            // }
+            console.log({data});
             const response = await axios.post(`http://localhost:8000/admin/addTeacher`, data);
+          console.log("asxasxasxas");
             return response.data;
         } catch (error) {
             rejectWithValue(error.message);
@@ -115,6 +115,38 @@ export const deleteTeacher = createAsyncThunk(
     }
 );
 
+
+// RELATED TO GRID COMP-----------------------------------------------------
+
+
+export const showAllTeachers = createAsyncThunk(
+    "Teacher/showAllTeachers",
+    //   Teacher ----> name of Slice 
+    //  createTeacher----> name of fun
+    async (args, thunkAPI) => {
+        // {data}: paramaters use it to change state
+
+        const {
+            rejectWithValue
+        } = thunkAPI
+        try {
+console.log({args});      
+            return args;
+        } catch (error) {
+
+            rejectWithValue(error.message)
+
+        }
+
+    }
+);
+
+
+
+// ----------------------------------------------------------------
+
+
+
 const TeacherSlice = createSlice({
     name: "Teacher",
     initialState,
@@ -153,10 +185,18 @@ const TeacherSlice = createSlice({
             const filteredData = state.TeacherData.filter(teacherdata => teacherdata.id !== action.payload.id)
             state.TeacterData = filteredData
             state.isUpdated = true;
-        }
-
+        },
+        // showAllTeachers------------------------------------------------------
+        [showAllTeachers.fulfilled]: (state, action) => {
+            
+            state.TeacherData=action.payload
+        },
     },
 });
+
+
+
+
 
 export const TeacherReducer = TeacherSlice.reducer; //initial state
 export const TeacherActions = TeacherSlice.actions; //Reducers or functions like create Teacher

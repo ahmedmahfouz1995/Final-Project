@@ -9,8 +9,13 @@ import Transform from "./Transform";
 import Students from "./Students ";
 import BecomeAnInstructor from "./BecomeAnInstructor";
 import Choose from "./Choose";
+import { useSelector } from "react-redux";
 
 export default function Home() {
+
+    const { TeacherData } = useSelector((state) => state.Teachercontx);
+console.log(TeacherData)
+
   return (
     <>
       <section className="homeSection">

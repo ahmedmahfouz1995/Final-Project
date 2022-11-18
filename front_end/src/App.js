@@ -42,6 +42,7 @@ import Home from "./HomePage/pages/Home/Home";
 import AllCourses from "./HomePage/pages/Courses/AllCourses";
 import CourseDetails from "./HomePage/pages/Courses/CourseDetails"
 import Auth from "./HomePage/pages/Register/Auth";
+import TeacherForm from "./HomePage/DashboardForms/TeacherForm";
 
 function App() {
   // const { activeMenu } = useStateContext();
@@ -126,7 +127,10 @@ const {TeacherData}=useSelector(state=>state.Teachercontx)
           <Route path="/" element={<Home />} />
           <Route path="/courses" element={<AllCourses />} />
           <Route path="/course-details" element={<CourseDetails />} />
-          <Route path="/auth" element={<Auth />} />
+          <Route path="/BecomeAnInstructor" element={<Auth />} />
+          <Route path="/CreateTeacher" element={<AdminCreate />} />
+          <Route path="/TeacherForm" element={<TeacherForm />} />
+          <Route path="/TeacherForm/:id" element={<TeacherForm />} />
         </Routes>
         <Footer />
     </div>
@@ -134,3 +138,12 @@ const {TeacherData}=useSelector(state=>state.Teachercontx)
 }
 
 export default App;
+
+
+
+
+
+
+
+
+

@@ -6,6 +6,7 @@ const classModel = require("../models/class");
 const studentModel = require("../models/student");
 const teacherModel = require("../models/teacher");
 const sendEmail = require("../service/email.service");
+const { get } = require("../utils/crud");
 
 
 
@@ -323,10 +324,14 @@ const addTeacher=async (req, res) => {
     console.log(req.body);
 
 try{
-    const {name,email,password,DOB,gender,phone,subjects}=req.body
+    
+    const {name,email,password='123456789',DOB,gender,phone,subject}=req.body
     const hashPassword = await bcrypt.hash(password, parseInt(process.env.SALTROUNDS))
-const newTeacher=new teacherModel({name,email,password:hashPassword,DOB,gender,phone,subjects})
+
+const newTeacher=new teacherModel({name,email,password:hashPassword,DOB,gender,phone,subject: subject?._id ? subject?._id : null })
 const savedTeacher=await newTeacher.save()
+await savedTeacher.populate("subject")
+
 res.json({message:savedTeacher})
 
 }catch(e){
@@ -388,9 +393,13 @@ res.json({message:"saved",saveClass})
  //editTeacher  -----------------------------------------------------------------------------
  
 const editTeacher=async (req, res) => {
+    console.log("edited")
 try{
 const {id}=req.params
 const editTheTeacher=req.body
+console.log("thissssssssssssss", editTheTeacher)
+editTheTeacher["subject"] = editTheTeacher["subject"]?._id ? editTheTeacher["subject"]._id : null; 
+console.log("thissssssssssssss", editTheTeacher)
 
 const findTeacher=await teacherModel.findById({_id:id})
 
@@ -511,7 +520,7 @@ res.json({message: 'deleted Success'})
 const getAllTeachers =async (req, res)=>{
 
     
-const findTeachers=await teacherModel.find()
+const findTeachers=await get(teacherModel, ["subject"])
 if(findTeachers.confirmEmail === false) res.json({message: 'plz confirm u email'})
 res.status(200).json(findTeachers);
 

@@ -28,7 +28,7 @@ const teacherSchema = mongoose.Schema({
   phone: {
     type: String
   },
-  subjects: { // بتاعه الماده id واخد ال 
+  subject: { // بتاعه الماده id واخد ال 
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Class'
   },
@@ -46,7 +46,6 @@ const teacherSchema = mongoose.Schema({
   },
   approved:{
     type:Boolean,
-    required:true,
     default:false,
     index: true // grouping بيعمل 
   }

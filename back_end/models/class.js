@@ -29,7 +29,6 @@ default:'10$'
   schedule: [
     {
       type: Date,
-      required: true,
       default:[]
     },
   ],
