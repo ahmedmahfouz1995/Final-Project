@@ -350,9 +350,11 @@ res.json({message:savedTeacher})
 
 const addStudent=async (req, res) => {
 try{
-    const {name,email,password,DOB,gender,phone,student_subjects}=req.body
+    const {name,email,password,DOB,gender,phone,subjects}=req.body
+    console.log({subjects});
+   
     const hashPassword = await bcrypt.hash(password, parseInt(process.env.SALTROUNDS))
-const newStudent=new studentModel({name,email,password:hashPassword,DOB,gender,phone,student_subjects})
+const newStudent=new studentModel({name,email,password:hashPassword,DOB,gender,phone,subjects})
 const savedStudent=await newStudent.save()
 res.json({message:savedStudent})
 
@@ -398,9 +400,11 @@ const editTeacher=async (req, res) => {
 try{
 const {id}=req.params
 const editTheTeacher=req.body
+console.log("id-------------------",id);
+console.log("body-------------------",req.body);
 console.log("thissssssssssssss", editTheTeacher)
-editTheTeacher["subject"] = editTheTeacher["subject"]?._id ? editTheTeacher["subject"]._id : null; 
-console.log("thissssssssssssss", editTheTeacher)
+//editTheTeacher["subject"] = editTheTeacher["subject"]?._id ? editTheTeacher["subject"]._id : null; 
+// console.log("thissssssssssssss", editTheTeacher)
 
 const findTeacher=await teacherModel.findById({_id:id})
 
@@ -448,7 +452,7 @@ res.json({message:"Catch editStudent Error"})
 const editClass=async (req, res) => {
 try{
     const {id}=req.params
-    console.log({id});
+   
     const editTheClass=req.body
     
     const findClass=await classModel.findById({_id:id})
