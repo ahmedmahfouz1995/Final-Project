@@ -20,7 +20,7 @@ import {
     BsBarChart,
     BsBoxSeam,
     BsCurrencyDollar,
-    BsShield,
+    BsShield,  
     BsChatLeft,
 } from "react-icons/bs";
 import { BiColorFill } from "react-icons/bi";
@@ -558,6 +558,13 @@ export const viewButton = (props) => (
         </a>
     </div>
   );
+export const viewClassButton = (props) => (
+    <div>
+        <button href={`/adminCourse/${props._id}`} className="decoraction-none btn btn-outline-danger" id={props._id} onClick={() => console.log(props._id)}>
+            View 
+        </button>
+    </div>
+  );
   
 export const teachersGrid = [
     {
@@ -584,6 +591,20 @@ export const teachersGrid = [
         textAlign: "Center",
     },
     { headerText: "view",textAlign: "Center" ,width: "100", template: viewButton },
+];
+export const classGrid = [
+    {
+        headerText: "Course Title",
+        width: "170",
+        field: "title",
+        textAlign: "Center",
+        isPrimaryKey: true,
+    },
+    { field: "price", headerText: "Price", width: "170", textAlign: "Center" },
+    { field: "class", headerText: "Class", width: "170", textAlign: "Center" },
+    { field: "startDate", headerText: "Start Date", width: "170", textAlign: "Center" },
+    { field: "endDate", headerText: "End Date", width: "170", textAlign: "Center" },
+    { headerText: "view",textAlign: "Center" ,width: "170", template: viewClassButton },
 ];
 
 export const links = [

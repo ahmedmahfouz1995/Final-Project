@@ -23,7 +23,7 @@ export default function AdminCreate() {
       useEffect(()=>{
           dispatch(getAllTeachers())
           dispatch(getAllclass())
-        },[])
+        },[])   
         const TeacherProfile = TeacherData.filter((teacher)=>teacher._id===id)
         const subjectToShow=classData.filter((course)=>course.title===TeacherProfile[0].subjects)
     const save=(e)=>{

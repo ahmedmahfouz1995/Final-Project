@@ -4,6 +4,7 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 // import { useDispatch } from "react-redux";
+import { get } from './../../helpers/Crud';
 import {
     useNavigate
 } from 'react-router-dom';
@@ -26,10 +27,6 @@ export const createclass = createAsyncThunk(
 
         const {rejectWithValue} = thunkAPI;
         try {
-            // if (isAdmin === false) {
-            //     const navigate = useNavigate()
-            //     navigate("logIn")
-            // }
             console.log({data});
             const response = await axios.post(`http://localhost:8000/admin/addclass`, data);
           console.log("asxasxasxas");
@@ -47,17 +44,11 @@ export const getAllclass = createAsyncThunk(
     //  createclass----> name of fun
     async (args, thunkAPI) => {
         // {data}: paramaters use it to change state
-
         const {
             rejectWithValue
         } = thunkAPI
         try {
-            const response = await axios.get(`http://localhost:8000/admin/getAllClasses`)
-            console.log({
-                response
-            });
-            console.log(response.data)
-            return response.data;
+            return args;
         } catch (error) {
 
             rejectWithValue(error.message)
@@ -166,6 +157,8 @@ const classSlice = createSlice({
         // -------------------------------------------------all class
         [getAllclass.fulfilled]: (state, action) => {
             state.classData = action.payload
+            console.log("data",action.payload);
+            console.log("stat",state.classData);
             state.isUpdated = true;
         },
         // edit class ------------------------------------------------
@@ -183,7 +176,6 @@ const classSlice = createSlice({
         },
         // showAllclasss------------------------------------------------------
         [showAllclass.fulfilled]: (state, action) => {
-            
             state.classData=action.payload
         },
     },

@@ -43,6 +43,8 @@ import AllCourses from "./HomePage/pages/Courses/AllCourses";
 import CourseDetails from "./HomePage/pages/Courses/CourseDetails"
 import Auth from "./HomePage/pages/Register/Auth";
 import TeacherForm from "./HomePage/DashboardForms/TeacherForm";
+import AdminCourses from "./Dashboard/pages/admin dashboard/AdminCourses";
+import AdminViewCourses from './Dashboard/pages/admin dashboard/AdminViewCourses';
 
 function App() {
   // const { activeMenu } = useStateContext();
@@ -129,6 +131,8 @@ const {TeacherData}=useSelector(state=>state.Teachercontx)
           <Route path="/course-details" element={<CourseDetails />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/teacherDetails/:id" element={<AdminCreate />} />
+          <Route path="/adminCourse/:id" element={<AdminCourses/>} />
+          <Route path="/adminViewCourses" element={<AdminViewCourses/>} />
           <Route path="/CreateTeacher" element={<AdminCreate />} />
           <Route path="/TeacherForm" element={<TeacherForm />} />
           <Route path="/TeacherForm/:id" element={<TeacherForm />} />
@@ -140,7 +144,6 @@ const {TeacherData}=useSelector(state=>state.Teachercontx)
                   <Route path="/Parent/child/show" element={<ShowStudent />} />
                   <Route path="/Parent/child/edit" element={<ShowStudent />} />
                 </Route>
-
         </Routes>
         <Footer />
     </div>
