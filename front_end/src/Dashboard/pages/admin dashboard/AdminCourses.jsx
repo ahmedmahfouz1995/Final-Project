@@ -5,7 +5,6 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getAllTeachers } from '../../store/reducer/TeacherSlice';
 export default function Courses() {
-    const btnContent=null 
     const {classData}=useSelector(state=>state.classcontx)
     console.log(classData);
     const {TeacherData}=useSelector(state=>state.Teachercontx)
@@ -14,7 +13,8 @@ export default function Courses() {
     const {id}=Param
     console.log(id);
     const myClass = classData.filter((ele)=>ele?._id===id)
-    const teacherToShow=TeacherData.filter((course)=>course?._id===myClass[0]?.teacher)
+    const teacherToShow=TeacherData.filter((course)=>course?._id===myClass[0]?.teacher._id)
+    console.log(teacherToShow);
     useEffect(()=>{
         dispatch(getAllTeachers())
     },[])
@@ -27,10 +27,10 @@ export default function Courses() {
                             <img className="h-auto w-full mx-auto"
                                 src={myClass[0]?.Image_url ||"https://imgk.timesnownews.com/story/english.png"}
                                 alt=""/>
-                                {/* <div>
+                                <div>
                                 <label className='text-blue-900' htmlFor="Image_url"> Update Course Image</label>
                                 <input name='Image_url' id='Image_url' type="file" />
-                                </div> */}
+                                </div>
                         </div>
                         <h1 className="text-gray-900 text-center font-bold text-xl leading-8 my-1">{myClass[0]?.title}</h1>
                     </div>
@@ -54,18 +54,18 @@ export default function Courses() {
                                     <div className="px-4 py-2"><input type="text" name='title' id='title' placeholder='' defaultValue={myClass[0]?.title}/></div>
                                 </div>
                                 <div className="grid grid-cols-2">
-                                    <div className="px-4 py-2 font-semibold">Class</div>
-                                    <div className="px-4 py-2"><input type="text" name='class' id='class'  placeholder='' defaultValue={myClass[0]?.class}/></div>
+                                    <div className="px-4 py-2 font-semibold">level</div>
+                                    <div className="px-4 py-2"><input type="text" name='class' id='class'  placeholder='' defaultValue={myClass[0]?.level}/></div>
                                 </div>
                                 <div className="grid grid-cols-2">
                                     <div className="px-4 py-2 font-semibold" > Start Date</div>
                                     <div className="px-4 py-2">
-                                    <input  placeholder='' defaultValue={myClass.startDate} type="date" name="startDate" id="startDate"  />
+                                    <input  placeholder='' defaultValue={myClass[0].startDate.split("T")[0]} type="date" name="startDate" id="startDate"  />
                                                 </div>
                                 </div>
                                 <div className="grid grid-cols-2">
                                     <div className="px-4 py-2 font-semibold"> End Date</div>
-                                    <input  placeholder='' defaultValue={myClass.endDate} type="date" name="endDate" id="endDate"  />
+                                    <input  placeholder='' defaultValue={myClass[0].endDate.split("T")[0]} type="date" name="endDate" id="endDate"  />
                                 </div>
                                 <div className="grid grid-cols-2">
                                     <div className="px-4 py-2 font-semibold">Price</div>
@@ -75,7 +75,7 @@ export default function Courses() {
                                     <div className="px-4 py-2 font-semibold">subject teacher</div>
                                     <select className="px-4 py-2 font-semibold" type="text" name='teacher' id=''   >
                                         {  
-                                            <option value={teacherToShow[0]?._id}>{teacherToShow[0]?.name}</option>
+                                            <option selected value={teacherToShow[0]?._id}>{teacherToShow[0]?.name}</option>
                                         }
                                         {
                                                 TeacherData.map((teacher)=>{
@@ -94,7 +94,7 @@ export default function Courses() {
                             </div>
                         </form>
                         <button type='submit'
-                            className="block w-full text-blue-800 text-sm font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4">{btnContent}</button>
+                            className="block w-full text-blue-800 text-sm font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4">submit edit</button>
                     </div>
                 </div>
             </div>

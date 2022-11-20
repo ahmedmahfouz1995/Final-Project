@@ -1,11 +1,9 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import {
-    createTeacher,
-    editTeacher,
-    getAllTeachers,
-    setTeacherProfile,
-} from "../../store/reducer/TeacherSlice";
+    editStudent,
+    getAllStudents,
+} from "../../store/reducer/StudentSlice";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -14,27 +12,32 @@ import Form from "react-bootstrap/Form";
 import { useNavigate, useParams } from "react-router-dom";
 import { getAllclass } from "../../store/reducer/classSlice";
 
-export default function AdminCreate() {
+export default function AdminCreateTwo() {
     const navigate = useNavigate();
-    const { TeacherData, isAdmin, isUpdated } = useSelector(
-        (state) => state.Teachercontx
+    const { StudentData, isAdmin, isUpdated } = useSelector(
+        (state) => state.Studentcontx
     );
 
     const dispatch = useDispatch();
     const { classData } = useSelector((state) => state.classcontx);
-    console.log(classData);
     const [data, setData] = useState({});
     const [err, setErr] = useState({});
     const param = useParams();
     const { id } = param;
     useEffect(() => {
-        dispatch(getAllTeachers());
+        dispatch(getAllStudents());
         dispatch(getAllclass());
     }, []);
-    const TeacherProfile = TeacherData.filter((teacher) => teacher._id === id);
+    const StudentProfile = StudentData.filter((Student) => Student._id === id);
+    console.log("StudentProffffffffile", StudentProfile);
+    console.log("StudentData", StudentData);
+    console.log("idddddddddddd", id);
+    const subjectToShow = classData.filter(
+        (course) => course.title === StudentProfile[0].subject
+    );
 
     // -------------------------------------
-    const [formValues, setFormValues] = useState(TeacherProfile[0]);
+    const [formValues, setFormValues] = useState(StudentProfile[0]);
 
     // handleChange---------------------------------------------
 
@@ -79,9 +82,9 @@ export default function AdminCreate() {
         if(Object.keys(err).length === 0){
 
             console.log("idddddddddddddddddddd",id,"formVlaesssssssss",formValues)
-            dispatch(editTeacher({id,data:formValues}));
+            dispatch(editStudent({id,data:formValues}));
             console.log("Asxas");
-            navigate("/teacherDashboard");
+            navigate("/StudentDashboard");
         }
         console.log("not deleted")
     };
@@ -92,20 +95,20 @@ export default function AdminCreate() {
                 <div className="md:grid-8 md:grid-cols-3 md:gap-6 mx-20">
                     <div className="mt-5 md:col-span-2 md:mt-0">
                         <h1 className="font-black my-3 text-center">
-                            Teacher Profile
+                            Student Profile
                         </h1>
                         <Form
                             className="col-12"
                             onChange={(e) => handleChange(e)}
                         >
-                            {console.log(TeacherProfile)}
+                            {console.log(StudentProfile)}
                             <Form.Group
                                 className="my-4"
                                 controlId="formBasicName"
                             >
                                 <Form.Control
                                     type="text"
-                                    defaultValue={TeacherProfile[0]?.name}
+                                    defaultValue={StudentProfile[0]?.name}
                                     placeholder="Enter Your Name"
                                     className="py-3"
                                     name="name"
@@ -118,7 +121,7 @@ export default function AdminCreate() {
                             >
                                 <Form.Control
                                     type="email"
-                                    defaultValue={TeacherProfile[0]?.email}
+                                    defaultValue={StudentProfile[0]?.email}
                                     placeholder="Enter Your Email"
                                     className="py-3"
                                     name="email"
@@ -132,7 +135,7 @@ export default function AdminCreate() {
                             >
                                 <Form.Control
                                     type="password"
-                                    defaultValue={TeacherProfile[0]?.password}
+                                    defaultValue={StudentProfile[0]?.password}
                                     placeholder="Enter Your Password"
                                     className="py-3"
                                     name="password"
@@ -146,7 +149,7 @@ export default function AdminCreate() {
                             >
                                 <Form.Control
                                     type="text"
-                                    defaultValue={TeacherProfile[0]?.phone}
+                                    defaultValue={StudentProfile[0]?.phone}
                                     placeholder="Enter Your Phone"
                                     className="py-3"
                                     name="phone"
@@ -164,13 +167,13 @@ export default function AdminCreate() {
                                     name="DOB"
                                     id="DOB"
                                     defaultValue={
-                                        TeacherProfile[0]?.DOB?.split("T")[0]
+                                        StudentProfile[0]?.DOB?.split("T")[0]
                                     }
                                     autoComplete="street-address"
                                     className="mt-1 mr-2  w-100 h-10 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                 />
                                 {console.log(
-                                    TeacherProfile[0]?.DOB?.split("T")[0]
+                                    StudentProfile[0]?.DOB?.split("T")[0]
                                 )}
                                 <p className="text-red-400">{err.DOB}</p>
 
@@ -179,7 +182,7 @@ export default function AdminCreate() {
                                 </label>
                                 <select
                                     name="gender"
-                                    defaultValue={TeacherProfile[0]?.gender}
+                                    defaultValue={StudentProfile[0]?.gender}
                                     className="form-select appearance-non w-100 px-3 py-1.5 text-base font normal text-gray-700
       bg-white bg-clip-padding bg-no-repeat
       border border-solid border-gray-300
@@ -200,22 +203,22 @@ export default function AdminCreate() {
                                 controlId="formBasicPassword"
                             >
                                 <select
+                                    defaultValue={subjectToShow[0]?._id}
                                     name="subject"
                                     className="form-select appearance-none block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300
             rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                                     aria-label="Default select example"
                                 >
-                                    <option 
-                                        key={TeacherProfile[0]?.subject._id}
-                                        value={TeacherProfile[0]?.subject._id}
-                                        selected
+                                    <option
+                                        key={subjectToShow[0]?._id}
+                                        value={subjectToShow[0]?._id}
                                     >
-                                        {TeacherProfile[0]?.subject.title}
+                                        {subjectToShow[0]?.title}
                                     </option>
                                     {classData.map((course) => {
                                         if (
                                             course?._id !==
-                                            TeacherProfile[0]?.subject._id
+                                            subjectToShow[0]?._id
                                         ) {
                                             return (
                                                 <option
@@ -239,7 +242,7 @@ export default function AdminCreate() {
                                 Edit
                             </Button>
                             <Button
-                                onClick={() => navigate("/teacherDashboard")}
+                                onClick={() => navigate("/StudentDashboard")}
                                 variant="primary"
                                 type="submit"
                                 className="col-5 registerBtn text-light p-3 rounded hover:opacity-95 transtion myFormBtn"

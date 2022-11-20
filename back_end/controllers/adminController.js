@@ -328,7 +328,7 @@ try{
     const {name,email,password='123456789',DOB,gender,phone,subject}=req.body
     const hashPassword = await bcrypt.hash(password, parseInt(process.env.SALTROUNDS))
 
-const newTeacher=new teacherModel({name,email,password:hashPassword,DOB,gender,phone,subject: subject?._id ? subject?._id : null })
+const newTeacher=new teacherModel({name,email,password:hashPassword,DOB,gender,phone,subject})
 const savedTeacher=await newTeacher.save()
 await savedTeacher.populate("subject")
 
@@ -379,6 +379,7 @@ const classData=req.body
 
 const newClass = new classModel(classData)
 const saveClass =await newClass.save()
+await saveClass.populate("teacher")
 res.json({message:"saved",saveClass})
 
     }catch(e){
@@ -523,13 +524,9 @@ res.json({message: 'deleted Success'})
 
 // getAllTeachers---------------------------------------------------------------
 const getAllTeachers =async (req, res)=>{
-
-    
 const findTeachers=await get(teacherModel, ["subject"])
 if(findTeachers.confirmEmail === false) res.json({message: 'plz confirm u email'})
 res.status(200).json(findTeachers);
-
-
 }
 const getTeacherById =async (req, res)=>{   
 
@@ -558,6 +555,7 @@ const getAllStudents =async (req, res)=>{
 
     const findStudents=await studentModel.find()
     if(findStudents.confirmEmail === false) res.json({message: 'plz confirm u email'})
+
     res.status(200).json(findStudents);
      
 }
@@ -582,14 +580,14 @@ res.json({message:'error in findStudent '})
 
     }
 }
+
 // ---------------------------------------------------------------
 const getAllClasses =async (req, res)=>{
     try{
-        const findClasses=await classModel.find()
+        const findClasses=await get (classModel,["teacher","students"])
         res.status(200).json(findClasses);
                 
         if(!findClasses) {
-            console.log(1);
             res.json({message:'not fonunded'})
         } 
         

@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ScheduleComponent, viewsDirective, viewDirective, Day, Week, WorkWeek, Month, Agenda, Inject, Resize, DragAndDrop } from '@syncfusion/ej2-react-schedule'
 import { DatePickerComponent } from '@syncfusion/ej2-react-calendars'
-import { scheduleData } from '../data/dummy'
 import { Header } from '../components'
 import { get, add, put, del } from '../helpers/Crud'
 import { Button } from '../components'
@@ -67,7 +66,6 @@ const Calendar = () => {
   const [eventData, setEventSelected] = useState({ status: false, id: null, start_time: null, topic: null, access_token: null, meeting_id: null });
 
   const refreshCalendar = () => {
-    console.log("sceduled data", scheduleData)
     get("http://localhost:8000/slot/").then(newData => {
       const dataToSet = newData.map((slot, index) => ({
         Id: index,

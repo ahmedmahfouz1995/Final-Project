@@ -1,145 +1,213 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+    createAsyncThunk,
+    createSlice
+} from "@reduxjs/toolkit";
 import axios from "axios";
 // import { useDispatch } from "react-redux";
+import {
+    useNavigate
+} from 'react-router-dom';
 
 const initialState = {
-  ParentId :"6372d5c501038356d4289486",
-  ParentData:[],
-  childData: [],
-  isLoading: false,
-  error: null,
-  isUpdated: false,
+    StudentData: [],
+    StudentProfile: {},
+    isLoading: false,
+    error: null,
+    isUpdated: false,
+    isAdmin: true,
 };
 
-export const getParent = createAsyncThunk(
-  "Parent/getParent",
-  async (id, thunkAPI) => {
-    const { rejectWithValue } = thunkAPI;
-    try {
-      const response = await axios.get(`http://localhost:8000/Parent/${id}`);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.message);
+// with back end 
+export const createStudent = createAsyncThunk(
+    "Student/createStudent",
+    //   Student ----> name of Slice
+    //  createStudent----> name of fun
+    async (data, thunkAPI) => {
+        // {data}: paramaters use it to change state
+
+        const {rejectWithValue} = thunkAPI;
+        try {
+            // if (isAdmin === false) {
+            //     const navigate = useNavigate()
+            //     navigate("logIn")
+            // }
+            const response = await axios.post(`http://localhost:8000/admin/addStudent`, data);
+            return response.data;
+        } catch (error) {
+            rejectWithValue(error.message);
+        }
     }
-  }
-);
-export const editParent = createAsyncThunk(
-  "Parent/editParent",
-  async ({ParentId,mydata}, thunkAPI) => {
-    const { rejectWithValue } = thunkAPI;
-    try {
-      const response = await axios.put(`http://localhost:8000/Parent/${ParentId}`,mydata);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
 );
 
-export const creatParent = createAsyncThunk(
-  "Parent/creatParent",
-  async (parent, thunkAPI) => {
-    const { rejectWithValue } = thunkAPI;
-    try {
-      const response = await axios.post(`http://localhost:8000/Parent/`,parent);
-      return response.data;
-    } catch (error) {
-      rejectWithValue(error.message);
+
+export const getAllStudents = createAsyncThunk(
+    "Student/getAllStudents",
+    //   Student ----> name of Slice 
+    //  createStudent----> name of fun
+    async (args, thunkAPI) => {
+        // {data}: paramaters use it to change state
+
+        const {
+            rejectWithValue
+        } = thunkAPI
+        try {
+            const response = await axios.get(`http://localhost:8000/admin/getAllStudents`)
+            return response.data;
+        } catch (error) {
+
+            rejectWithValue(error.message)
+
+        }
+
     }
-  }
-);
-export const getChildren = createAsyncThunk(
-  "Parent/getChildren",
-  async (id,thunkAPI) => {
-    const { rejectWithValue } = thunkAPI;
-    try {
-      const response = await axios.get(`http://localhost:8000/Parent/child/${id}`);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
 );
 
-export const creatChildren = createAsyncThunk(
-  "Parent/creatChildren",
-  async (id,child, thunkAPI) => {
-    const { rejectWithValue } = thunkAPI;
-    try {
-      const response = await axios.post(`http://localhost:8000/Parent/child/${id}`,child);
-      return response.data;
-    } catch (error) {
-      rejectWithValue(error.message);
+export const editStudent = createAsyncThunk(
+    "Student/editStudent",
+    //   Student ----> name of Slice
+    //  createStudent----> name of fun
+    async ({
+        data,
+        id
+    }, thunkAPI) => {
+        // {data}: paramaters use it to change state
+
+        const {
+            rejectWithValue
+        } = thunkAPI;
+        try {
+            const response = await axios.put(`http://localhost:8000/admin/editStudent/${id}`, data);
+            return response.data;
+        } catch (error) {
+            rejectWithValue(error.message);
+        }
     }
-  }
+);
+export const deleteStudent = createAsyncThunk(
+    "Student/deleteStudent",
+    //   Student ----> name of Slice
+    //  createStudent----> name of fun
+    async ({
+        id
+    }, thunkAPI) => {
+        // {data}: paramaters use it to change state
+
+        const {
+            rejectWithValue
+        } = thunkAPI;
+        try {
+
+            const response = await axios.delete(`http://localhost:8000/admin/deleteStudent/${id}`);
+            return response.data;
+        } catch (error) {
+            rejectWithValue(error.message);
+        }
+    }
 );
 
-const ParentSlice = createSlice({
-  name: "Parent",
-  initialState,
-  reducers: {
-    // setUpdated: (state, action) => ({...state, isUpdated: action.payload})
-  },
-  extraReducers: {
 
-    // get parent
-    [getParent.pending]: (state, action) =>  {
-      state.isLoading = true;
-      state.isUpdated = false;
+// RELATED TO GRID COMP-----------------------------------------------------
+
+
+export const showAllStudents = createAsyncThunk(
+    "Student/showAllStudents",
+    //   Student ----> name of Slice 
+    //  createStudent----> name of fun
+    async (args, thunkAPI) => {
+        // {data}: paramaters use it to change state
+
+        const {
+            rejectWithValue
+        } = thunkAPI
+        try {     
+            return args;
+        } catch (error) {
+
+            rejectWithValue(error.message)
+
+        }
+
+    }
+);
+export const setStudentProfile = createAsyncThunk(
+    "Student/setStudentProfile",
+    //   Student ----> name of Slice 
+    //  createStudent----> name of fun
+    async (args, thunkAPI) => {
+        // {data}: paramaters use it to change state
+        const {
+            rejectWithValue
+        } = thunkAPI
+        try {   
+            return args
+        } catch (error) {
+
+            rejectWithValue(error.message)
+
+        }
+
+    }
+);
+
+
+
+// ----------------------------------------------------------------
+
+
+
+const StudentSlice = createSlice({
+    name: "Student",
+    initialState,
+    reducers: {
+        // setUpdated: (state, action) => ({...state, isUpdated: action.payload})
     },
-    [getParent.fulfilled]: (state, action) => {
-      state.isLoading = false;
-      state.ParentData = action.payload;
+    extraReducers: {
+
+        // get Student
+        // -------Add Student   --> action =setState <----
+        [createStudent.pending]: (state, action) => ({
+            ...state,
+            isUpdated: false
+        }),
+        [createStudent.fulfilled]: (state, action) => {
+            state.StudentData = action.payload; // action.payload--> response.data  or error.message
+            state.isUpdated = true;
+        },
+        [createStudent.rejected]: (state, action) => {
+            state.isUpdated = false;
+        },
+        // -------------------------------------------------all Student
+        [getAllStudents.fulfilled]: (state, action) => {
+            state.StudentData = action.payload
+            state.isUpdated = true;
+        },
+        // edit Student ------------------------------------------------
+        [editStudent.fulfilled]: (state, action) => {
+            const foundIndex = state.StudentData.indexOf(Studentdata => Studentdata.id === action.payload.id)
+            const filteredData = state.StudentData.filter(Studentdata => Studentdata.id !== action.payload.id)
+            state.StudentData = filteredData.splice(foundIndex, 0, action.payload)
+            state.isUpdated = true;
+        },
+        // delete Student ------------------------------------------------
+        [deleteStudent.fulfilled]: (state, action) => {
+            const filteredData = state.StudentData.filter(Studentdata => Studentdata.id !== action.payload.id)
+            state.StudentData = filteredData
+            state.isUpdated = true;
+        },
+        // showAllStudents------------------------------------------------------
+        [showAllStudents.fulfilled]: (state, action) => {
+            state.StudentData=action.payload
+        },
+        [setStudentProfile.fulfilled]: (state, action) => {
+            state.StudentProfile=action.payload
+
+        },
     },
-    [getParent.rejected]: (state, action) => { 
-      state.isLoading = false
-      state.isUpdated = false
-      state.error = action.payload
-    },
-    // -------Add Parent
-    [creatParent.pending]: (state, action) => ({...state, isUpdated: false}),
-    [creatParent.fulfilled]: (state, action) => {
-      state.ParentData.push(action.payload);
-      state.isUpdated = true;
-    },
-    [creatParent.rejected]: (state, action) => {
-        state.isUpdated = false;
-    },
-    // -------edit Parent
-    [editParent.pending]: (state, action) => ({...state, isUpdated: false}),
-    [editParent.fulfilled]: (state, action) => {
-    state.ParentData = action.payload;
-      state.isUpdated = true;
-    },
-    [editParent.rejected]: (state, action) => {
-      state.isUpdated = false;
-    },
-    // get children
-    [getChildren.pending]: (state, action) =>  {
-      state.isLoading = true;
-      state.isUpdated = false;
-    },
-    [getChildren.fulfilled]: (state, action) => {
-      state.isLoading = false;
-      state.isUpdated = false;
-      state.childData = action.payload;
-    },
-    [getChildren.rejected]: (state, action) => { 
-      state.isLoading = false
-      state.isUpdated = false
-      state.error = action.payload
-    },
-    // -------Add child
-    [creatChildren.pending]: (state, action) => ({...state, isUpdated: false}),
-    [creatChildren.fulfilled]: (state, action) => {
-      state.childData.push(action.payload);
-      state.isUpdated = true;
-    },
-    [creatChildren.rejected]: (state, action) => {
-      state.isUpdated = false;
-    },
-  },
 });
 
-export const ParentReducer = ParentSlice.reducer;
-export const ParentActions = ParentSlice.actions;
+
+
+
+
+export const StudentReducer = StudentSlice.reducer; //initial state
+export const StudentActions = StudentSlice.actions; //Reducers or functions like create Student

@@ -21,10 +21,14 @@ const classSchema = mongoose.Schema({
     required: true,
   },
 price:{
-type:String,
+type: Number,
 required:true,
 default:'10$'
-
+},
+level:{
+type:String,
+required:true,
+default:'1st level'
 },
   schedule: [
     {

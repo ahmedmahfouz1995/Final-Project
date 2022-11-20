@@ -4,11 +4,6 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 // import { useDispatch } from "react-redux";
-import { get } from './../../helpers/Crud';
-import {
-    useNavigate
-} from 'react-router-dom';
-
 const initialState = {
     classData: [],
     isLoading: false,
@@ -48,7 +43,8 @@ export const getAllclass = createAsyncThunk(
             rejectWithValue
         } = thunkAPI
         try {
-            return args;
+            const response = await axios.get(`http://localhost:8000/admin/getAllClasses`)
+            return response.data;
         } catch (error) {
 
             rejectWithValue(error.message)

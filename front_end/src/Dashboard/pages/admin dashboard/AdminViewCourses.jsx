@@ -22,6 +22,7 @@ export default function AdminViewCourses (props) {
         allowAdding: true,
         allowDeleting: true,
     };
+    const customIDRules =[{ required: true, minLength: 2}]
     const dispatch = useDispatch();
     const toolbarOptions = [
         "Add",
@@ -36,6 +37,13 @@ export default function AdminViewCourses (props) {
 
     const refreshGrid = () => {
         get("http://localhost:8000/admin/getAllClasses").then((newData) => {
+            for (let index = 0; index < newData.length; index++) {
+                const element = newData[index];
+                if (element.startDate) {
+                    element.startDate=element.startDate.split("T")[0]   
+                    element.endDate=element.endDate.split("T")[0]   
+                }
+            }
             dispatch(getAllclass(newData));
             setData({ result: newData, count: newData.length });
         });
@@ -71,7 +79,7 @@ export default function AdminViewCourses (props) {
 
     return (
         <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl">
-            <Header category="Page" title="Teachers" />
+            <Header category="Page" title="Courses" />
             {/* <GridComponent ref={grid => this.gridInstance = grid} dataSource={this.props.data1.currentData}  dataStateChange={this.dataStateChange.bind(this)} dataSourceChanged={this.dataSourceChanged.bind(this)} allowSorting={true} editSettings={this.editOptions} toolbar={this.toolbarOptions} allowFiltering={true} allowPaging={true}></GridComponent> */}
             <GridComponent
                 ref={ref}
@@ -87,7 +95,7 @@ export default function AdminViewCourses (props) {
             >
                 <ColumnsDirective>
                     {classGrid.map((item, index) => (
-                        <ColumnDirective key={index} {...item} />
+                        <ColumnDirective  validationRules={customIDRules[index]} key={index} {...item} />
                     ))}
                 </ColumnsDirective>
                 <Inject services={[Page, Sort, Edit, Toolbar, Search]} />
