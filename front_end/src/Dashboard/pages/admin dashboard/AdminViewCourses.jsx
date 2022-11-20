@@ -9,7 +9,9 @@ import {
     Toolbar,
     Edit,
     Sort,
+    parentsUntil
 } from "@syncfusion/ej2-react-grids";
+import { getValue } from '@syncfusion/ej2-base';
 import { Header } from "./../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { get, add, put, del } from "./../../helpers/Crud";
@@ -23,7 +25,21 @@ export default function AdminViewCourses (props) {
         allowDeleting: true,
     };
        
-        const customIDRules =[{ required:[true,"title is required "],min:[5,"title length error"]}]
+    // const customFn = (args) => {
+    //     //var editRow = parentsUntil (args.element, 'e-row'); //here you can get the values the other input field value
+    //     // var Grid_Id = parentsUntil (args.element, 'e-grid').id;
+    //     // console.log(editRow.querySelector("#"+Grid_Id+"OrderID").value);
+    //     const inputTextValue = getValue('value', args);
+    //     return inputTextValue !== "" && !(/[0-9]+/).test(inputTextValue);
+    // }
+
+        const customIDRules =[
+            // { required:[true,"title is required "],min:[5,"title length error"]}
+            {
+                regex: ["^[A-Za-z ]+$","course title can not contain numbers"],
+                required: true
+            }
+        ]
     const dispatch = useDispatch();
     const toolbarOptions = [
         "Add",
