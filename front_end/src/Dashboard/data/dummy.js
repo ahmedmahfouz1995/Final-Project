@@ -44,7 +44,11 @@ import product6 from "./product6.jpg";
 import product7 from "./product7.jpg";
 import { ComboBoxComponent } from "@syncfusion/ej2-react-dropdowns";
 import { NavLink } from "react-router-dom";
-
+// import { loadCldr } from '@syncfusion/ej2-base';
+// loadCldr(enNumberData, entimeZoneData);
+// import {setCulture, setCurrencyCode} from '@syncfusion/ej2-base';
+// setCulture('ar');
+// setCurrencyCode('EGY    ');
 export const gridOrderImage = (props) => (
     <div>
         <img
@@ -577,14 +581,23 @@ export const studentsGrid = [
     // },
     { headerText: "view",textAlign: "Center" ,width: "100", template: viewButtonTwo },
 ];
+const integerParams = {
+    params: {
+      decimals: 0,
+      format: "C2",
+      min: 0,
+      validateDecimalOnType: true,
+    },
+  };
 export const classGrid = [
     {
         headerText: "Course Title",
         width: "170",
         field: "title",
         textAlign: "Center",
+
     },
-    { field: "price", headerText: "Price", width: "170", textAlign: "Center" ,editType:'numericEdit',format:"C2"},
+    { field: "price", headerText: "Price", width: "170", textAlign: "Center" ,editType:'numericEdit' , format: "C2" ,edit :integerParams},
     { field: "level", headerText: "Class", width: "170", textAlign: "Center" },
     {
         field: "teacher.name",

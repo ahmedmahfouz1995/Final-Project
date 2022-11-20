@@ -22,7 +22,8 @@ export default function AdminViewCourses (props) {
         allowAdding: true,
         allowDeleting: true,
     };
-    const customIDRules =[{ required: true, minLength: 2}]
+       
+        const customIDRules =[{ required:[true,"title is required "],min:[5,"title length error"]}]
     const dispatch = useDispatch();
     const toolbarOptions = [
         "Add",
@@ -51,7 +52,6 @@ export default function AdminViewCourses (props) {
 
     const dataSourceChanged = (state) => {
         if (state.action === "add") {
-            console.log(state);
             add("http://localhost:8000/admin/addclass", state.data).then(
                 (_) => refreshGrid()
             );

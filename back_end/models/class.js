@@ -22,7 +22,7 @@ const classSchema = mongoose.Schema({
   },
 price:{
 type: Number,
-required:true,
+required:true, 
 default:'10$'
 },
 level:{
