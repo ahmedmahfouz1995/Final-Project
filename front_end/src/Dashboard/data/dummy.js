@@ -595,7 +595,6 @@ export const classGrid = [
         width: "170",
         field: "title",
         textAlign: "Center",
-
     },
     { field: "price", headerText: "Price", width: "170", textAlign: "Center" ,editType:'numericEdit' , format: "C2" ,edit :integerParams},
     { field: "level", headerText: "Class", width: "170", textAlign: "Center" },
