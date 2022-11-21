@@ -24,7 +24,6 @@ export const createclass = createAsyncThunk(
         try {
             console.log({data});
             const response = await axios.post(`http://localhost:8000/admin/addclass`, data);
-          console.log("asxasxasxas");
             return response.data;
         } catch (error) {
             rejectWithValue(error.message);
@@ -153,8 +152,6 @@ const classSlice = createSlice({
         // -------------------------------------------------all class
         [getAllclass.fulfilled]: (state, action) => {
             state.classData = action.payload
-            console.log("data",action.payload);
-            console.log("stat",state.classData);
             state.isUpdated = true;
         },
         // edit class ------------------------------------------------

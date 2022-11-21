@@ -452,8 +452,10 @@ res.json({message:"Catch editStudent Error"})
 
 const editClass=async (req, res) => {
 try{
+
+    console.log("aho aho");
+    console.log(req.body);
     const {id}=req.params
-   
     const editTheClass=req.body
     
     const findClass=await classModel.findById({_id:id})
