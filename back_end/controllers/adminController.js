@@ -402,24 +402,25 @@ try{
 const {id}=req.params
 const editTheTeacher=req.body
 console.log("id-------------------",id);
-console.log("body-------------------",req.body);
 console.log("thissssssssssssss", editTheTeacher)
 //editTheTeacher["subject"] = editTheTeacher["subject"]?._id ? editTheTeacher["subject"]._id : null; 
 // console.log("thissssssssssssss", editTheTeacher)
-
 const findTeacher=await teacherModel.findById({_id:id})
-
+await classModel.findByIdAndUpdate({_id:findTeacher.subject},{$set:{teacher:findTeacher._id}})
 if(!findTeacher) return res.json({message:"Teacher not found"})
-
 const updateTeacher= await teacherModel.findByIdAndUpdate({_id:id},editTheTeacher)
-
+console.log(updateTeacher)
 res.status(200).json({message:"Teacher updated",updateTeacher})
+}catch(e){
 
-}catch(err){
+    if(e.keyValue?.email){
 
-    res.json({message:"Catch editStudent Error"})
-    
+        res.status(409).json({message:"email exists"})
+
+    }else{
+        res.status(500).json({message:"Error",e})
     }
+}
 }
 
 //editStudent  -----------------------------------------------------------------------------
@@ -452,41 +453,26 @@ res.json({message:"Catch editStudent Error"})
 
 const editClass=async (req, res) => {
 try{
-
     console.log("aho aho");
     console.log(req.body);
     const {id}=req.params
-    const editTheClass=req.body
-    
+    const editTheClass=req.body 
     const findClass=await classModel.findById({_id:id})
-    
     if(!findClass) return res.json({message:"Class not found"})
-    
     const updateClass= await classModel.findByIdAndUpdate({_id:id},editTheClass)
- 
-    
+    await teacherModel.findByIdAndUpdate({_id:findClass.teacher},{$set:{subject:findClass._id}}) 
     res.status(200).json({message:"Teacher updated",updateClass})
 }catch(err){
-
     res.json({message:"Catch editStudent Error"})
-    
     }
     }
     
     // deleteTeacher----------------------------------
 const deleteTeacher=async (req, res) => {
-
-
 const {id}=req.params
-
 const findTeacher=await teacherModel.findById(id)
-
-
 if(!findTeacher) res.json({message: 'Sorry cant find your choice'})
-
-
 await teacherModel.findByIdAndDelete(id)
-
 res.json({message: 'deleted Success'})
 }
 
@@ -526,7 +512,7 @@ res.json({message: 'deleted Success'})
 
 // getAllTeachers---------------------------------------------------------------
 const getAllTeachers =async (req, res)=>{
-const findTeachers=await get(teacherModel, ["subject"])
+const findTeachers=await get(teacherModel,["subject"])
 if(findTeachers.confirmEmail === false) res.json({message: 'plz confirm u email'})
 res.status(200).json(findTeachers);
 }

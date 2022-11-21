@@ -36,9 +36,37 @@ const Teachers = (props) => {
         "Cancel",
         "Search",
     ];
+    const customIDRules =[
+        {
+            // name
+            required: true,
+            regex: ["^[A-Za-z ]+$","name can not contain numbers or special characters"],
+            minLength: [5,"name length must be longer than four letters "]
+        },
+        {
+            // email
+            required: true,
+           email: [true,"this Email aleardy exist"],
+        },
+        {
+        //    phone 
+            required: true,
+            // regex: ["/^(1\s|1|)?((\(\d{3}\))|\d{3})(\-|\s)?(\d{3})(\-|\s)?(\d{4})$/","inValid phone number"],
+           
+           number :[true ,"price can not contain letters"]
+        },
+        {
+            // gender
+            required: true,
+        },
+        {
+            // dob
+            required: true,
+        },
+       
+    ]
 
-    const [data, setData] = useState();
-
+    const [data, setData] = useState([]);
     const refreshGrid = () => {
         get("http://localhost:8000/admin/getAllTeachers").then((newData) => {
             for (let index = 0; index < newData.length; index++) {
@@ -48,20 +76,25 @@ const Teachers = (props) => {
                 }
             }
             dispatch(showAllTeachers(newData));
-            setData({ result: newData, count: newData.length });
-            
+            console.log("TeacherData",{TeacherData});
+            setData({ result:newData, count: newData.length });
+            console.log("newData",{newData});
         });
     };
+
    
     const dataSourceChanged = (state) => {
-        console.log("state",state);
         if (state.action === "add") {
-            console.log(state);
+            state.data.subject._id=state.data.subject.title
+            state.data.subject.title=""
             add("http://localhost:8000/admin/addTeacher", state.data).then(
                 (_) => refreshGrid()
             );
         } else if (state.action === "edit") {
-            ref.current.hideSpinner();
+            ref.current.hideSpinner(); 
+            state.data.subject._id=state.data.subject.title
+            state.data.subject.title=""
+            console.log("khooooood",state.data);
             put(
                 `http://localhost:8000/admin/editTeacher/${state.data._id}`,
                 state.data
@@ -76,16 +109,10 @@ const Teachers = (props) => {
             console.log(state.action);
         }
     };
-
-
     const ref = useRef(null);
     useEffect(() => {
-
         refreshGrid();
-        console.log(data);
     }, []);
-
-
     return (
         <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl">
             <Header category="Page" title="Teachers" />
@@ -99,11 +126,13 @@ const Teachers = (props) => {
                 toolbar={toolbarOptions}
                 dataSourceChanged={dataSourceChanged}
                 width="auto"
-                // queryCellInfo={dropdown}
             >
                 <ColumnsDirective>
+                {
+                    console.log(TeacherData,data)
+                }
                     {teachersGrid.map((item, index) => (
-                        <ColumnDirective key={index} {...item} />
+                        <ColumnDirective validationRules={customIDRules[index]} key={index} {...item} />
                     ))}
                 </ColumnsDirective>
                 <Inject services={[Page, Sort, Edit, Toolbar, Search]} />

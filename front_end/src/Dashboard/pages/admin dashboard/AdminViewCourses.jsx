@@ -22,7 +22,7 @@ export default function AdminViewCourses (props) {
     const editOptions = {
         allowEditing: true,
         allowAdding: true,
-        allowDeleting: true,
+        allowDeleting: true,    
     };
     const toolbarOptions = [
         "Add",
@@ -30,7 +30,7 @@ export default function AdminViewCourses (props) {
         "Delete",
         "Update",
         "Cancel",
-        // "Search",
+        "Search",
     ];
     const customIDRules =[
         {
@@ -49,8 +49,9 @@ export default function AdminViewCourses (props) {
             required: true,
         },
         {
-// teacher 
+            // teacher 
             required: true,
+        
         },
         {
             // start 

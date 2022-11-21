@@ -48,11 +48,7 @@ import { ComboBoxComponent } from "@syncfusion/ej2-react-dropdowns";
 import { NavLink } from "react-router-dom";
 import { get } from "./../helpers/Crud";
 import { dataStateChange } from "@syncfusion/ej2-react-grids";
-// import { loadCldr } from '@syncfusion/ej2-base';
-// loadCldr(enNumberData, entimeZoneData);
-// import {setCulture, setCurrencyCode} from '@syncfusion/ej2-base';
-// setCulture('ar');
-// setCurrencyCode('EGY    ');
+
 export const gridOrderImage = (props) => (
     <div>
         <img
@@ -539,10 +535,12 @@ export const viewClassButton = (props) => (
   let TeacherData=[]
   // ////////////////////////////////////////////////
   get("http://localhost:8000/admin/getAllTeachers").then((newData) => {
-     TeacherData.push(...newData);
+      let filter  = newData.filter((teacher)=>{
+          return teacher.subject===null||""
+        })
+        TeacherData.push([...filter])
   });
-  console.log(TeacherData);
-
+console.log( {TeacherData});
   const dataquery = new Query().select("name","_id").take(TeacherData.length).requiresCount()
      const countryParams = {
          create: () => {
@@ -565,10 +563,40 @@ export const viewClassButton = (props) => (
               countryObj.appendTo(countryElem);
           }
         };
+
+        let subjectElem
+        let subjectObj
+        let subjectData=[]
+        // ////////////////////////////////////////////////
+        get("http://localhost:8000/admin/getAllClasses").then((newData) => {
+            subjectData.push(...newData);
+        });
+     const subjectParam  = {
+         create: () => {
+            subjectElem = document.createElement('input');
+             return  subjectElem;
+          },
+          destroy: () => {
+            subjectObj.destroy();
+            },
+          read: () => {
+              return subjectObj.value;
+          },
+          write: () => {
+            subjectObj = new DropDownList({
+                  dataSource: new DataManager(subjectData),
+                  fields: {value:'_id',text:'title' },
+                  floatLabelType: 'Never',
+                  placeholder: 'Select subject'
+              });
+              subjectObj.appendTo( subjectElem);
+          }
+        };
+        
         let classElem
-            let classObj
+        let classObj
     const schoolClasses = ["1st Elementary level","2nd Elementary level","3rd Elementary level","4th Elementary level","5th Elementary level","6th Elementary level","1st Prepartory level","2nd Prepartory level","3rd Prepartory level","1st Secondary level","2nd Secondary level","3rd Secondary level"]
-     const classParams = {
+    const classParams = {
           create: () => {
             classElem = document.createElement('input');
               return classElem;
@@ -588,33 +616,58 @@ export const viewClassButton = (props) => (
               classObj.appendTo(classElem);
           }
       };
-      ////////////////////////////////////////////////
-
+        let genderElem
+        let genderObj
+    const gender = ["male","female"]
+    const gendersParams = {
+          create: () => {
+            genderElem = document.createElement('input');
+              return genderElem;
+          },
+          destroy: () => {
+            genderObj.destroy();
+          },
+          read: () => {
+              return genderObj.value;
+          },
+          write: () => {
+            genderObj = new DropDownList({
+                  dataSource: new DataManager(gender),
+                  floatLabelType: 'Never',
+                  placeholder: 'Select gender'
+              });
+              genderObj.appendTo(genderElem);
+          }
+      };
+      const birthDate = new Date()
+      export const birthDateParams = {
+        params: {
+          max: birthDate,
+          value: birthDate,
+        },
+      };
   export const teachersGrid = [
-    {
-        headerText: "_id",
-        width: "150",
-        field: "_id",
-        textAlign: "Center",
-        isPrimaryKey: true,
-    },
-    { field: "name", headerText: "name", width: "150", textAlign: "Center" },
-    { field: "email", headerText: "email", width: "170", textAlign: "Center" },
-    { field: "phone", headerText: "phone", width: "170", textAlign: "Center" },
+    { field: "name", headerText: "Teacher Name", width: "170", textAlign: "Center" },
+    { field: "email", headerText: "Email", width: "170", textAlign: "Center" },
+    { field: "phone", headerText: "Phone", width: "170", textAlign: "Center" },
     {
         field: "gender",
         headerText: "gender",
-        width: "170",
+        width: "120",
         textAlign: "Center",
+        editType:'dropdownedit',
+        edit : gendersParams 
     },
-    { field:"DOB", headerText: "DOB", width: "170", textAlign: "Center" },
+    { field:"DOB", headerText: "DOB", width: "170", textAlign: "Center" ,editType:'datePickerEdit', edit:birthDateParams },
     {
         field: "subject.title",
-        headerText: "subjects",
+        headerText: "Subject",
         width: "170",
         textAlign: "Center",
+        editType:'dropdownedit',
+        edit : subjectParam 
     },
-    { headerText: "view",textAlign: "Center" ,width: "100", template: viewButton },
+    { headerText: "view",textAlign: "Center" ,width: "100", template: viewButton ,isPrimaryKey: true },
 ];
 export const studentsGrid = [
     {
@@ -640,7 +693,7 @@ export const studentsGrid = [
     //     width: "170",
     //     textAlign: "Center",
     // },
-    { headerText: "view",textAlign: "Center" ,width: "100", template: viewButtonTwo },
+    { headerText: "view",textAlign: "Center" ,width: "100", template: viewButtonTwo ,isPrimaryKey: true},
 ];
 export const integerParams = {
     params: {
@@ -656,8 +709,6 @@ export const integerParams = {
   endminDate.setDate(endminDate.getDate()+14)
   const endDate =  new Date()
   endDate.setDate(endDate.getDate()+15)
-  console.log(endminDate,endDate);
-
 export const dateParams = {
     params: {
       min: minDate,

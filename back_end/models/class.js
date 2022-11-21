@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const teacherModel = require("./teacher");
 const classSchema = mongoose.Schema({
   title: {
     type: String,
@@ -8,7 +9,7 @@ const classSchema = mongoose.Schema({
   teacher: {   //د ا الشخص الي كريته
     type: mongoose.Schema.Types.ObjectId,
     ref: "Teacher",
-    required: true,
+    default:null
   },
 
   startDate: {
@@ -47,5 +48,8 @@ default:'1st level'
   ],
 
 });
+classSchema.post('findByIdAndDelete', function(doc) {
+  teacherModel.findOneAndUpdate({subject:doc._id},{$set:{subject:null}})
+  });
 const classModel= mongoose.model('Class',classSchema)
 module.exports =classModel

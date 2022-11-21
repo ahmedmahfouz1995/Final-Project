@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const classModel = require("./class");
 const teacherSchema = mongoose.Schema({
   name: {
     type: String,
@@ -30,7 +31,8 @@ const teacherSchema = mongoose.Schema({
   },
   subject: { // بتاعه الماده id واخد ال 
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Class'
+    ref: 'Class',
+    default: null
   },
   confirmEmail: {
     type: Boolean,
@@ -49,6 +51,9 @@ const teacherSchema = mongoose.Schema({
     default:false,
     index: true // grouping بيعمل 
   }
+});
+teacherSchema.post('findByIdAndDelete', function(doc) {
+classModel.findOneAndUpdate({teacher:doc._id},{$set:{teacher:null}})
 });
 
 const teacherModel = mongoose.model('Teacher', teacherSchema)
