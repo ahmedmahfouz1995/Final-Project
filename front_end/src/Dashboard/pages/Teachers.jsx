@@ -89,12 +89,15 @@ const Teachers = (props) => {
             state.data.subject.title=""
             add("http://localhost:8000/admin/addTeacher", state.data).then(
                 (_) => refreshGrid()
-            );
-        } else if (state.action === "edit") {
-            ref.current.hideSpinner(); 
+            );}
+            else if (state.requestType === 'add') {
+                ref.current.hideSpinner();
+                console.log("editing");
+            }
+        else if (state.action === "edit") {
+            ref.current.hideSpinner();
             state.data.subject._id=state.data.subject.title
             state.data.subject.title=""
-            console.log("khooooood",state.data);
             put(
                 `http://localhost:8000/admin/editTeacher/${state.data._id}`,
                 state.data
@@ -109,7 +112,23 @@ const Teachers = (props) => {
             console.log(state.action);
         }
     };
+ 
+    const actionBegienHandler= (args) => {
+        // if (args.requestType==="add") {
+        //     console.log(grid);
+        //     grid.columnModel[5].allowEditing=false
+        //     grid.columnModel[5].editType=""
+        //     grid.columnModel[5].edit=""
+        //     // grid.properties.columns[5].visible=false
+        //     console.log("hidden");
+        // }
+    }
+    const actionEndHandler= (e)=>{
+        // grid.columnModel[5].visible=false
+}
     const ref = useRef(null);
+    let grid;
+    console.log(grid);
     useEffect(() => {
         refreshGrid();
     }, []);
@@ -117,20 +136,22 @@ const Teachers = (props) => {
         <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl">
             <Header category="Page" title="Teachers" />
             <GridComponent
-                ref={ref}
-                actionComplete={(e) => console.log(e)}
+                actionComplete={actionEndHandler}
+                actionBegin={actionBegienHandler}
                 dataSource={data}
                 allowPaging={true}
-                allowSorting={true}
                 editSettings={editOptions}
                 toolbar={toolbarOptions}
                 dataSourceChanged={dataSourceChanged}
                 width="auto"
+                ref={(g) =>{
+                    grid = g
+                    console.log(g);
+                    console.log(grid);
+                }
+            }
             >
                 <ColumnsDirective>
-                {
-                    console.log(TeacherData,data)
-                }
                     {teachersGrid.map((item, index) => (
                         <ColumnDirective validationRules={customIDRules[index]} key={index} {...item} />
                     ))}

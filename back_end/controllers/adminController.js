@@ -322,25 +322,15 @@ const getAdminById = async (req, res) => {
 //addTeacher  -----------------------------------------------------------------------------
 
 const addTeacher = async (req, res) => {
-    console.log(req.body);
-
     try {
-
-        const { name, email, password = '123456789', DOB, gender, phone, subject } = req.body
+        const { name, email, password = '123456789', DOB, gender, phone } = req.body
         const hashPassword = await bcrypt.hash(password, parseInt(process.env.SALTROUNDS))
-
-        const newTeacher = new teacherModel({ name, email, password: hashPassword, DOB, gender, phone, subject })
+        const newTeacher = new teacherModel({ name, email, password: hashPassword, DOB, gender, phone })
         const savedTeacher = await newTeacher.save()
-        await savedTeacher.populate("subject")
-
         res.json({ message: savedTeacher })
-
     } catch (e) {
-
         if (e.keyValue?.email) {
-
             res.status(409).json({ message: "email exists" })
-
         } else {
             res.status(500).json({ message: "Error", e })
         }
@@ -376,18 +366,25 @@ const addStudent = async (req, res) => {
 
 const addClass = async (req, res) => {
     try {
-        const classData = req.body
-
+        const classData = req.body 
         const newClass = new classModel(classData)
+        const {title ,level}=req.body
+        console.log(level);
+        const titleExists = await classModel.find({title:title})
+        const levelExists = await classModel.find({level:level})
+        if (titleExists && levelExists ) {
+            console.log("exist");
+            return res.status(409).json({ message: "title exists" })
+        }
         const saveClass = await newClass.save()
-        await saveClass.populate("teacher")
+        const teacher= await teacherModel.findByIdAndUpdate({_id:saveClass.teacher},{$set:{subject:saveClass._id}})
+        console.log("teacher subject",teacher.subject);
+        await  teacher.populate("subject")
         res.json({ message: "saved", saveClass })
 
     } catch (e) {
         if (e.keyValue?.title) {
-
             res.status(409).json({ message: "title exists" })
-
         } else {
             console.log(e);
             res.status(500).json({ message: "Error", e })
@@ -406,61 +403,6 @@ const editTeacher = genericPutEndpointHandler(teacherModel, classModel, "subject
         }
     }
 )
-
-// const editTeacher = async (req, res) => {
-//     console.log("edited")
-//     try {
-//         const { id } = req.params
-//         const editTheTeacher = req.body
-//         //console.log("thissssssssssssss_before", editTheTeacher)
-//         const { _id: teacherId } = req.body
-//         const { _id: subjectId } = req.body.subject || { _id: null };
-//         //console.log("teacherid", teacherId)
-//         //console.log("sbuject", subjectId)
-
-//         editTheTeacher.subject = subjectId;
-//         if (subjectId && await teacherModel.findOne({subject: subjectId})) {
-//             return res.status(409).json({ message: "another teacher has subject" })
-//         }
-
-//         //console.log("id-------------------", id);
-//         //console.log("thissssssssssssss_after", editTheTeacher)
-//         //editTheTeacher["subject"] = editTheTeacher["subject"]?._id ? editTheTeacher["subject"]._id : null; 
-//         // console.log("thissssssssssssss", editTheTeacher)
-//         const findTeacher = await teacherModel.findById({ _id: id })
-//         if (!findTeacher) {
-//             return res.json({ message: "Teacher not found" })
-//         }
-
-//         const foundTeacher = await teacherModel.findById({ _id: teacherId })
-//         //console.log("foundTeacher", foundTeacher)
-//         const oldSubjectId = foundTeacher.subject;
-//         let oldSubject;
-//         if (oldSubjectId) {
-//             oldSubject = await classModel.findByIdAndUpdate({ _id: oldSubjectId }, { $set: { teacher: null } })
-//         }
-//         Object.assign(foundTeacher, editTheTeacher);
-//         const updateTeacher = await (new teacherModel(foundTeacher).save());
-//         let updateClass;
-//         if (subjectId) {
-//             updateClass = await classModel.findByIdAndUpdate({ _id: subjectId }, { $set: { teacher: teacherId } })
-//         }
-        
-//         //console.log("oldSubject", oldSubject)
-//         //console.log("updateTeacher", updateTeacher)
-//         //console.log("updateClass", updateClass)
-//         res.status(200).json({ message: "Teacher updated", updateTeacher })
-//     } catch (e) {
-//         console.log(e)
-//         if (e.keyValue?.email) {
-
-//             res.status(409).json({ message: "email exists" })
-
-//         } else {
-//             res.status(500).json({ message: "Error", e })
-//         }
-//     }
-// }
 
 //editStudent  -----------------------------------------------------------------------------
 

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import CellEditArgs from "@syncfusion/ej2-react-grids"
 import { DataManager, Query } from '@syncfusion/ej2-data';
 import { DropDownList } from '@syncfusion/ej2-dropdowns';
 import {
@@ -535,11 +536,13 @@ export const viewClassButton = (props) => (
   let TeacherData=[]
   // ////////////////////////////////////////////////
   get("http://localhost:8000/admin/getAllTeachers").then((newData) => {
-        TeacherData.push(...newData)
+   let filterData= newData.filter((teacher)=>{
+        return teacher.subject === null || teacher.subject === "" || teacher.subject === undefined
+    })
+        TeacherData.push(...filterData)
 
   });
 console.log( {TeacherData});
-  const dataquery = new Query().select("name","_id").take(TeacherData.length).requiresCount()
      const countryParams = {
          create: () => {
              countryElem = document.createElement('input');
@@ -663,7 +666,7 @@ console.log( {TeacherData});
         width: "170",
         textAlign: "Center",
         editType:'dropdownedit',
-        edit : subjectParam 
+        edit : subjectParam  ,
     },
     { headerText: "view",textAlign: "Center" ,width: "100", template: viewButton ,isPrimaryKey: true },
 ];
@@ -728,7 +731,7 @@ export const classGrid = [
     },
     { field: "price", headerText: "Price", width: "170", textAlign: "Center" ,editType:'numericEdit', format:"C2",edit :integerParams},
     { field: "level", headerText: "Class", width: "170", textAlign: "Center",editType:'dropdownedit', edit : classParams},
-    {field: "teacher.name",headerText: "Teacher",width: "200",textAlign: "Center", editType:'dropdownedit',edit : countryParams, query : dataquery,
+    {field: "teacher.name",headerText: "Teacher",width: "200",textAlign: "Center", editType:'dropdownedit',edit : countryParams,
     },
     { field: "startDate", headerText: "Start Date", width: "170", textAlign: "Center", editType:'datePickerEdit', edit:dateParams},
     { field: "endDate", headerText: "End Date", width: "170", textAlign: "Center", editType:'datePickerEdit',edit:endDateParams},
