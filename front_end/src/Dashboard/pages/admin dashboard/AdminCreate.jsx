@@ -206,16 +206,16 @@ export default function AdminCreate() {
                                     aria-label="Default select example"
                                 >
                                     <option 
-                                        key={TeacherProfile[0]?.subject._id}
-                                        value={TeacherProfile[0]?.subject._id}
+                                        key={TeacherProfile[0]?.subjects}
+                                        value={TeacherProfile[0]?.subjects}
                                         selected
                                     >
-                                        {TeacherProfile[0]?.subject.title}
+                                        {/* {TeacherProfile[0]?.subject.title} */}
                                     </option>
-                                    {classData.map((course) => {
+                                    {/* {classData.map((course) => {
                                         if (
                                             course?._id !==
-                                            TeacherProfile[0]?.subject._id
+                                            // TeacherProfile[0]?.subject._id
                                         ) {
                                             return (
                                                 <option
@@ -226,7 +226,7 @@ export default function AdminCreate() {
                                                 </option>
                                             );
                                         }
-                                    })}
+                                    })} */}
                                 </select>
                                 <p className="text-red-400">{err.subject}</p>
                             </Form.Group>
