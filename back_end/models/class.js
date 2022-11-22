@@ -50,6 +50,6 @@ default:'1st level'
 });
 classSchema.post('findByIdAndDelete', function(doc) {
   teacherModel.findOneAndUpdate({subject:doc._id},{$set:{subject:null}})
-  });
+});
 const classModel= mongoose.model('Class',classSchema)
 module.exports =classModel

@@ -56,6 +56,11 @@ teacherSchema.post('findByIdAndDelete', function(doc) {
 classModel.findOneAndUpdate({teacher:doc._id},{$set:{teacher:null}})
 });
 
+teacherSchema.post('findByIdAndUpdate', function(doc) {
+  console.log("middleware", doc)
+  classModel.findOneAndUpdate({teacher:doc._id},{$set:{teacher:null}})
+});
+
 const teacherModel = mongoose.model('Teacher', teacherSchema)
 
 module.exports = teacherModel

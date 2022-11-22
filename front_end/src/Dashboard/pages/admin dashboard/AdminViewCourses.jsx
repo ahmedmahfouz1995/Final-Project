@@ -50,7 +50,7 @@ export default function AdminViewCourses (props) {
         },
         {
             // teacher 
-            required: true,
+            minLength: [5,"title length must be longer than four letters "]
         
         },
         {

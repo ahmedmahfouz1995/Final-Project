@@ -7,14 +7,15 @@ const studentModel = require("../models/student");
 const teacherModel = require("../models/teacher");
 const sendEmail = require("../service/email.service");
 const { get } = require("../utils/crud");
+const { genericPutEndpointHandler }= require("../utils/router_handlers");
 
 
 
 const signupAdmin = async (req, res) => {
-try{
+    try {
 
 
- 
+
         const {
             name,
             email,
@@ -46,16 +47,16 @@ try{
             message: "done",
             savedadmin
         })
-    }catch(e){
+    } catch (e) {
 
-    if(e.keyValue?.email){
+        if (e.keyValue?.email) {
 
-        res.status(409).json({message:"email exists"})
+            res.status(409).json({ message: "email exists" })
 
-    }else{
-        res.status(500).json({message:"Error",e})
+        } else {
+            res.status(500).json({ message: "Error", e })
+        }
     }
-}
 
 
 
@@ -280,13 +281,13 @@ const signinAdmin = async (req, res) => {
 //getAllAdmin  -----------------------------------------------------------------------------
 
 
-const getAllAdmin=async (req, res) => {
+const getAllAdmin = async (req, res) => {
 
- 
-        const findAdmins=await adminModel.find()
-        if(findAdmins.confirmEmail === false) res.json({message: 'plz confirm u email'})
-  
-        res.status(200).json({message:findAdmins});
+
+    const findAdmins = await adminModel.find()
+    if (findAdmins.confirmEmail === false) res.json({ message: 'plz confirm u email' })
+
+    res.status(200).json({ message: findAdmins });
 
 
 
@@ -295,24 +296,24 @@ const getAllAdmin=async (req, res) => {
 
 //getAdminById  -----------------------------------------------------------------------------
 
-const getAdminById=async (req, res) => {
+const getAdminById = async (req, res) => {
 
-    try{
-        const {id}=req.params
-        const findAdmin=await adminModel.findById({_id:id})
-        
-        if(!findAdmin.confirmEmail) res.json({message: 'plz confirm u email'})
-        
-        
-        if(!findAdmin) {
-            res.json({message:'not fonunded'})
+    try {
+        const { id } = req.params
+        const findAdmin = await adminModel.findById({ _id: id })
+
+        if (!findAdmin.confirmEmail) res.json({ message: 'plz confirm u email' })
+
+
+        if (!findAdmin) {
+            res.json({ message: 'not fonunded' })
         }
-        
-        res.json({message:'done findAdmin',findAdmin})
-        
-    }catch (e) {
-        
-res.json({message:'error in findAdmins '})
+
+        res.json({ message: 'done findAdmin', findAdmin })
+
+    } catch (e) {
+
+        res.json({ message: 'error in findAdmins ' })
 
     }
 
@@ -320,291 +321,333 @@ res.json({message:'error in findAdmins '})
 }
 //addTeacher  -----------------------------------------------------------------------------
 
-const addTeacher=async (req, res) => {
+const addTeacher = async (req, res) => {
     console.log(req.body);
 
-try{
-    
-    const {name,email,password='123456789',DOB,gender,phone,subject}=req.body
-    const hashPassword = await bcrypt.hash(password, parseInt(process.env.SALTROUNDS))
+    try {
 
-const newTeacher=new teacherModel({name,email,password:hashPassword,DOB,gender,phone,subject})
-const savedTeacher=await newTeacher.save()
-await savedTeacher.populate("subject")
+        const { name, email, password = '123456789', DOB, gender, phone, subject } = req.body
+        const hashPassword = await bcrypt.hash(password, parseInt(process.env.SALTROUNDS))
 
-res.json({message:savedTeacher})
+        const newTeacher = new teacherModel({ name, email, password: hashPassword, DOB, gender, phone, subject })
+        const savedTeacher = await newTeacher.save()
+        await savedTeacher.populate("subject")
 
-}catch(e){
+        res.json({ message: savedTeacher })
 
-    if(e.keyValue?.email){
+    } catch (e) {
 
-        res.status(409).json({message:"email exists"})
+        if (e.keyValue?.email) {
 
-    }else{
-        res.status(500).json({message:"Error",e})
+            res.status(409).json({ message: "email exists" })
+
+        } else {
+            res.status(500).json({ message: "Error", e })
+        }
     }
-}
 }
 //addStudent  -----------------------------------------------------------------------------
 
 
-const addStudent=async (req, res) => {
-try{
-    const {name,email,password,DOB,gender,phone,subjects}=req.body
-    console.log({subjects});
-   
-    const hashPassword = await bcrypt.hash(password, parseInt(process.env.SALTROUNDS))
-const newStudent=new studentModel({name,email,password:hashPassword,DOB,gender,phone,subjects})
-const savedStudent=await newStudent.save()
-res.json({message:savedStudent})
+const addStudent = async (req, res) => {
+    try {
+        const { name, email, password, DOB, gender, phone, subjects } = req.body
+        console.log({ subjects });
 
-}catch(e){
+        const hashPassword = await bcrypt.hash(password, parseInt(process.env.SALTROUNDS))
+        const newStudent = new studentModel({ name, email, password: hashPassword, DOB, gender, phone, subjects })
+        const savedStudent = await newStudent.save()
+        res.json({ message: savedStudent })
 
-    if(e.keyValue?.email){
+    } catch (e) {
 
-        res.status(409).json({message:"email exists"})
+        if (e.keyValue?.email) {
 
-    }else{
-        res.status(500).json({message:"Error",e})
+            res.status(409).json({ message: "email exists" })
+
+        } else {
+            res.status(500).json({ message: "Error", e })
+        }
     }
-}
 
 }
 //addClass  -----------------------------------------------------------------------------
 
 
-const addClass=async (req, res) => {
-    try{
-const classData=req.body
+const addClass = async (req, res) => {
+    try {
+        const classData = req.body
 
-const newClass = new classModel(classData)
-const saveClass =await newClass.save()
-await saveClass.populate("teacher")
-res.json({message:"saved",saveClass})
+        const newClass = new classModel(classData)
+        const saveClass = await newClass.save()
+        await saveClass.populate("teacher")
+        res.json({ message: "saved", saveClass })
 
-    }catch(e){
-        if(e.keyValue?.title){
+    } catch (e) {
+        if (e.keyValue?.title) {
 
-            res.status(409).json({message:"title exists"})
-    
-        }else{
+            res.status(409).json({ message: "title exists" })
+
+        } else {
             console.log(e);
-            res.status(500).json({message:"Error",e})
+            res.status(500).json({ message: "Error", e })
         }
-    
+
     }
 }
- //editTeacher  -----------------------------------------------------------------------------
- 
-const editTeacher=async (req, res) => {
-    console.log("edited")
-try{
-const {id}=req.params
-const editTheTeacher=req.body
-console.log("id-------------------",id);
-console.log("thissssssssssssss", editTheTeacher)
-//editTheTeacher["subject"] = editTheTeacher["subject"]?._id ? editTheTeacher["subject"]._id : null; 
-// console.log("thissssssssssssss", editTheTeacher)
-const findTeacher=await teacherModel.findById({_id:id})
-await classModel.findByIdAndUpdate({_id:findTeacher.subject},{$set:{teacher:findTeacher._id}})
-if(!findTeacher) return res.json({message:"Teacher not found"})
-const updateTeacher= await teacherModel.findByIdAndUpdate({_id:id},editTheTeacher)
-console.log(updateTeacher)
-res.status(200).json({message:"Teacher updated",updateTeacher})
-}catch(e){
+//editTeacher  -----------------------------------------------------------------------------
 
-    if(e.keyValue?.email){
-
-        res.status(409).json({message:"email exists"})
-
-    }else{
-        res.status(500).json({message:"Error",e})
+const editTeacher = genericPutEndpointHandler(teacherModel, classModel, "subject", "teacher", 
+    (_, res, e) => {
+        if (e.keyValue?.email) {
+            return res.status(409).json({ message: "email exists" })
+        } else {
+            return res.status(500).json({ message: "Error", e })
+        }
     }
-}
-}
+)
+
+// const editTeacher = async (req, res) => {
+//     console.log("edited")
+//     try {
+//         const { id } = req.params
+//         const editTheTeacher = req.body
+//         //console.log("thissssssssssssss_before", editTheTeacher)
+//         const { _id: teacherId } = req.body
+//         const { _id: subjectId } = req.body.subject || { _id: null };
+//         //console.log("teacherid", teacherId)
+//         //console.log("sbuject", subjectId)
+
+//         editTheTeacher.subject = subjectId;
+//         if (subjectId && await teacherModel.findOne({subject: subjectId})) {
+//             return res.status(409).json({ message: "another teacher has subject" })
+//         }
+
+//         //console.log("id-------------------", id);
+//         //console.log("thissssssssssssss_after", editTheTeacher)
+//         //editTheTeacher["subject"] = editTheTeacher["subject"]?._id ? editTheTeacher["subject"]._id : null; 
+//         // console.log("thissssssssssssss", editTheTeacher)
+//         const findTeacher = await teacherModel.findById({ _id: id })
+//         if (!findTeacher) {
+//             return res.json({ message: "Teacher not found" })
+//         }
+
+//         const foundTeacher = await teacherModel.findById({ _id: teacherId })
+//         //console.log("foundTeacher", foundTeacher)
+//         const oldSubjectId = foundTeacher.subject;
+//         let oldSubject;
+//         if (oldSubjectId) {
+//             oldSubject = await classModel.findByIdAndUpdate({ _id: oldSubjectId }, { $set: { teacher: null } })
+//         }
+//         Object.assign(foundTeacher, editTheTeacher);
+//         const updateTeacher = await (new teacherModel(foundTeacher).save());
+//         let updateClass;
+//         if (subjectId) {
+//             updateClass = await classModel.findByIdAndUpdate({ _id: subjectId }, { $set: { teacher: teacherId } })
+//         }
+        
+//         //console.log("oldSubject", oldSubject)
+//         //console.log("updateTeacher", updateTeacher)
+//         //console.log("updateClass", updateClass)
+//         res.status(200).json({ message: "Teacher updated", updateTeacher })
+//     } catch (e) {
+//         console.log(e)
+//         if (e.keyValue?.email) {
+
+//             res.status(409).json({ message: "email exists" })
+
+//         } else {
+//             res.status(500).json({ message: "Error", e })
+//         }
+//     }
+// }
 
 //editStudent  -----------------------------------------------------------------------------
 
 
-const editStudent=async (req, res) => {
-try{
+const editStudent = async (req, res) => {
+    try {
 
 
-    const {id}=req.params
-    const editTheStudent=req.body
-    
-    const findStudent=await studentModel.findById({_id:id})
-    
-    if(!findStudent) return res.json({message:"Student not found"})
-    
-    const updateTeacher= await studentModel.findByIdAndUpdate({_id:id},editTheStudent)
-    
-    res.status(200).json({message:"Teacher updated",updateTeacher})
+        const { id } = req.params
+        const editTheStudent = req.body
 
-}catch(err){
+        const findStudent = await studentModel.findById({ _id: id })
 
-res.json({message:"Catch editStudent Error"})
+        if (!findStudent) return res.json({ message: "Student not found" })
 
+        const updateTeacher = await studentModel.findByIdAndUpdate({ _id: id }, editTheStudent)
+
+        res.status(200).json({ message: "Teacher updated", updateTeacher })
+
+    } catch (err) {
+
+        res.json({ message: "Catch editStudent Error" })
+
+    }
 }
-}
-    
+
 //editClass  -----------------------------------------------------------------------------
 
+const editClass = genericPutEndpointHandler(classModel,teacherModel, "teacher" , "subject", 
+    (_, res, e) => {
+        return res.status(500).json({ message: "Error", e })
+    }
+)
+// const editClass = async (req, res) => {
+//     try {
+//         console.log("aho aho");
+//         console.log(req.body);
+//         const { id } = req.params
+//         const editTheClass = req.body
+//         const findClass = await classModel.findById({ _id: id })
+//         if (!findClass) return res.json({ message: "Class not found" })
+//         const updateClass = await classModel.findByIdAndUpdate({ _id: id }, editTheClass)
+//         await teacherModel.findByIdAndUpdate({ _id: findClass.teacher }, { $set: { subject: findClass._id } })
+//         res.status(200).json({ message: "Teacher updated", updateClass })
+//     } catch (err) {
+//         res.json({ message: "Catch editStudent Error" })
+//     }
+// }
 
-const editClass=async (req, res) => {
-try{
-    console.log("aho aho");
-    console.log(req.body);
-    const {id}=req.params
-    const editTheClass=req.body 
-    const findClass=await classModel.findById({_id:id})
-    if(!findClass) return res.json({message:"Class not found"})
-    const updateClass= await classModel.findByIdAndUpdate({_id:id},editTheClass)
-    await teacherModel.findByIdAndUpdate({_id:findClass.teacher},{$set:{subject:findClass._id}}) 
-    res.status(200).json({message:"Teacher updated",updateClass})
-}catch(err){
-    res.json({message:"Catch editStudent Error"})
-    }
-    }
-    
-    // deleteTeacher----------------------------------
-const deleteTeacher=async (req, res) => {
-const {id}=req.params
-const findTeacher=await teacherModel.findById(id)
-if(!findTeacher) res.json({message: 'Sorry cant find your choice'})
-await teacherModel.findByIdAndDelete(id)
-res.json({message: 'deleted Success'})
+// deleteTeacher----------------------------------
+const deleteTeacher = async (req, res) => {
+    const { id } = req.params
+    const findTeacher = await teacherModel.findById(id)
+    if (!findTeacher) res.json({ message: 'Sorry cant find your choice' })
+    await teacherModel.findByIdAndDelete(id)
+    res.json({ message: 'deleted Success' })
 }
 
-    // deleteStudent----------------------------------
-const deleteStudent=async (req, res) => {
+// deleteStudent----------------------------------
+const deleteStudent = async (req, res) => {
 
 
-const {id}=req.params
+    const { id } = req.params
 
-const findStudent=await studentModel.findById(id)
-
-
-if(!findStudent) res.json({message: 'Sorry cant find your choice'})
+    const findStudent = await studentModel.findById(id)
 
 
-await studentModel.findByIdAndDelete(id)
+    if (!findStudent) res.json({ message: 'Sorry cant find your choice' })
 
-res.json({message: 'deleted Success'})
+
+    await studentModel.findByIdAndDelete(id)
+
+    res.json({ message: 'deleted Success' })
 }
 
-    // deleteClass----------------------------------
-const deleteClass=async (req, res) => {
+// deleteClass----------------------------------
+const deleteClass = async (req, res) => {
 
 
-const {id}=req.params
+    const { id } = req.params
 
-const findClass=await classModel.findById(id)
-
-
-if(!findClass) res.json({message: 'Sorry cant find your choice'})
+    const findClass = await classModel.findById(id)
 
 
-await classModel.findByIdAndDelete(id)
+    if (!findClass) res.json({ message: 'Sorry cant find your choice' })
 
-res.json({message: 'deleted Success'})
+
+    await classModel.findByIdAndDelete(id)
+
+    res.json({ message: 'deleted Success' })
 }
 
 // getAllTeachers---------------------------------------------------------------
-const getAllTeachers =async (req, res)=>{
-const findTeachers=await get(teacherModel,["subject"])
-if(findTeachers.confirmEmail === false) res.json({message: 'plz confirm u email'})
-res.status(200).json(findTeachers);
+const getAllTeachers = async (req, res) => {
+    const findTeachers = await get(teacherModel, ["subject"])
+    if (findTeachers.confirmEmail === false) res.json({ message: 'plz confirm u email' })
+    res.status(200).json(findTeachers);
 }
-const getTeacherById =async (req, res)=>{   
+const getTeacherById = async (req, res) => {
 
-    try{
-        const {id}=req.params
-        const findTeacher=await teacherModel.findById({_id:id})
-        
-        
-        
-        if(!findTeacher) {
-            res.json({message:'not fonunded'})
+    try {
+        const { id } = req.params
+        const findTeacher = await teacherModel.findById({ _id: id })
+
+
+
+        if (!findTeacher) {
+            res.json({ message: 'not fonunded' })
         }
-        
+
         res.json(findTeacher)
-        
-    }catch (e) {
-        
-res.json({message:'error in getTeacherById '})
+
+    } catch (e) {
+
+        res.json({ message: 'error in getTeacherById ' })
 
     }
 
 
 }
 // ----------------------------------------------------------------
-const getAllStudents =async (req, res)=>{
+const getAllStudents = async (req, res) => {
 
-    const findStudents=await studentModel.find()
-    if(findStudents.confirmEmail === false) res.json({message: 'plz confirm u email'})
+    const findStudents = await studentModel.find()
+    if (findStudents.confirmEmail === false) res.json({ message: 'plz confirm u email' })
 
     res.status(200).json(findStudents);
-     
+
 }
 
-const getStudentById =async (req, res)=>{
+const getStudentById = async (req, res) => {
 
-    try{
-        const {id}=req.params
-        const findStudent=await studentModel.findById({_id:id})
-        
-        
-        
-        if(!findStudent) {
-            res.json({message:'not fonunded'})
+    try {
+        const { id } = req.params
+        const findStudent = await studentModel.findById({ _id: id })
+
+
+
+        if (!findStudent) {
+            res.json({ message: 'not fonunded' })
         }
-        
+
         res.json(findStudent)
-        
-    }catch (e) {
-        
-res.json({message:'error in findStudent '})
+
+    } catch (e) {
+
+        res.json({ message: 'error in findStudent ' })
 
     }
 }
 
 // ---------------------------------------------------------------
-const getAllClasses =async (req, res)=>{
-    try{
-        const findClasses=await get (classModel,["teacher","students"])
+const getAllClasses = async (req, res) => {
+    try {
+        const findClasses = await get(classModel, ["teacher", "students"])
         res.status(200).json(findClasses);
-                
-        if(!findClasses) {
-            res.json({message:'not fonunded'})
-        } 
-        
-    }catch (e) {
-        
+
+        if (!findClasses) {
+            res.json({ message: 'not fonunded' })
+        }
+
+    } catch (e) {
+
         console.log(e);
-        res.json({message:'error in findClasse '})
+        res.json({ message: 'error in findClasse ' })
 
     }
 
 
 
 }
-const getClassById =async (req, res)=>{
+const getClassById = async (req, res) => {
 
-    try{
-        const {id}=req.params
-        const findClasse=await classModel.findById({_id:id})
-                
-        
-        if(!findClasse) {
-            res.json({message:'not fonunded'})
+    try {
+        const { id } = req.params
+        const findClasse = await classModel.findById({ _id: id })
+
+
+        if (!findClasse) {
+            res.json({ message: 'not fonunded' })
         }
-        
+
         res.json(findClasse)
-        
-    }catch (e) {
-        
-res.json({message:'error in findClasse '})
+
+    } catch (e) {
+
+        res.json({ message: 'error in findClasse ' })
 
     }
 }
@@ -635,9 +678,9 @@ module.exports = {
     deleteStudent,
     deleteClass,
     getAllTeachers,
-getTeacherById,
-getAllStudents,
-getStudentById,
-getAllClasses,
-getClassById,
+    getTeacherById,
+    getAllStudents,
+    getStudentById,
+    getAllClasses,
+    getClassById,
 }

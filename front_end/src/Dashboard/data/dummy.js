@@ -535,10 +535,8 @@ export const viewClassButton = (props) => (
   let TeacherData=[]
   // ////////////////////////////////////////////////
   get("http://localhost:8000/admin/getAllTeachers").then((newData) => {
-      let filter  = newData.filter((teacher)=>{
-          return teacher.subject===null||""
-        })
-        TeacherData.push([...filter])
+        TeacherData.push(...newData)
+
   });
 console.log( {TeacherData});
   const dataquery = new Query().select("name","_id").take(TeacherData.length).requiresCount()
