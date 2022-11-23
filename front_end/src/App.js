@@ -28,6 +28,7 @@ import Auth from "./HomePage/pages/Register/Auth";
 import TeacherForm from "./HomePage/DashboardForms/TeacherForm";
 import AdminCourses from "./Dashboard/pages/admin dashboard/AdminCourses";
 import AdminViewCourses from './Dashboard/pages/admin dashboard/AdminViewCourses';
+import StudentDashbord from "./Dashboard/pages/StudentDashbord";
 
 function App() {
   // const { activeMenu } = useStateContext();
@@ -89,14 +90,11 @@ const {TeacherData}=useSelector(state=>state.Teachercontx)
                 <Route path="/editor" element={<Editor />} />
                 <Route path="/calendar" element={<Calendar />} />
                 <Route path="/color-picker" element={<ColorPicker />} /> */}
-
-            
-
-
         {/* =============== Home page ============== */}
         <TheNavbar />
         <Routes>
         <Route path="/teacherDashboard" element={<Teachers {...TeacherData} />} />
+        <Route path="/studentDashboard" element={<StudentDashbord />} />
 
           <Route path="/" element={<Home />} />
           <Route path="/courses" element={<AllCourses />} />

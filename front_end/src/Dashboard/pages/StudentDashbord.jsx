@@ -10,18 +10,13 @@ import {
     Edit,
     Sort,
 } from "@syncfusion/ej2-react-grids";
-import { teachersGrid } from "../data/dummy";
+import { studentsGrid} from "../data/dummy";
 import { Header } from "../components";
 import { useDispatch, useSelector } from "react-redux";
 import { get, add, put, del } from "../helpers/Crud";
-import {
-   
-    showAllTeachers,
-} from "../store/reducer/TeacherSlice";
-
-
-const Teachers = (props) => {
-    const { TeacherData } = useSelector((state) => state.Teachercontx);
+import { showAllStudents } from "../store/reducer/StudentSlice";
+const StudentDashbord = () => {
+    const { StudentData } = useSelector((state) => state.Studentcontx);
     const editOptions = {
         allowEditing: true,
         allowAdding: true,
@@ -41,19 +36,21 @@ const Teachers = (props) => {
             // name
             required: true,
             regex: ["^[A-Za-z ]+$","name can not contain numbers or special characters"],
-            minLength: [5,"name length must be longer than four letters "]
-        },
+        }
+        // ,{ 
+        //     minLength: [5,"name length must be longer than four letters "]
+        // }
+        ,
         {
             // email
             required: true,
-            regex: ["/^\S+@\S+\.\S+$/"],
+            // regex: ["/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/","please enter a valide Email "],
         },
         {
         //    phone 
             required: true,
             // regex: ["/^(1\s|1|)?((\(\d{3}\))|\d{3})(\-|\s)?(\d{3})(\-|\s)?(\d{4})$/","inValid phone number"],
-           
-           number :[true ,"price can not contain letters"]
+           number :[true ,"Phone can not contain letters"]
         },
         {
             // gender
@@ -65,29 +62,24 @@ const Teachers = (props) => {
         },
        
     ]
-
+console.log(StudentData);
     const [data, setData] = useState([]);
     const refreshGrid = () => {
-        get("http://localhost:8000/admin/getAllTeachers").then((newData) => {
+        get("http://localhost:8000/admin/getAllStudents").then((newData) => {
             for (let index = 0; index < newData.length; index++) {
                 const element = newData[index];
                 if (element.DOB) {
                     element.DOB=element.DOB.split("T")[0]   
                 }
             }
-            dispatch(showAllTeachers(newData));
-            console.log("TeacherData",{TeacherData});
+            dispatch(showAllStudents(newData));
             setData({ result:newData, count: newData.length });
             console.log("newData",{newData});
         });
     };
-
-   
     const dataSourceChanged = (state) => {
         if (state.action === "add") {
-            state.data.subject._id=state.data.subject.title
-            state.data.subject.title=""
-            add("http://localhost:8000/admin/addTeacher", state.data).then(
+            add("http://localhost:8000/admin/addStudent", state.data).then(
                 (_) => refreshGrid()
             );}
             else if (state.requestType === 'add') {
@@ -96,23 +88,20 @@ const Teachers = (props) => {
             }
         else if (state.action === "edit") {
             ref.current.hideSpinner();
-            state.data.subject._id=state.data.subject.title
-            state.data.subject.title=""
             put(
-                `http://localhost:8000/admin/editTeacher/${state.data._id}`,
+                `http://localhost:8000/admin/editStudent/${state.data._id}`,
                 state.data
             )
             .then((_) => refreshGrid())
             .then(() => ref.current.hideSpinner());
         } else if (state.requestType === "delete") {
             del(
-                `http://localhost:8000/admin/deleteTeacher/${state.data[0]._id}`
+                `http://localhost:8000/admin/deleteStudent/${state.data[0]._id}`
             ).then((_) => refreshGrid());
         } else {
             console.log(state.action);
         }
     };
- 
     const actionBegienHandler= (args) => {
         if (args.requestType==="add") {
         }
@@ -126,7 +115,7 @@ const ref = useRef();
     }, []);
     return (
         <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl">
-            <Header category="Page" title="Teachers" />
+            <Header category="Page" title="Students" />
             <GridComponent
                 actionComplete={actionEndHandler}
                 actionBegin={actionBegienHandler}
@@ -136,11 +125,10 @@ const ref = useRef();
                 toolbar={toolbarOptions}
                 dataSourceChanged={dataSourceChanged}
                 width="auto"
-                ref={ref
-            }
+                ref={ref}
             >
                 <ColumnsDirective>
-                    {teachersGrid.map((item, index) => (
+                    {studentsGrid.map((item, index) => (
                         <ColumnDirective validationRules={customIDRules[index]} key={index} {...item} />
                     ))}
                 </ColumnsDirective>
@@ -150,4 +138,4 @@ const ref = useRef();
     );
 };
 
-export default Teachers;
+export default StudentDashbord;

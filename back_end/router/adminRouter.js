@@ -1,4 +1,4 @@
-const { signupAdmin, confirmEmail, refreshEmail, signinAdmin, getAllAdmin, getAdminById, addTeacher, addStudent, addClass, editTeacher, editClass, editStudent, deleteTeacher, getAllTeachers, getTeacherById, getAllStudents, getStudentById, getAllClasses, getClassById, deleteStudent, deleteClass } = require('../controllers/adminController');
+const { signupAdmin, confirmEmail, refreshEmail, signinAdmin, getAllAdmin, getAdminById, addTeacher, addStudent, addClass, editTeacher, editClass, editStudent, deleteTeacher, getAllTeachers, getTeacherById, getAllStudents, getStudentById, getAllClasses, getClassById, deleteStudent, deleteClass, getAllParents, addParent } = require('../controllers/adminController');
 const { signUpValidation, getAdminValidation, EditByAdminValidation, DeleteByAdminValidation } = require('./VaidationsCruds/adminValidation');
 const { endPoint } = require('../endPoint/endPoint');
 const { authen } = require('../middlewear/authen');
@@ -17,6 +17,7 @@ router.get('/getAllAdmin',getAllAdmin)
 router.get('/getAdminById/:id',validation(getAdminValidation),authen(endPoint.admin.getAllAdmins),getAdminById)
 router.post('/addTeacher',addTeacher)
 router.post('/addStudent',addStudent)
+router.post('/addParent',addParent)
 router.post('/addClass',addClass)
 router.put('/editTeacher/:id',validation(EditByAdminValidation),editTeacher)
 router.put('/editStudent/:id',validation(EditByAdminValidation),editStudent)
@@ -24,9 +25,8 @@ router.put('/editClass/:id',validation(EditByAdminValidation),editClass)
 router.delete('/deleteTeacher/:id',validation(DeleteByAdminValidation),deleteTeacher)
 router.delete('/deleteStudent/:id',validation(DeleteByAdminValidation),deleteStudent)
 router.delete('/deleteClass/:id',validation(DeleteByAdminValidation),deleteClass)
-
-
 router.get('/getAllTeachers',getAllTeachers)
+router.get('/getAllParents',getAllParents)
 router.get('/getTeacherById/:id',validation(getAdminValidation),getTeacherById)
 router.get('/getAllStudents',getAllStudents)
 router.get('/getStudentById/:id',validation(getAdminValidation),getStudentById)

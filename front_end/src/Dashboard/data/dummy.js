@@ -564,13 +564,17 @@ console.log( {TeacherData});
               countryObj.appendTo(countryElem);
           }
         };
-
+// ظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظ
         let subjectElem
         let subjectObj
         let subjectData=[]
         // ////////////////////////////////////////////////
         get("http://localhost:8000/admin/getAllClasses").then((newData) => {
-            subjectData.push(...newData);
+            const filter = newData.filter((clas)=>{
+                return clas.teacher === null || clas.teacher===""  ||clas.teacher ===undefined 
+            })
+            subjectData.push(...filter);
+
         });
      const subjectParam  = {
          create: () => {
@@ -594,6 +598,36 @@ console.log( {TeacherData});
           }
         };
         
+// ظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظ
+        let ParentElem
+        let ParentObj
+        let ParentData=[]
+        // ////////////////////////////////////////////////
+        get("http://localhost:8000/admin/getAllParents").then((newData) => {
+            ParentData.push(...newData);
+        });
+        console.log(ParentData);
+     const ParentParam   = {
+         create: () => {
+            ParentElem = document.createElement('input');
+             return  ParentElem;
+          },
+          destroy: () => {
+            ParentObj.destroy();
+            },
+          read: () => {
+              return ParentObj.value;
+          },
+          write: () => {
+            ParentObj = new DropDownList({
+                  dataSource: new DataManager(ParentData),
+                  fields: {value:'_id',text:'Parent_name' },
+                  floatLabelType: 'Never',
+                  placeholder: 'Select Parent'
+              });
+              ParentObj.appendTo( ParentElem);
+          }
+        };
         let classElem
         let classObj
     const schoolClasses = ["1st Elementary level","2nd Elementary level","3rd Elementary level","4th Elementary level","5th Elementary level","6th Elementary level","1st Prepartory level","2nd Prepartory level","3rd Prepartory level","1st Secondary level","2nd Secondary level","3rd Secondary level"]
@@ -671,29 +705,20 @@ console.log( {TeacherData});
     { headerText: "view",textAlign: "Center" ,width: "100", template: viewButton ,isPrimaryKey: true },
 ];
 export const studentsGrid = [
-    {
-        headerText: "_id",
-        width: "150",
-        field: "_id",
-        textAlign: "Center",
-        isPrimaryKey: true,
-    },
-    { field: "name", headerText: "name", width: "150", textAlign: "Center" },
-    { field: "email", headerText: "email", width: "170", textAlign: "Center" },
-    { field: "phone", headerText: "phone", width: "170", textAlign: "Center" },
-    {
-        field: "gender",
-        headerText: "gender",
-        width: "170",
-        textAlign: "Center",
-    },
-    { field: "DOB", headerText: "DOB", width: "170", textAlign: "Center" },
+    { field: "name", headerText: "Student Name", width: "170", textAlign: "Center" },
     // {
-    //     field: "subject.title",
-    //     headerText: "subjects",
+    //     field: "Parent.Parent_name",
+    //     headerText: "Parent",
     //     width: "170",
     //     textAlign: "Center",
+    //     editType:'dropdownedit',
+    //     edit : ParentParam  ,
     // },
+    { field: "email", headerText: "Email", width: "170", textAlign: "Center" },
+    { field: "phone", headerText: "Phone", width: "170", textAlign: "Center"},
+    { field: "level", headerText: "Class", width: "170", textAlign: "Center",editType:'dropdownedit', edit : classParams},
+    {field: "gender",headerText: "gender",width: "170",textAlign: "Center",   editType:'dropdownedit', edit : gendersParams },
+    { field: "DOB", headerText: "Birth date", width: "170", textAlign: "Center" ,editType:'datePickerEdit', edit:birthDateParams },
     { headerText: "view",textAlign: "Center" ,width: "100", template: viewButtonTwo ,isPrimaryKey: true},
 ];
 export const integerParams = {
@@ -731,7 +756,7 @@ export const classGrid = [
     },
     { field: "price", headerText: "Price", width: "170", textAlign: "Center" ,editType:'numericEdit', format:"C2",edit :integerParams},
     { field: "level", headerText: "Class", width: "170", textAlign: "Center",editType:'dropdownedit', edit : classParams},
-    {field: "teacher.name",headerText: "Teacher",width: "200",textAlign: "Center", editType:'dropdownedit',edit : countryParams,
+    {field: "teacher.name",headerText: "Teacher",width: "170",textAlign: "Center", editType:'dropdownedit',edit : countryParams,
     },
     { field: "startDate", headerText: "Start Date", width: "170", textAlign: "Center", editType:'datePickerEdit', edit:dateParams},
     { field: "endDate", headerText: "End Date", width: "170", textAlign: "Center", editType:'datePickerEdit',edit:endDateParams},

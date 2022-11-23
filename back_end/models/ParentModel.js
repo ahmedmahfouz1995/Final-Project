@@ -42,12 +42,16 @@ const ParentSchema = mongoose.Schema(
       }
     },
     student_Id:
-      [{ type: Schema.ObjectId, ref: 'Student' }]
+      [{ type: mongoose.Schema.Types.ObjectId, ref: 'Student',default: null }]
     ,
     Password:{
       type: String,
       required: true,
-    }
+    },
+    role: {
+      type: String,
+      default: 'Parent'
+    },
   },
 )
 const ParentModel = mongoose.model("Parent", ParentSchema);

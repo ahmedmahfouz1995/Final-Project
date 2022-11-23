@@ -1,10 +1,10 @@
 const bcrypt = require("bcrypt");
-
 const jwt = require("jsonwebtoken");
 const adminModel = require("../models/admin");
 const classModel = require("../models/class");
 const studentModel = require("../models/student");
 const teacherModel = require("../models/teacher");
+const  ParentModel = require("../models/ParentModel");
 const sendEmail = require("../service/email.service");
 const { get } = require("../utils/crud");
 const { genericPutEndpointHandler }= require("../utils/router_handlers");
@@ -336,30 +336,37 @@ const addTeacher = async (req, res) => {
         }
     }
 }
-//addStudent  -----------------------------------------------------------------------------
-
-
-const addStudent = async (req, res) => {
+const addParent = async (req, res) => {
     try {
-        const { name, email, password, DOB, gender, phone, subjects } = req.body
-        console.log({ subjects });
-
-        const hashPassword = await bcrypt.hash(password, parseInt(process.env.SALTROUNDS))
-        const newStudent = new studentModel({ name, email, password: hashPassword, DOB, gender, phone, subjects })
-        const savedStudent = await newStudent.save()
-        res.json({ message: savedStudent })
-
+        const {Password = '123456789' } = req.body
+        const hashPassword = await bcrypt.hash(Password, parseInt(process.env.SALTROUNDS))
+        const newParent= new ParentModel(req.body)
+        const savedParent= await newParent.save()
+        res.json({ message: savedParent })
     } catch (e) {
-
         if (e.keyValue?.email) {
-
             res.status(409).json({ message: "email exists" })
-
         } else {
             res.status(500).json({ message: "Error", e })
         }
     }
-
+}
+//addStudent  -----------------------------------------------------------------------------
+const addStudent = async (req, res) => {
+    try {
+        const { name, email, password='123456789', DOB, gender, phone , level } = req.body
+        const hashPassword = await bcrypt.hash(password, parseInt(process.env.SALTROUNDS))
+        const newStudent = new studentModel({ name, email, password: hashPassword, DOB, gender, phone ,level })
+        await get(studentModel, ["Parent"])
+        const savedStudent = await newStudent.save()
+        res.json({ message: savedStudent })
+    } catch (e) {
+        if (e.keyValue?.email) {
+            res.status(409).json({ message: "email exists" })
+        } else {
+            res.status(500).json({ message: "Error", e })
+        }
+    }
 }
 //addClass  -----------------------------------------------------------------------------
 
@@ -369,16 +376,13 @@ const addClass = async (req, res) => {
         const classData = req.body 
         const newClass = new classModel(classData)
         const {title ,level}=req.body
-        console.log(level);
-        const titleExists = await classModel.find({title:title})
-        const levelExists = await classModel.find({level:level})
-        if (titleExists && levelExists ) {
+        const Exists = await classModel.find({title:title ,level:level})
+        if (Exists.length >0) {
             console.log("exist");
             return res.status(409).json({ message: "title exists" })
         }
         const saveClass = await newClass.save()
         const teacher= await teacherModel.findByIdAndUpdate({_id:saveClass.teacher},{$set:{subject:saveClass._id}})
-        console.log("teacher subject",teacher.subject);
         await  teacher.populate("subject")
         res.json({ message: "saved", saveClass })
 
@@ -501,31 +505,25 @@ const getAllTeachers = async (req, res) => {
     if (findTeachers.confirmEmail === false) res.json({ message: 'plz confirm u email' })
     res.status(200).json(findTeachers);
 }
+const getAllParents = async (req, res) => {
+    const findParents = await get( ParentModel, ["student_Id"])
+    res.status(200).json(findParents);
+}
 const getTeacherById = async (req, res) => {
-
     try {
         const { id } = req.params
         const findTeacher = await teacherModel.findById({ _id: id })
-
-
-
         if (!findTeacher) {
             res.json({ message: 'not fonunded' })
         }
-
         res.json(findTeacher)
-
     } catch (e) {
-
         res.json({ message: 'error in getTeacherById ' })
-
     }
-
-
 }
 // ----------------------------------------------------------------
 const getAllStudents = async (req, res) => {
-
+    //  await get(studentModel, ["Parent"])
     const findStudents = await studentModel.find()
     if (findStudents.confirmEmail === false) res.json({ message: 'plz confirm u email' })
 
@@ -537,6 +535,7 @@ const getStudentById = async (req, res) => {
 
     try {
         const { id } = req.params
+        // await get(studentModel, ["Parent"])
         const findStudent = await studentModel.findById({ _id: id })
 
 
@@ -553,7 +552,6 @@ const getStudentById = async (req, res) => {
 
     }
 }
-
 // ---------------------------------------------------------------
 const getAllClasses = async (req, res) => {
     try {
@@ -625,4 +623,6 @@ module.exports = {
     getStudentById,
     getAllClasses,
     getClassById,
+    getAllParents,
+    addParent ,
 }
