@@ -1,5 +1,6 @@
 import React from "react";
 import banner from "./../../assets/teaching-img.png";
+import { NavLink } from 'react-router-dom';
 
 export default function BecomeAnInstructor() {
   return (
@@ -11,7 +12,7 @@ export default function BecomeAnInstructor() {
               <h1 className="font-bold">
                 Become An Instructor Today And Start Teaching{" "}
               </h1>
-              <p className="secondary-color">
+              <p className="secondary-color fw-bold">
                 Instructors from around the world teach millions of students on
                 Edmy. We provide the tools and skills to teach what you love.
                 And you can also achieve your goal with us.
@@ -22,10 +23,12 @@ export default function BecomeAnInstructor() {
               <h1 className="mb-6">
                 Transform Your Life Through Online Education
               </h1>
+              <NavLink to={"/contact-us"}>
               <button className="TransformBtn btn btn-outline-danger px-4 py-2">
                 {" "}
                 Become An Instructor
               </button>
+              </NavLink>
             </div>
           </div>
           <div className="col-md-6 flex  justify-center items-center">

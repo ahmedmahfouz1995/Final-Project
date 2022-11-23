@@ -1,21 +1,30 @@
 import React from "react";
 import banner from "./../../assets/transform-img.png";
+import breaks from "./../../assets/333pn.png";
 
 
 export default function Transform() {
   return (
+    <>
+      <div className="breaksColors conatiner-fluid flex justify-center breaksColorsTransForm ">
+
+
+<img className="breaksColorsImg " src={breaks} />
+<img className="breaksColorsImg " src={breaks} />
+<img className="breaksColorsImg " src={breaks} />
+<img className="breaksColorsImg " src={breaks} />
+
+
+
+      </div>
     <div className="TransformSection my-5">
       <div className="container">
         <div className="row">
           <div className="col-md-6 flex flex-col justify-center items-center ">
             <div className="TransformLeft">
               <h1 className="font-bold">
-                Enroll Know to our Courcess and learn More{" "}
+               <span className="text-lower-third-about"> Enroll </span> now to our Courses and learn More
               </h1>
-              <p className="secondary-color">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Excepturi soluta animi fugiat unde, atque totam.
-              </p>
             </div>
 
             <div className="TransformLeftBox">
@@ -23,7 +32,6 @@ export default function Transform() {
                 Transform Your Life Through Online Education
               </h1>
               <button className="TransformBtn btn btn-outline-danger px-4 py-2">
-                {" "}
                 Courcess
               </button>
             </div>
@@ -35,5 +43,6 @@ export default function Transform() {
         </div>
       </div>
     </div>
-  );
+
+ </> );
 }

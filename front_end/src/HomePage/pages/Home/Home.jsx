@@ -1,26 +1,25 @@
 import React from "react";
 import banner from "./../../assets/banner-img-1.png";
+import breaks from "./../../assets/333pn.png";
+import breaks2 from './../../assets/pg9.png'
+import join from "./../../assets/pg5.png";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 
+import Video from "./Video";
 import Courses from "./Courses";
 import Transform from "./Transform";
 import Students from "./Students ";
 import BecomeAnInstructor from "./BecomeAnInstructor";
 import Choose from "./Choose";
-import { useSelector } from "react-redux";
 
 export default function Home() {
-
-    const { TeacherData } = useSelector((state) => state.Teachercontx);
-console.log(TeacherData)
-
   return (
     <>
       <section className="homeSection">
         <div className="container   ">
-          <div className="row">
+          <div className="row items-center ">
             <div className="col-md-7 flex justify-center items-center  ">
               <img
                 className="homeImg rounded-full relative z-50"
@@ -38,29 +37,82 @@ console.log(TeacherData)
                 courses & <span className="text-yellow-200"> 500k+ </span>{" "}
                 Online registered student. Find your desired Courses from them.
               </p>
-              <InputGroup className="mb-3">
-                <Form.Control
-                  placeholder="Recipient's username"
-                  aria-label="Recipient's username"
-                  aria-describedby="basic-addon2"
-                />
-                <Button
-                  className="px-4 py-3 text-white"
-                  variant="outline-danger"
-                  id="button-addon2"
-                >
-                  Search Now
-                </Button>
-              </InputGroup>
+          
             </div>
           </div>
         </div>
       </section>
+      <div className="breaksColors conatiner-fluid flex justify-center">
+
+
+<img className="breaksColorsImg " src={breaks} />
+<img className="breaksColorsImg " src={breaks} />
+<img className="breaksColorsImg " src={breaks} />
+<img className="breaksColorsImg " src={breaks} />
+
+
+
+      </div>
+      <div className="JoinUs">
+{/* <div className="container JoinUss">
+<div className="row">
+
+<div className="col-lg-5 flex flex-column align-center justify-center JoinUsSecOne ">
+    <div className="JoinUsSecOneWords p-4">
+
+<h1 >WELCOME IN YOUR WEbSITE</h1>
+<p className="lead">Online learning has shown significant growth over the last decade, as the internet and education combine to provide people with the opportunity to gain new skills. </p>
+    </div>
+</div>
+<div className="col-lg-7 flex justify-center items-center  ">
+              <img
+                className="homeImg homeImgForJoin col-12  rounded-full relative z-50"
+                src={join}
+                alt=""
+              />
+              <div className="imgBackgroundHome absolute opacity-70 imgBackgroundHomeForJoin">
+                
+              </div>
+            </div>
+</div>
+
+
+</div> */}
+
+<div className="flex justify-center laptopSection">
+    {/* <div className="flex items-center justify-center rightStrockWord">
+        <h1>WELCOME TO</h1>
+    </div> */}
+<div className="col-lg-7 flex justify-center items-center laptopSectionConntent  ">
+              <img
+                className="homeImg homeImgForJoin col-12 w-75 rounded-full relative z-50 hover:mb-3 transition  laptopSectionConntentImg"
+                src={join}
+                alt=""
+              />
+              <div className="imgBackgroundHome absolute opacity-70 imgBackgroundHomeForJoin">
+              <h1 className="rightWelcome z-50"><span className="rightWelcomeFirstSpan">WELCOME</span>   <br /> <span className="rightWelcomeSecondSpan"> IN </span></h1>
+
+              </div>
+              <div className="imgBackgroundHome absolute opacity-70 imgBackgroundHomeForJoin">
+              <h1 className="leftWelcome z-50">YOUR <span className="rightWelcomeSecondSpanTwo">WEBSITE</span> </h1>
+
+              </div>
+            </div>
+
+            {/* <div className="flex items-center justify-center leftStrockWord">
+        <h1>xcascdsc</h1>
+    </div> */}
+</div>
+
+      </div>
+
       <Courses />
       <Transform />
-      <Choose />
+      <Video />
       <Students />
+      <Choose />
       <BecomeAnInstructor />
+
     </>
   );
 }

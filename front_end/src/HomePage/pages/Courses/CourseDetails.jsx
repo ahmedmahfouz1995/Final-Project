@@ -5,6 +5,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { useLocation } from "react-router-dom";
+import Footer from "../../components/Footer";
 
 export default function CourseDetails() {
 
@@ -57,7 +58,7 @@ export default function CourseDetails() {
               <Tabs
                 defaultActiveKey="overview"
                 id="justify-tab-example"
-                className="mb-3 fw-bold p-2"
+                className="mb-3 fw-bold p-2 tab-link"
                 justify
               >
                 <Tab eventKey="overview" title="Overview">
@@ -109,13 +110,14 @@ export default function CourseDetails() {
               </ListGroup>
               <Card.Body>
                 <Card.Link href="#">
-                  <button class="btn btn-primary buy col-12">Enroll Now</button>
+                  <button class="btn btn-primary registerBtn py-3 buy col-12">Enroll Now</button>
                 </Card.Link>
               </Card.Body>
             </Card>
           </div>
         </div>
       </div>
+      {/* <Footer /> */}
     </div>
   );
 }

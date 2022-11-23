@@ -2,10 +2,27 @@ import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { FiSettings } from "react-icons/fi";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
+
 import { Navbar, Sidebar, ThemeSettings } from "./Dashboard/components";
 import {
-  Teachers,
+  Ecommerce,
+  Orders,
+  Calendar,
+  Employees,
+  Stacked,
+  Pyramid,
+  Customers,
+  Kanban,
+  Area,
+  Bar,
+  Pie,
+  Financial,
+  ColorPicker,
+  ColorMapping,
+  Editor,
+  Line,
 } from "./Dashboard/pages";
+import { useStateContext } from "./Dashboard/contetxts/ContextProvider";
 import "./App.css";
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -16,27 +33,25 @@ import CreateParent from './Dashboard/pages/parent dashboard/ParentComponents/Cr
 import ShowParent from './Dashboard/pages/parent dashboard/ParentComponents/ShowParent';
 import ShowStudent from './Dashboard/pages/parent dashboard/ParentComponents/ShowStudent';
 import AdminCreate from './Dashboard/pages/admin dashboard/AdminCreate';
-import AdminCreateTwo from "./Dashboard/pages/admin dashboard/AdminCreateTwo";
 
 // ========================== Home Page ===================
 import TheNavbar from "./HomePage/components/TheNavbar";
 import Footer from "./HomePage/components/Footer";
 import Home from "./HomePage/pages/Home/Home";
+import About from "./HomePage/pages/About/About";
+import Contact from "./HomePage/pages/Contact/Contact";
 import AllCourses from "./HomePage/pages/Courses/AllCourses";
 import CourseDetails from "./HomePage/pages/Courses/CourseDetails"
 import Auth from "./HomePage/pages/Register/Auth";
-import TeacherForm from "./HomePage/DashboardForms/TeacherForm";
-import AdminCourses from "./Dashboard/pages/admin dashboard/AdminCourses";
-import AdminViewCourses from './Dashboard/pages/admin dashboard/AdminViewCourses';
-import StudentDashbord from "./Dashboard/pages/StudentDashbord";
 
 function App() {
   // const { activeMenu } = useStateContext();
   const { activeMenu } = useSelector(state => state.context);
   const booksProps = useSelector(state => state.booksList);
-const {TeacherData}=useSelector(state=>state.Teachercontx)
+
   return (
     <div>
+      <BrowserRouter>
         {/* <div className="flex relative dark:bg-main-dark-bg">
           <div className="fixed right-4 bottom-4" style={{ zIndex: "1000" }}>
             <TooltipComponent content="Settings" position="Top">
@@ -64,16 +79,16 @@ const {TeacherData}=useSelector(state=>state.Teachercontx)
           >
             <div className="fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full">
               <Navbar />
-            </div> */}
+            </div>
 
-            {/* <div>
-              <Routes> */}
-                {/* Dashboard */}
-                {/* <Route path="/" element={<Ecommerce />} />
-                <Route path="/CreateTeacher" element={<AdminCreate />} /> */}
+            <div>
+              <Routes>
+               
+                <Route path="/" element={<Ecommerce />} />
+                <Route path="/CreateTeacher" element={<AdminCreate />} />
 
-                {/* Pages */}
-                {/* <Route path="/orders" element={<Orders />} />
+                
+                <Route path="/orders" element={<Orders />} />
                 <Route path="/employees" element={<Employees {...booksProps} />} />
                 <Route path="/customers" element={<Customers />} />
                 <Route path="/Parent" element={<Parent />}>
@@ -83,51 +98,42 @@ const {TeacherData}=useSelector(state=>state.Teachercontx)
                   <Route path="/Parent/child" element={<ShowChildren />} />
                   <Route path="/Parent/child/show" element={<ShowStudent />} />
                   <Route path="/Parent/child/edit" element={<ShowStudent />} />
-                </Route> */}
+                </Route>
+                
 
-                {/* Apps */}
-                {/* <Route path="/kanban" element={<Kanban />} />
+                <Route path="/kanban" element={<Kanban />} />
                 <Route path="/editor" element={<Editor />} />
                 <Route path="/calendar" element={<Calendar />} />
-                <Route path="/color-picker" element={<ColorPicker />} /> */}
+                <Route path="/color-picker" element={<ColorPicker />} />
+
+                
+                <Route path="/line" element={<Line />} />
+                <Route path="/area" element={<Area />} />
+                <Route path="/bar" element={<Bar />} />
+                <Route path="/pie" element={<Pie />} />
+                <Route path="/financial" element={<Financial />} />
+                <Route path="/color-mapping" element={<ColorMapping />} />
+                <Route path="/pyramid" element={<Pyramid />} />
+                <Route path="/stacked" element={<Stacked />} />
+              </Routes>
+            </div>
+          </div>
+        </div> */}
+
         {/* =============== Home page ============== */}
         <TheNavbar />
         <Routes>
-        <Route path="/teacherDashboard" element={<Teachers {...TeacherData} />} />
-        <Route path="/studentDashboard" element={<StudentDashbord />} />
-
           <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact-us" element={<Contact />} />
           <Route path="/courses" element={<AllCourses />} />
           <Route path="/course-details" element={<CourseDetails />} />
           <Route path="/auth" element={<Auth />} />
-          <Route path="/teacherDetails/:id" element={<AdminCreate />} />
-          <Route path="/studentDetails/:id" element={<AdminCreateTwo />} />
-          <Route path="/adminCourse/:id" element={<AdminCourses/>} />
-          <Route path="/adminViewCourses" element={<AdminViewCourses/>} />
-          <Route path="/CreateTeacher" element={<AdminCreate />} />
-          <Route path="/TeacherForm" element={<TeacherForm />} />
-          <Route path="/TeacherForm/:id" element={<TeacherForm />} />
-          <Route path="/Parent" element={<Parent />}>
-                  <Route path="/Parent/show" element={<ShowParent />} />
-                  <Route path="/Parent/edit" element={<EditParent />} />
-                  <Route path="/Parent/Create" element={<CreateParent />} />
-                  <Route path="/Parent/child" element={<ShowChildren />} />
-                  <Route path="/Parent/child/show" element={<ShowStudent />} />
-                  <Route path="/Parent/child/edit" element={<ShowStudent />} />
-                </Route>
         </Routes>
         <Footer />
+      </BrowserRouter>
     </div>
   );
 }
 
 export default App;
-
-
-
-
-
-
-
-
-

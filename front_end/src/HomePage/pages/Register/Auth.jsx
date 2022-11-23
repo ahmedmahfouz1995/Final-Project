@@ -1,51 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 // import banner from "./../assets/register.png";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import { useDispatch, useSelector } from "react-redux";
-import { getAllclass } from "../../../Dashboard/store/reducer/classSlice";
-import { createTeacher } from "../../../Dashboard/store/reducer/TeacherSlice";
 import AuthBanner from "./AuthBanner";
 
 export default function Auth() {
-const [formValue,setFormValue]=useState({
-  role:"teacher"
-})
-const [err, setErr] = useState({});
-// const {TeacherData}=useSelector(state=>state.Teachercontx)
-const dispatch=useDispatch()
-const {classData}=useSelector(state=>state.classcontx)
-
-const onChangeHandle=(e)=>{
-    if (e.target.value==="") {
-        setErr({...err,[e.target.id]:`${e.target.id} is required`})
-      } else if(e.target.value.length<5) {
-        setErr({...err,[e.target.id]:`${e.target.id} must be more than 5 letters`})}
-      else{
-        setFormValue({...formValue,[e.target.id]:e.target.value})
-        setErr({[e.target.id]:""})
-      }
-      }
-
-  
-
-const submitHandler=(e)=>{
-   
-e.preventDefault()
-console.log(createTeacher(formValue))
-    console.log("form.................",formValue)
-dispatch(createTeacher(formValue))
-
-}
-useEffect(()=>{
-    dispatch(getAllclass())
-    console.log(classData);
-},[])
-
-
-
   return (
     <>
     <AuthBanner></AuthBanner>
@@ -74,91 +35,24 @@ useEffect(()=>{
                {/* Tab1 */}
               <Tab className="col-12 font-bold " eventKey="home" title="Register">
                
-              <Form className="col-12" onChange={(e)=>onChangeHandle(e)} onSubmit={submitHandler}>
-              <Form.Group className="my-4" controlId="formBasicName" >
-                <Form.Control type="text" placeholder="Enter Your Name" className="py-3" name="name"/>
+              <Form className="col-12">
+              <Form.Group className="my-4" controlId="formBasicEmail">
+                <Form.Control type="email" placeholder="Enter email" className="py-3"/>
               </Form.Group>
 
-              <Form.Group className="my-4" controlId="formBasicEmail" >
-                <Form.Control type="email" placeholder="Enter Your Email" className="py-3" name="email"/>
+              <Form.Group className="my-4" controlId="formBasicEmail">
+                <Form.Control type="email" placeholder="Enter last Name" className="py-3"/>
               </Form.Group>
 
-              <Form.Group className="my-4" controlId="formBasicPassword" >
-                <Form.Control type="password" placeholder="Enter Your Password" className="py-3" name="password"/>
+              <Form.Group className="my-4" controlId="formBasicEmail">
+                <Form.Control type="email" placeholder="Enter email" className="py-3"/>
               </Form.Group>
 
-              <Form.Group className="my-4" controlId="formBasicPhone" >
-                <Form.Control type="text" placeholder="Enter Your Phone" className="py-3" name="phone"/>
+              <Form.Group className="my-4" controlId="formBasicPassword">
+                <Form.Control type="password" placeholder="Password" className="py-3"/>
               </Form.Group>              
 
-              <Form.Group className="my-4 flex gx-2" controlId="formBasicDobAndGender">
-              <input  type="date" name="DOB" id="DOB" autoComplete="street-address" className="mt-1 mr-2  w-45 h-10 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"/>
-              <select name="gender" class="form-select appearance-none
-      
-      w-45
-      px-3
-      py-1.5
-      text-base
-      font-normal
-      text-gray-700
-      bg-white bg-clip-padding bg-no-repeat
-      border border-solid border-gray-300
-      rounded
-      transition
-      ease-in-out
-      m-0
-      focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example">
-        <option value="1" selected>Enter Your Gender</option>
-        <option value="male" >Male</option>
-        <option value="female">Female</option>
-    </select>
-
-              </Form.Group>              
-              
-              <Form.Group className="my-4" controlId="formBasicPassword" >
-              <select name="subject" class="form-select appearance-none
-      block
-      w-full
-      px-3
-      py-1.5
-      text-base
-      font-normal
-      text-gray-700
-      bg-white bg-clip-padding bg-no-repeat
-      border border-solid border-gray-300
-      rounded
-      transition
-      ease-in-out
-      m-0
-      focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example">
-        <option value="1" selected >Enter Your Subject</option>
-        {classData.map((course)=>{
-            return(
-                <option value={course._id} >{course.title}</option>
-            )
-        })}
-
-        {/* <option value="6377108dd827070560ea8322"  >Arabic</option>
-        <option value="637710f4d827070560ea8327">Math</option>
-        <option value="637710fdd827070560ea8329">Engilsh</option>
-        <option value="63771102d827070560ea832b">Science</option>
-        <option value="63771109d827070560ea832d">French</option>
-        <option value="6377110fd827070560ea832f">History</option>
-        <option value="63771114d827070560ea8331">Geography</option>
-        <option value="63771118d827070560ea8333">Chemistry</option>
-        <option value="6377111dd827070560ea8335">Biology</option>
-        <option value="63771122d827070560ea8337">Algebra</option>
-        <option value="63771128d827070560ea8339">Geometry</option>
-        <option value="6377112dd827070560ea833b">Religion</option>
-        <option value="63771133d827070560ea833d">Pysices</option> */}
-    </select>
-              </Form.Group>              
-
-              
-   
-
-
-              <Button   variant="primary" type="submit" className="col-12 registerBtn text-light p-3 rounded hover:opacity-95 transtion myFormBtn">
+              <Button variant="primary" type="submit" className="col-12 registerBtn text-light p-3 rounded hover:opacity-95 transtion myFormBtn">
                 Register Now
               </Button>
             </Form>

@@ -1,21 +1,15 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
-import { NavLink, useLocation, useParams } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 
 export default function ShowStudent(props) {
     const {childData,isUpdated}= useSelector(
         (state) => state.Parentcontx
       );
-      const param=useParams()
-      console.log(param);
-      const{id}=param
-      console.log(id);
       const Location =useLocation()
-       const myId=  Location.search.split("?")[1]
-       const myData = childData.filter((child)=>{
-        return child._id ===myId
-       })
+     let mylocation=Location
+     console.log(mylocation);
   return (
     <>
 <div className="max-w-sm w-full lg:max-w-full lg:flex py-6" style={{height:"450px"}}>
@@ -29,7 +23,7 @@ export default function ShowStudent(props) {
         </svg>
         Members only
       </p>
-      <h1 className="text-gray-900 font-bold text-xl mb-2">{myData[0].name}</h1>
+      <div className="text-gray-900 font-bold text-xl mb-2"></div>
       <p className="text-gray-700 text-base">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, Lorem ipsum dolor sit, amet consectetur adipisicing elit. Placeat non aliquam rerum eius omnis ipsum cumque fuga inventore adipisci ea. exercitationem praesentium nihil.</p>
     <div className="px-6">
     <span className="inline-block bg-gray-200 rounded-full px-3 my-5 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Phone : </span>

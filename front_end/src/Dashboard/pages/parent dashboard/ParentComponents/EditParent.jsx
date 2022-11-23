@@ -75,7 +75,7 @@ export default function EditParent() {
  
     <input type="submit" className="bg-transparent hover:bg-green-500 mx-8 text-green-700 font-semibold hover:text-white py-2 px-4 border border-green-500 hover:border-transparent rounded">
     </input>
-  <NavLink to={"/Parent"}>
+  <NavLink to={"/Parent/"}>
     <button type="submit" className="bg-transparent hover:bg-red-500 mx-8 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded">
         Dissmiss 
     </button>

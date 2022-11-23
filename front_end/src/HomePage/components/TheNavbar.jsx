@@ -40,6 +40,12 @@ export default function TheNavbar() {
               <NavLink className="buttons nav-link" to="/courses">
                 Courses
               </NavLink>
+              <NavLink className="buttons nav-link" to="/about">
+                About Us
+              </NavLink>
+              <NavLink className="buttons nav-link" to="/contact-us">
+                Contact Us
+              </NavLink>
             </Nav>
             <Nav>
               <NavLink

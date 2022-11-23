@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/material": "^5.10.12",
+    "@mui/styled-engine-sc": "^5.10.6",
     "@reduxjs/toolkit": "^1.9.0",
     "@syncfusion/ej2-base": "^20.3.56",
     "@syncfusion/ej2-diagrams": "^20.3.56",
@@ -10,7 +14,7 @@
     "@syncfusion/ej2-react-calendars": "^20.3.56",
     "@syncfusion/ej2-react-charts": "^20.3.56",
     "@syncfusion/ej2-react-dropdowns": "^20.3.56",
-    "@syncfusion/ej2-react-grids": "^20.3.56",
+    "@syncfusion/ej2-react-grids": "^20.3.57",
     "@syncfusion/ej2-react-kanban": "^20.3.56",
     "@syncfusion/ej2-react-popups": "^20.3.56",
     "@syncfusion/ej2-react-schedule": "^20.3.56",
@@ -22,15 +26,18 @@
     "deep-equal": "^2.1.0",
     "es6-promise": "^4.2.8",
     "jwt-decode": "^3.1.2",
-    "postcss": "^8.4.6",
+    "nodemon": "^2.0.20",
     "react": "^18.2.0",
     "react-bootstrap": "^2.6.0",
+    "react-bootstrap-icons": "^1.9.1",
+    "react-countup": "^6.3.2",
     "react-dom": "^18.2.0",
+    "react-drag-drop-files": "^2.3.7",
     "react-icons": "^4.3.1",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.4.3",
     "react-scripts": "5.0.1",
-    "tailwindcss": "^3.0.19",
+    "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -64,6 +71,9 @@
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.28.0",
-    "eslint-plugin-react-hooks": "^4.3.0"
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "postcss": "^8.4.6",
+    "react-error-overlay": "^6.0.9",
+    "tailwindcss": "^3.0.19"
   }
 }

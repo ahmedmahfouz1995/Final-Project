@@ -3,49 +3,60 @@ import emdy1 from "../../assets/edmy1.png";
 import emdy2 from "../../assets/edmy2.png";
 import emdy3 from "../../assets/edmy3.png";
 import emdy4 from "../../assets/edmy4.png";
+import breaks2 from './../../assets/pg9.png'
+
 export default function Choose() {
   return (
-    <div className="primary-color ChooseSection my-5">
-      <div className="container">
-        <div className="row">
-          <h1 className="text-center mt-5 font-bold">
-            Why You Should Choose Our Site
+    <>
+         
+    <div className="primary-color ChooseSection my-5 py-5">
+    <div className="breaksColorsFooter conatiner-fluid mb-5 justify-center flex breaksColorsFooterChoose ">
+
+<img className="breaksBooksImg " src={breaks2} />
+<img className="breaksBooksImg " src={breaks2} />
+<img className="breaksBooksImg " src={breaks2} />
+
+
+      </div>
+      <div className="container choose">
+        <div className="row mb-5">
+          <h1 className="text-center my-5 font-bold">
+            Why You Should <span className="text-lower-third-about"> Choose </span> Our Site
           </h1>
 
-          <div className="emdyCard col-sm-3">
-            <img src={emdy1} alt="" />
+          <div className="emdyCard p-3 text-center  col-sm-3">
+
+            <img className="homeCourseImg" src={emdy1} alt="" />
+            <h3>Engaging Content</h3>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis
-              maxime doloribus nesciunt quibusdam hic asperiores sint minus sed
-              enim tenetur!
+            Videos, Web pages, Presentations, Documents - watch on any device!
             </p>
           </div>
-          <div className="emdyCard col-sm-3">
-            <img src={emdy2} alt="" />
+          <div className="emdyCard p-3 text-center  col-sm-3">
+            <img className="homeCourseImg" src={emdy2} alt="" />
+            <h3>Metrics</h3>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus
-              magni laborum fugit modi obcaecati, et maxime quaerat iure unde
-              tempora?
+            Measure participation, feedback and see revenue reports.
             </p>
           </div>
-          <div className=" emdyCard col-sm-3">
-            <img src={emdy3} alt="" />
+          <div className=" emdyCard p-3 text-center  col-sm-3">
+            <img className="homeCourseImg" src={emdy3} alt="" />
+            <h3>Quizzes and Reviews</h3>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi
-              optio reiciendis pariatur officia magni itaque fugit voluptatum,
-              aspernatur voluptates excepturi.
+            Check how well people are learning and what they think of the content.
             </p>
           </div>
-          <div className="emdyCard col-sm-3">
-            <img src={emdy4} alt="" />
+          <div className="emdyCard p-3 text-center  col-sm-3">
+            <img className="homeCourseImg" src={emdy4} alt="" />
+            <h3>Certifications</h3>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit
-              repudiandae eius, tempore eveniet ipsam sed quaerat beatae. Natus,
-              labore libero.
+            Score advanced tests and see how many attempts lead to success.
             </p>
           </div>
         </div>
       </div>
+
     </div>
-  );
+    
+    </> );
 }
