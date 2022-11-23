@@ -32,13 +32,16 @@ type:String,
 required:true,
 default:'1st level'
 },
-  schedule: [
+Image_url:{
+type:String,
+default:'https://1.bp.blogspot.com/-ugf3uhhQYH8/X-xIJ-2TVtI/AAAAAAAAB1M/OCAGWmXvjbcTcqZQuNMjhA1TNCDTdhaaACLcBGAsYHQ/s450/Online_English_Courses_Learn_Special_English.jpg'
+},
+schedule: [
     {
       type: Date,
       default:[]
     },
   ],
-
   students: [
     {
       type: mongoose.Schema.Types.ObjectId,

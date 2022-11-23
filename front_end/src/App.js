@@ -43,6 +43,7 @@ import Contact from "./HomePage/pages/Contact/Contact";
 import AllCourses from "./HomePage/pages/Courses/AllCourses";
 import CourseDetails from "./HomePage/pages/Courses/CourseDetails"
 import Auth from "./HomePage/pages/Register/Auth";
+import AdminViewCourses from "./Dashboard/pages/admin dashboard/AdminViewCourses";
 
 function App() {
   // const { activeMenu } = useStateContext();
@@ -129,6 +130,7 @@ function App() {
           <Route path="/courses" element={<AllCourses />} />
           <Route path="/course-details" element={<CourseDetails />} />
           <Route path="/auth" element={<Auth />} />
+          <Route path="/Admin" element={<AdminViewCourses/>}/>
         </Routes>
         <Footer />
       </BrowserRouter>

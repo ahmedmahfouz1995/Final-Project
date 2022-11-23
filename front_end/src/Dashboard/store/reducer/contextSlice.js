@@ -14,7 +14,7 @@ const initialState = {
 const contextSlice = createSlice({
   name: "context",
   initialState,
-  reducers: {
+  reducers:{
     setActiveMenu: (state, action) => ({ ...state, activeMenu: action.payload }),
     setScreenSize: (state, action) => ({ ...state, screenSize: action.payload }),
     handleClick: (state, action) => {
