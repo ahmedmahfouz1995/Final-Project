@@ -46,7 +46,7 @@ const Teachers = (props) => {
         {
             // email
             required: true,
-            regex: ["/^\S+@\S+\.\S+$/"],
+            // regex: ["/^\S+@\S+\.\S+$/"],
         },
         {
         //    phone 
@@ -63,7 +63,7 @@ const Teachers = (props) => {
             // dob
             required: true,
         },
-       
+ 
     ]
 
     const [data, setData] = useState([]);
@@ -112,9 +112,18 @@ const Teachers = (props) => {
             console.log(state.action);
         }
     };
+    const reqiredrule ={ required: true}
+    const rule ={regex: [/null/,"MUST BE EMPTY"]}
  
     const actionBegienHandler= (args) => {
+        console.log(args.requestType);
         if (args.requestType==="add") {
+           ref.current.columnModel[5].validationRules=rule
+           ref.current.columnModel[5].allowEditing= false
+        }else if (args.requestType==="beginEdit") {
+            console.log(1);
+            ref.current.columnModel[5].validationRules=reqiredrule
+            ref.current.columnModel[5].allowEditing= true
         }
     }
     const actionEndHandler= (e)=>{
