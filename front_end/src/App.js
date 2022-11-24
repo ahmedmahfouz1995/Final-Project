@@ -44,6 +44,19 @@ import AllCourses from "./HomePage/pages/Courses/AllCourses";
 import CourseDetails from "./HomePage/pages/Courses/CourseDetails"
 import Auth from "./HomePage/pages/Register/Auth";
 import AdminViewCourses from "./Dashboard/pages/admin dashboard/AdminViewCourses";
+import Teacher from './Dashboard/pages/Teacher dashborad/Teacher';
+import TeacherStudents from './Dashboard/pages/Teacher dashborad/TeacherStudents';
+import TeacherCourses from './Dashboard/pages/Teacher dashborad/TeacherCourses';
+import TeacherMeetings from './Dashboard/pages/Teacher dashborad/TeacherMeetings';
+import TeacherAttendance from './Dashboard/pages/Teacher dashborad/TeacherAttendance';
+import TeacherExams from './Dashboard/pages/Teacher dashborad/TeacherExams';
+import Profile from './Dashboard/pages/student dashboard/components/Profile/Profile';
+import Matirals from './Dashboard/pages/student dashboard/components/Matirals/Matirals';
+import Exams from './Dashboard/pages/student dashboard/components/Exams/Exams';
+import Meetings from './Dashboard/pages/student dashboard/components/Meetings/Meetings';
+import Attendance from './Dashboard/pages/student dashboard/components/Attendance/Attendance';
+import Courses from "./Dashboard/pages/student dashboard/components/MyCourses/MyCourses";
+import Navigation from './Dashboard/pages/student dashboard/components/Navigation';
 
 function App() {
   // const { activeMenu } = useStateContext();
@@ -131,7 +144,25 @@ function App() {
           <Route path="/course-details" element={<CourseDetails />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/Admin" element={<AdminViewCourses/>}/>
-        </Routes>
+     <Route exact path='/teacher' element={<Teacher/>}>
+     <Route exact path='/teacher/students' element={<TeacherStudents/>}></Route>
+     <Route exact path='/teacher/courses' element={<TeacherCourses/>}></Route>
+     <Route exact path='/teacher/meetings' element={<TeacherMeetings/>}></Route>
+     <Route exact path='/teacher/attendance' element={<TeacherAttendance/>}></Route>
+     <Route exact path='/teacher/exams' element={<TeacherExams/>}></Route>
+     </Route>
+        <Route path="/student" element={<Navigation />}>
+        <Route path="/student/profile" element={<Profile />}/>
+        <Route path="/student/calender" element={<Calendar />}/>
+        <Route path="/student/courses" element={<Courses />}/>
+        <Route path="/student/matirals" element={<Matirals />}/>
+        <Route path="/student/exams" element={<Exams />} />
+        <Route path="/student/meetings" element={<Meetings />}/>
+        <Route path="/student/all-courses" element={<AllCourses />}/>
+        <Route path="/student/attendance" element={<Attendance />}/>
+        </Route>
+      </Routes>
+     
         <Footer />
       </BrowserRouter>
     </div>
