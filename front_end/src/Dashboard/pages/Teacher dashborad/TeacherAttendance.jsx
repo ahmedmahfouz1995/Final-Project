@@ -1,85 +1,146 @@
 import React from 'react'
-import Calendar from "calendar-reactjs";
+
+import Header from './../../components/Header';
+import { GridComponent, ColumnsDirective, ColumnDirective, Page, Sort, Edit, Toolbar, Search } from '@syncfusion/ej2-react-grids';
+import { Inject } from '@syncfusion/ej2-react-schedule';
+import { attendanceGrid } from '../../data/dummy';
+import { axios } from 'axios';
+import { useEffect, useRef, useState } from 'react';
+import { add, del, get, put } from '../../helpers/Crud';
+import { getValue } from '@syncfusion/ej2-base';
 export default function TeacherAttendance() {
+    // validationRules={customIDRules[index]} 
+    const editOptions = {
+        allowEditing: true,
+        allowAdding: true,
+        allowDeleting: true,
+    };
+    const toolbarOptions = [
+        "add",
+        "Edit",
+        "Delete",
+        "Update",
+        "Cancel",
+        "Search",
+    ];
+    const customIDRules =[
+        {
+            // name
+            required: true,
+         
+        },
+        {
+            // email
+            required: true,
+    
+        },
+        {
+        //    phone 
+            required: true,
+    
+        },
+        {
+            // gender
+            required: true,
+        },
+    ]
+const [data,setData]=useState()
+const [details,setDetails]=useState()
+    const refreshGrid = () => {
+        get("http://localhost:8000/attend/637f41c0a191baa398cd37d5").then((newData) => {
+            const students =newData.students
+            setData({ result:students, count: students.length });
+            setDetails(newData);
+        });
+    };
+   const rowDataBound=(args)=> {
+        if (args.row) {
+          if (getValue('attendenceStuts', args.data) ===true){
+            args.row.classList.add('present');
+          } else if(getValue('attendenceStuts', args.data) ===false ) {
+              args.row.classList.add('absent');
+          } else {
+              args.row.classList.add('');
+          }
+        }
+    }
+   
+    const dataSourceChanged = (state) => {
+       if (state.action === "edit") {
+            ref.current.hideSpinner();
+             details.students.map((element)=>{
+                if (element._id._id===state.data._id._id) {
+                    element.attendenceStuts=state.data.attendenceStuts
+                    return 1
+                }else{
+                    refreshGrid()
+                }
+             })
+             setDetails(details)
+            put(`http://localhost:8000/attend/${details._id}`,details)
+                .then((_) => refreshGrid())
+                .then(() => ref.current.hideSpinner());
+                refreshGrid()
+            }
+        else if (state.requestType === "delete") {
+                ref.current.hideSpinner();
+             details.students.filter((element)=>{
+                    return element._id._id !==state.data._id._id
+             })
+             setDetails(details)
+                del(
+                    `http://localhost:8000/attend/${details._id}`,details
+                    ).then((_) => refreshGrid());
+             
+            }
+        else if (state.action === "add") {
+                    state.data.classTitle=data?.count+1
+                    add("http://localhost:8000/admin/attend", state.data).then(
+                        (_) => refreshGrid()
+                        );
+                        console.log(state.data)
+                 } else {
+                    console.log(state.action);
+            }
+    };
+            
+    const actionBegienHandler= (args) => {
+        if (args.requestType==="add") {
+        }
+    }
+    const actionEndHandler= (e)=>{
+}
+console.log(data.count);
+const ref = useRef();
+    useEffect(() => {
+        refreshGrid();
+    }, []);
   return (
-    <div className='myAttendance p-5 bg-light'>
-    <div className="container">
-      <h2 className='mb-5 text-center'>Attendance</h2>
-      <Calendar
-    onCellClick={(val) => console.log(val)}
-    month={{
-      date: "2021-05-13",
-      days: [
-        { date: "2021-05-01", status: "vacation" },
-        { date: "2021-05-02", status: "vacation" },
-        { date: "2021-05-03", status: "present" },
-        { date: "2021-05-04", status: "present" },
-        { date: "2021-05-05", status: "present" },
-        { date: "2021-05-06", status: "present" },
-        { date: "2021-05-07", status: "present" },
-        { date: "2021-05-08", status: "vacation" },
-        { date: "2021-05-09", status: "vacation" },
-        { date: "2021-05-10", status: "present" },
-        { date: "2021-05-11", status: "present" },
-        { date: "2021-05-12", status: "present" },
-        { date: "2021-05-13", status: "present" },
-        { date: "2021-05-14", status: "present" },
-        { date: "2021-05-15", status: "vacation" },
-        { date: "2021-05-16", status: "vacation" },
-        { date: "2021-05-17", status: "absent" },
-        { date: "2021-05-18", status: "leave" },
-        { date: "2021-05-19", status: "leave" },
-        { date: "2021-05-20", status: "leave" },
-        { date: "2021-05-21", status: "leave" },
-        { date: "2021-05-22", status: "vacation" },
-        { date: "2021-05-23", status: "vacation" },
-        { date: "2021-05-24", status: "present" },
-        { date: "2021-05-25", status: "present" },
-        { date: "2021-05-26", status: "present" },
-        { date: "2021-05-27", status: "present" },
-        { date: "2021-05-28", status: "present" },
-        { date: "2021-05-29", status: "vacation" },
-        { date: "2021-05-30", status: "vacation" },
-        { date: "2021-05-31", status: "present" }
-      ]
-    }}
-    emptyCellStyle={{ backgroundColor: "white" }}
-    status={{
-      present: {
-        labelStyle: {
-          backgroundColor: "green",
-          color: "black",
-          borderRadius: "8px",
-          padding: "0px 0px 3px 0px"
-        }
-      },
-      absent: {
-        labelStyle: {
-          backgroundColor: "red",
-          color: "black",
-          borderRadius: "8px",
-          padding: "0px 0px 3px 0px"
-        }
-      },
-      vacation: {
-        labelStyle: {
-          backgroundColor: "yellow",
-          color: "black",
-          borderRadius: "8px",
-          padding: "0px 0px 3px 0px"
-        }
-      },
-      leave: {
-        labelStyle: {
-          backgroundColor: "orange",
-          color: "black",
-          borderRadius: "8px",
-          padding: "0px 0px 3px 0px"
-        }
-      }
-    }}
-  />
-    </div>
-      </div>
+    <>
+    <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl">
+     { <h3 className="text-green-900">Lesson : {data.count+1}</h3> }
+            <Header title="attendance sheet" />
+            <GridComponent
+                 actionComplete={actionEndHandler}
+                 actionBegin={actionBegienHandler}
+                 dataSource={data}
+                 allowPaging={true}
+                 allowEditing={true}
+                 editSettings={editOptions}
+                 toolbar={toolbarOptions}
+                 rowDataBound={rowDataBound}
+                 dataSourceChanged={dataSourceChanged}
+                 width="auto"
+                 ref={ref}
+            >
+                <ColumnsDirective>
+                    {attendanceGrid.map((item, index) => (
+                        <ColumnDirective validationRules={customIDRules[index]} key={index} {...item} />
+                    ))}
+                </ColumnsDirective>
+                <Inject services={[Page, Sort, Edit, Toolbar, Search]} />
+            </GridComponent>
+        </div>
+    </>
   )
 }

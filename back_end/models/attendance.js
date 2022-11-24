@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const attendanceSchema = mongoose.Schema({
     classTitle: {
     type: String,
-    required: true,
+    // required: true,
   },
   teacher: { 
     type: mongoose.Schema.Types.ObjectId,
@@ -14,19 +14,21 @@ const attendanceSchema = mongoose.Schema({
     ref: 'Class',
     default: null
   },
-  present : [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Student',
-    }
-  ],
-  absent : [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Student',
-    }
-  ]
+  students : [
+  
+      {
+        _id:{
+         type :  mongoose.Schema.Types.ObjectId,
+          ref: "Student",
+          default:null
 
+        },
+        attendenceStuts:{
+          type: Boolean,  
+          default:true
+        }
+      }
+  ]
 });
 
 const attendanceModel = mongoose.model('attendanceSheet', attendanceSchema)

@@ -12,7 +12,8 @@ const cors = require('cors');
 const path = require('path');
 const cookieParser = require('cookie-parser')
 const { verifyToken } = require('./utils/token')
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const attendrouter = require("./router/attendanceRouter");
 
 const app = express();
 var corsOptions = {
@@ -50,6 +51,7 @@ app.use("/zoomapi", zoomRouter);
 app.use('/Parent',ParentRouter);
 app.use("/teacher", teacherRouter);
 app.use("/admin", adminRouter);
+app.use("/attend", attendrouter);
 app.use((req, res, next) => {
   // res.sendFile(path.join(__dirname, "build", "index.html"));
 });
