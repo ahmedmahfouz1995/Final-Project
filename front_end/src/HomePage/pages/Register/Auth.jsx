@@ -191,7 +191,7 @@ export default function Auth() {
               <Tab className="col-12 font-bold " eventKey="home" title="Register">
 
                 <Form className="col-12" onChange={(e) => onChangeHandler(e)} onSubmit={submitHandler}>
-                  <Form.Group className="my-4" controlId="formBasicName" >
+                  <Form.Group className="my-4" controlId="formName" >
                     <Form.Control type="text" placeholder="Enter Your Name" className="py-3" name="name" />
                     {err.name && <p className="text-danger"> {err.name}</p>}
                   </Form.Group>
@@ -267,12 +267,12 @@ export default function Auth() {
               </Tab>
               {/* Tab2 **************************************************************/}
               <Tab className="col-12 font-bold " eventKey="profile" title="Login">
-                <Form className="col-12" onChange={onChangeHandlerLogin} onSubmit={submitHandlerLogin}>
-                  <Form.Group className="my-4" controlId="formBasicEmail">
+                <Form className="col-12" onChange={onChangeHandlerLogin} >
+                  <Form.Group className="my-4" controlId="Email">
                     <Form.Control type="email" placeholder="Enter email" className="py-3" name="email"/>
                   </Form.Group>
 
-                  <Form.Group className="my-4" controlId="formBasicPassword">
+                  <Form.Group className="my-4" controlId="Password">
                     <Form.Control type="password" placeholder="Password" className="py-3" name="password"/>
                   </Form.Group>
                   {['radio'].map((type) => (
@@ -305,7 +305,7 @@ export default function Auth() {
                   ))}
 
 
-                  <Button variant="primary" type="submit" className="col-12 registerBtn text-light p-3 rounded hover:opacity-95 transtion myFormBtn">
+                  <Button onClick={submitHandlerLogin} variant="primary"  className="col-12 registerBtn text-light p-3 rounded hover:opacity-95 transtion myFormBtn">
                     Login Now
                   </Button>
                 </Form>

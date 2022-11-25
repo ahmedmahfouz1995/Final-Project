@@ -378,7 +378,6 @@ const addClass = async (req, res) => {
         const {title ,level}=req.body
         const Exists = await classModel.find({title:title ,level:level})
         if (Exists.length >0) {
-            console.log("exist");
             return res.status(409).json({ message: "title exists" })
         }
         const saveClass = await newClass.save()

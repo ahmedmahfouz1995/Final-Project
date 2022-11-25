@@ -17,9 +17,6 @@ const {classData}=useSelector(state=>state.classcontx)
 const dispatch=useDispatch()
 const {TeacherData} =useSelector(state=>state.Teachercontx)
 
-  console.log({classData})
-  console.log({TeacherData})
-
 useEffect(()=>{
 dispatch(getAllclass())
 dispatch(getAllTeachers())
@@ -45,7 +42,6 @@ dispatch(getAllTeachers())
       
 {classData&& classData.map((course)=>{
 
-console.log({course})
 
 
 return  <Cards cardCom={course}  key={course._id} />

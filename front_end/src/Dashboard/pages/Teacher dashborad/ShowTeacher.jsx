@@ -1,22 +1,34 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { getAllTeachers, setTeacherProfile } from '../../store/reducer/TeacherSlice';
 // import { useSelector } from 'react-redux';
 // import { useDispatch } from 'react-redux';import { Outlet, NavLink, useLocation } from 'react-router-dom';
 // import { creatParent,creatChildren,getChildren,getParent } from './../../../store/reducer/ParentSlice';
-// import { useEffect } from 'react';
+// import { useEffect, useState } from 'react';
 // import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import  jwt_decode  from 'jwt-decode';
+import { useSelector } from 'react-redux';
+import { setTeacherProfileAfterLggIn } from './../../store/reducer/TeacherSlice';
+import { useEffect } from 'react';
 
 
 export default function ShowTeacher(props) {
-    // const {ParentId, ParentData,isUpdated}= useSelector(
-    //     (state) => state.Parentcontx
-    //   );
-    //   const Location = useLocation()
-    //   const navigate = useNavigate()
-    //  let myLocation =Location.pathname;
-    //   const dispatch = useDispatch();
-    //   useEffect(()=>{
-    //     dispatch(getParent(ParentId))
-    //   },[])
+    const {TeacherProfile}= useSelector(
+        (state) => state.Teachercontx
+      );
+      const token= sessionStorage.getItem("token")
+    const dispatch = useDispatch()
+    if (token){
+        const decoded = jwt_decode(token);
+        var {id}=decoded 
+    }
+    const [data,setData]= useState(TeacherProfile[0])
+    useEffect(()=>{
+        dispatch(getAllTeachers())
+        dispatch(setTeacherProfileAfterLggIn(id))
+        
+      },[])
   return (
     <>
 <div className="max-w-sm w-full lg:max-w-full lg:flex py-6" style={{height:"450px"}}>
@@ -30,11 +42,11 @@ export default function ShowTeacher(props) {
         </svg>
         Members only
       </p>
-      <div className="text-gray-900 font-bold text-xl mb-2">ٌRamadan Mabrouk</div>
+      <div className="text-gray-900 font-bold text-xl mb-2">{data?.name}</div>
       <p className="text-gray-700 text-base">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, Lorem ipsum dolor sit, amet consectetur adipisicing elit. Placeat non aliquam rerum eius omnis ipsum cumque fuga inventore adipisci ea. exercitationem praesentium nihil.</p>
     <div className="px-6">
-    <span className="inline-block bg-gray-200 rounded-full px-3 my-5 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Phone : 015135241616</span>
-    <span className="inline-block bg-gray-200 rounded-full px-3 my-5 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Email : ra@ma.com</span>
+    <span className="inline-block bg-gray-200 rounded-full px-3 my-5 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Phone : {data?.phone}</span>
+    <span className="inline-block bg-gray-200 rounded-full px-3 my-5 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Email : {data?.email}</span>
   </div>
     </div>
     {/* {

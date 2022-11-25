@@ -1,6 +1,6 @@
 import React from 'react'
 import Calendar from "calendar-reactjs";
-export default function TeacherAttendance() {
+export default function TeacherAttend() {
   return (
     <div className='myAttendance p-5 bg-light'>
     <div className="container">

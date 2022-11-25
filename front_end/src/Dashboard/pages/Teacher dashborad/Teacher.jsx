@@ -7,55 +7,6 @@ export default function Teacher() {
   const Location =useLocation()
   let myLocation=Location.pathname
   return<>
-  {/* <div className="page text-center fs-5 p-5 bg-light d-flex justify-content-center row">
-    <div className="col-md-6">
-    <Card style={{ width: '30rem' }} className="ms-5">
-      <Card.Img className="card-img" variant="top" src="https://images.unsplash.com/photo-1544717305-2782549b5136?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80" />
-      <Card.Body>
-        <Card.Title>Fly Zend</Card.Title>
-        <div className="row">
-        <Card.Text className="col-md-4">
-        Head of Dept.
-        </Card.Text>
-        <Card.Text className="col-md-4">
-        fly@gmail.com
-        </Card.Text>
-        <Card.Text className="col-md-4">
-        +01962067309
-        </Card.Text>
-        </div>
-        <Button variant="primary">Update Data</Button>
-      </Card.Body>
-    </Card>
-    </div>
-    <div className="col-md-6">
-      <h1 className="mb-5">To Do</h1>
-      <div className="row">
-        <NavLink className="col-md-3 text-decoration-none " to="/students">
-          <img className="tech-img" src="/assets/students.png" alt="students"></img>
-          <h3 className="text-decoration-none mt-3">Students</h3>
-        </NavLink>
-        <NavLink className="col-md-3 text-decoration-none"  to="/courses">
-          <img className="tech-img" src="/assets/courses.png" alt="courses"></img>
-          <h3 className="text-decoration-none mt-3">Courses</h3>
-        </NavLink>
-        <NavLink className="col-md-3 text-decoration-none" to="/meetings">
-          <img className="tech-img"  src="/assets/meetings.png" alt="meetings"></img>
-          <h3 className="text-decoration-none mt-3">Meetings</h3>
-        </NavLink>
-        <NavLink className="col-md-3 text-decoration-none" to="/attendance">
-          <img className="tech-img"  src="/assets/attendance.png" alt="attendance"></img>
-          <h3 className="text-decoration-none mt-3">Attendance</h3>
-        </NavLink>
-        <NavLink className="col-md-3 text-decoration-none" to="/exams">
-          <img className="tech-img"  src="/assets/exams.png" alt="exams"></img>
-          <h3 className="text-decoration-none mt-3">Exams</h3>
-        </NavLink>
-      </div>
-    </div>
-  
-    </div>; */}
-    <>
 <div className="border-b border-gray-200 dark:border-gray-700">
     <ul className="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400" >
        <NavLink className="text-decoration-none"  to={"/teacher"} >
@@ -122,5 +73,4 @@ export default function Teacher() {
 }
     <Outlet />
     </>
-  </>
 }

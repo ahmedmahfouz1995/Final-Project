@@ -17,13 +17,15 @@ console.log(attendanceModel.length);
 //Get By Ida
 
 const getReport = ("/:id",async (req, res, next) => {
-  try {
+  // try {
     const {id}  = req.params;
-    const report= await attendanceModel.findById(id).populate("teacher").populate("subject").populate("students._id")
+    console.log(id);
+    const report= await attendanceModel.find({teacher:id}).populate("teacher").populate("subject").populate("students._id")
+    console.log("here",report);
     res.json(report);
-  } catch (error) {
-    res.json({ msg: "Error getting parent" });
-  }
+  // } catch (error) {
+  //   res.json({ msg: "Error getting parent" });
+  // }
 });
 
 const creatReport = ("/", async (req, res, next) => {
@@ -41,7 +43,6 @@ const creatReport = ("/", async (req, res, next) => {
       try {
         const {id}  = req.params;
        const report=await attendanceModel.findByIdAndUpdate(id,req.body)    
-       console.log( report);
       res.json(report);
       } catch (error) {
         res.json(error);

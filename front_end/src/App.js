@@ -45,6 +45,22 @@ import AllCourses from "./HomePage/pages/Courses/AllCourses";
 import CourseDetails from "./HomePage/pages/Courses/CourseDetails"
 import Auth from "./HomePage/pages/Register/Auth";
 import AdminViewCourses from "./Dashboard/pages/admin dashboard/AdminViewCourses";
+import AdminDashbord from './Dashboard/pages/admin dashboard/AdminDashbord';
+import Attendance from './Dashboard/pages/student dashboard/components/Attendance/Attendance';
+import StudentDashbord from './Dashboard/pages/StudentDashbord';
+import TeacherAttendance from './Dashboard/pages/Teacher dashborad/TeacherAttendance';
+import TeacherAttendanceReport from './Dashboard/pages/Teacher dashborad/TeacherAttendanceReport';
+import Teacher from "./Dashboard/pages/Teacher dashborad/Teacher";
+import TeacherStudents from './Dashboard/pages/Teacher dashborad/TeacherStudents';
+import TeacherCourses from './Dashboard/pages/Teacher dashborad/TeacherCourses';
+import TeacherMeetings from './Dashboard/pages/Teacher dashborad/TeacherMeetings';
+import TeacherExams from './Dashboard/pages/Teacher dashborad/TeacherExams';
+import Navigation from './Dashboard/pages/student dashboard/components/Navigation';
+import Profile from './Dashboard/pages/student dashboard/components/Profile/Profile';
+import Exams from './Dashboard/pages/student dashboard/components/Exams/Exams';
+import Meetings from './Dashboard/pages/student dashboard/components/Meetings/Meetings';
+import Matirals from './Dashboard/pages/student dashboard/components/Matirals/Matirals';
+import Courses from './Dashboard/pages/student dashboard/components/MyCourses/MyCourses';
 
 function App() {
   // const { activeMenu } = useStateContext();
@@ -132,9 +148,33 @@ function App() {
           <Route path="/course-details" element={<CourseDetails />} />
           <Route path="/calendar" element={<Calendar/>}/>
           <Route path="/auth" element={<Auth />} />
-          <Route path="/Admin" element={<AdminViewCourses/>}/>
-          <Route path="/teacherDashboard" element={<Teachers/>}/>
+          <Route path="/AdminDashboard" element={<AdminDashbord/>}>
+                <Route path="/AdminDashboard/teachers" element={<Teachers/>}/>
+                <Route path="/AdminDashboard/courses" element={<AdminViewCourses/>}/>
+                <Route path="/AdminDashboard/attendance" element={<TeacherAttendance/>}/>
+                <Route path="/AdminDashboard/students" element={<StudentDashbord/>}/>
+          </Route>
+          <Route path="/teacher" element={<Teacher/>}>
+          <Route path="/teacher/students" element={<TeacherStudents/>}/>
+                <Route path="/teacher/courses" element={<TeacherCourses/>}/>
+                <Route path="/teacher/meetings" element={<Calendar/>}/>
+                <Route path="/teacher/attendance" element={<TeacherAttendance/>}/>
+                <Route path="/teacher/exams" element={<TeacherExams/>}/>
+          </Route>
+          <Route path="/student" element={<Navigation/>}>
+            <Route path="/student/profile" element={<Profile/>}/>
+                <Route path="/student/calender" element={<Calendar/>}/>
+                <Route path="/student/courses" element={<Courses/>}/>
+                <Route path="/student/all-courses" element={<AllCourses/>}/>
+                <Route path="/student/exams" element={<Exams/>}/>
+                <Route path="/student/meetings" element={<Meetings/>}/>
+                <Route path="/student/matirals" element={<Matirals/>}/>
+                <Route path="/student/attendance" element={<TeacherAttendance/>}/>
+          </Route>
         </Routes>
+       
+
+        
         <Footer />
       </BrowserRouter>
     </div>

@@ -32,7 +32,6 @@ router.post("/login", async (req, res, next) => {
     return res.status(401).end();
   }
 
-  // console.log("correct 3")
   const { _id: id, name, password: userPassword } = user;
   const match = await bcrypt.compare(password, userPassword);
   if (!match) {
@@ -41,7 +40,7 @@ router.post("/login", async (req, res, next) => {
 
   // console.log("correct 4")
 
-  const token = signToken({ id, name, role });
+  const token = signToken({ id, name, role ,loggedIn:true});
   res.json({token});
 });
 

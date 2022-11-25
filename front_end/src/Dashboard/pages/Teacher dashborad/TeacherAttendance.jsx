@@ -51,17 +51,19 @@ const [viewallreport,setAllView]=useState(false)
 const [details,setDetails]=useState()
 
     const refreshGrid = () => {
-        get("http://localhost:8000/attend/637f41c0a191baa398cd37d5").then((newData) => {
-            const students =newData.students
-            setData({ result:students, count: students.length });
+        get("http://localhost:8000/attend/637d373630607008f751039f").then((newData) => {
+            console.log(newData);
+            const students =newData[0].students
+            console.log(students);
+            setData({ result:students, count: students?.length });
             setDetails(newData);
+            console.log(details);
         });
     };
     const ShowNewReport=(id)=>{
         setView(true)
         setAllView(false)
         refreshGrid()
-
     }
    const rowDataBound=(args)=> {
         if (args.row) {
@@ -78,7 +80,8 @@ const [details,setDetails]=useState()
     const dataSourceChanged = (state) => {
        if (state.action === "edit") {
             ref.current.hideSpinner();
-             details.students.map((element)=>{
+            console.log("dd",state.data._id._id);
+             details[0].students.map((element)=>{
                 if (element._id._id===state.data._id._id) {
                     element.attendenceStuts=state.data.attendenceStuts
                     return 1
@@ -87,8 +90,9 @@ const [details,setDetails]=useState()
                     return 0
                 }
              })
-             setDetails(details)
-            put(`http://localhost:8000/attend/${details._id}`,details)
+             setDetails(...details)
+             console.log(details);
+            put(`http://localhost:8000/attend/${details[0]._id}`,details[0])
                 .then((_) => refreshGrid())
                 .then(() => ref.current.hideSpinner());
                 refreshGrid()
