@@ -46,6 +46,7 @@ export default function Home() {
                 dispatch(getAllTeachers())
                 dispatch(getAllStudents())
                 dispatch(getAllclass())
+                navigate("/AdminDashboard")
             }
         }
     }

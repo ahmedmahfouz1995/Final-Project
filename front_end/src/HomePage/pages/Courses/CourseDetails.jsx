@@ -8,6 +8,7 @@ import { useLocation, useParams } from "react-router-dom";
 import Footer from "../../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllclass } from "../../../Dashboard/store/reducer/classSlice";
+import { NavLink } from "react-router-dom";
 
 export default function CourseDetails() {
 
@@ -59,7 +60,7 @@ useEffect(()=>{
                     src="https://res.cloudinary.com/dev-empty/image/upload/v1661245253/wqsnxv0pfdwl2abdakf5.jpg"
                     alt="Admin"
                   />
-                  <span>Created By {state.teacher.name}</span>
+                  <span>Created By {state?.teacher?.name}</span>
                 </a>
               </div>
               <div className="this-course-content my-5">
@@ -98,7 +99,7 @@ useEffect(()=>{
                     in months not years without wasting money, time and effort
                     on traditional Piano Lessons. */}
                     This is {state.title} course for {state.level} which is taught by one of the best Instructors in the arab world
-                    Mr {state.teacher.name}<br></br>
+                    Mr {state?.teacher?.name}<br></br>
                     There are more than {state.students.length} students.<br></br>
                     The Course starts at  {state.startDate.split("T")[0]}  and ends at  {state.endDate.split("T")[0]}<br></br>
                     Make sure to enroll as soon as possible
@@ -133,12 +134,15 @@ useEffect(()=>{
                 <ListGroup.Item>Start date : {state.startDate.split("T")[0]}</ListGroup.Item>
                 <ListGroup.Item>End date : {state.endDate.split("T")[0]}</ListGroup.Item>
 
-                <ListGroup.Item>Instructor : {state.teacher.name}</ListGroup.Item>
+                <ListGroup.Item>Instructor : {state?.teacher?.name}</ListGroup.Item>
                 <ListGroup.Item>Enrolled</ListGroup.Item>
               </ListGroup>
               <Card.Body>
                 <Card.Link href="#">
+                    <NavLink to={"/admin/enroll/:classid"}>
                   <button className="btn btn-primary registerBtn py-3 buy col-12">Enroll Now</button>
+
+                    </NavLink>
                 </Card.Link>
               </Card.Body>
             </Card>

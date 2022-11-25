@@ -6,6 +6,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import logo from "./../assets/logoE.png";
 import jwt_decode from "jwt-decode";
 export default function TheNavbar() {
+    const navigate= useNavigate()
+
     const token= sessionStorage.getItem("token")
     if (token){
         const decoded = jwt_decode(token);
@@ -13,6 +15,7 @@ export default function TheNavbar() {
     }
      const  signOut= ()=>{
         sessionStorage.removeItem("token")
+        navigate("/")
      }
   return (
     <>
@@ -56,7 +59,7 @@ export default function TheNavbar() {
               </NavLink>
             </Nav>
             <Nav>
-                {/* {Boolean(id) || */}
+                {Boolean(id) ||
             <NavLink
                 className="nav-link registerBtn text-light p-3 rounded hover:opacity-95 transtion"
                 to="/auth"
@@ -64,7 +67,7 @@ export default function TheNavbar() {
                 Regester Now
               </NavLink>
 
-                {/* } */}
+                 }
             </Nav>
           </Navbar.Collapse>
         </Container>

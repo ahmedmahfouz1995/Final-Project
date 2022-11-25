@@ -432,6 +432,33 @@ const editStudent = async (req, res) => {
     }
 }
 
+const Enroll = async (req, res) => {
+    try {
+        const token= sessionStorage.getItem("token")
+        if (token){
+            var decoded = jwt_decode(token);
+            var {id,role}=decoded
+        }
+
+        const { classid } = req.params
+
+        const findStudent = await studentModel.findById({ _id: id })
+
+        if (!findStudent) return res.json({ message: "Student not found" })
+        
+        const foundclass = await classModel.findById({ _id: classid })
+        
+        if (!foundclass) return res.json({ message: "class not found" })
+
+        res.status(200).json({ message: "enrolled", foundclass })
+
+    } catch (err) {
+
+        res.json({ message: "Catch Enroll Error" })
+
+    }
+}
+
 //editClass  -----------------------------------------------------------------------------
 
 const editClass = genericPutEndpointHandler(classModel,teacherModel, "teacher" , "subject", 
@@ -625,4 +652,5 @@ module.exports = {
     getClassById,
     getAllParents,
     addParent ,
+    Enroll,
 }

@@ -46,12 +46,12 @@ const Teachers = (props) => {
         {
             // email
             required: true,
-            // regex: ["", "Email is not correct"],
+            regex: [" /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g", "Email is not correct"],
         },
         {
             //    phone 
             required: true,
-            // regex: ["/^(1\s|1|)?((\(\d{3}\))|\d{3})(\-|\s)?(\d{3})(\-|\s)?(\d{4})$/","inValid phone number"],
+            regex: ["/^(1\s|1|)?((\(\d{3}\))|\d{3})(\-|\s)?(\d{3})(\-|\s)?(\d{4})$/","inValid phone number"],
 
             number: [true, "price can not contain letters"]
         },
