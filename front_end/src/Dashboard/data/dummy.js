@@ -601,12 +601,12 @@ console.log( {TeacherData});
 // ظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظ
         let ParentElem
         let ParentObj
-        let ParentData=[]
+        let ParentData=[true,false]
         // ////////////////////////////////////////////////
-        get("http://localhost:8000/admin/getAllParents").then((newData) => {
-            ParentData.push(...newData);
-        });
-        console.log(ParentData);
+        // get("http://localhost:8000/admin/getAllParents").then((newData) => {
+        //     ParentData.push(...newData);
+        // });
+        // console.log(ParentData);
      const ParentParam   = {
          create: () => {
             ParentElem = document.createElement('input');
@@ -623,7 +623,7 @@ console.log( {TeacherData});
                   dataSource: new DataManager(ParentData),
                   fields: {value:'_id',text:'Parent_name' },
                   floatLabelType: 'Never',
-                  placeholder: 'Select Parent'
+                  placeholder: 'set status'
               });
               ParentObj.appendTo( ParentElem);
           }
@@ -851,3 +851,16 @@ export const links = [
       ],
     },
   ];
+  export const attendanceGrid = [
+    { field: "_id.name", headerText: "Student Name", width: "170", textAlign: "Center",  allowEditing:false},
+    { field: "_id.email", headerText: "Student Email", width: "170", textAlign: "Center", allowEditing:false},
+    { field: "_id.phone", headerText: "Student Phone", width: "170", textAlign: "Center", allowEditing:false},
+    { field: "attendenceStuts", headerText: "Attendance Status", width: "100", textAlign: "Center" ,editType:'dropdownedit', edit:ParentParam},
+    
+];
+export const attendanceReprtGrid = [
+    { field: "reportDate", headerText: "subject data", width: "170", textAlign: "Center",  allowEditing:false},
+    { field: "teacher.name", headerText: "teacher", width: "170", textAlign: "Center", allowEditing:false},
+    { field: "subject.title", headerText: "Subject", width: "170", textAlign: "Center", allowEditing:false},
+    { headerText: "view",textAlign: "Center" ,width: "100", template: viewButtonTwo ,isPrimaryKey: true},
+];

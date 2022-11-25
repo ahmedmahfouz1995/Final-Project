@@ -16,6 +16,7 @@ const initialState = {
     error: null,
     isUpdated: false,
     isAdmin: true,
+    isLoggedIn: false,
 };
 
 // with back end 
@@ -62,6 +63,26 @@ export const getAllTeachers = createAsyncThunk(
                 }
               })
             return response.data;
+        } catch (error) {
+
+            rejectWithValue(error.message)
+
+        }
+
+    }
+);
+export const setTeacherProfileAfterLggIn = createAsyncThunk(
+    "Teacher/setTeacherProfileAfterLggIn",
+    //   Teacher ----> name of Slice 
+    //  createTeacher----> name of fun
+    async (args, thunkAPI) => {
+        // {data}: paramaters use it to change state
+
+        const {
+            rejectWithValue
+        } = thunkAPI
+        try {
+            return args;
         } catch (error) {
 
             rejectWithValue(error.message)
@@ -152,10 +173,9 @@ export const setTeacherProfile = createAsyncThunk(
     //  createTeacher----> name of fun
     async (args, thunkAPI) => {
         // {data}: paramaters use it to change state
-        const {
-            rejectWithValue
-        } = thunkAPI
+        const {rejectWithValue} = thunkAPI
         try {   
+           console.log(sessionStorage.getItem());
             return args
         } catch (error) {
 
@@ -197,6 +217,12 @@ const TeacherSlice = createSlice({
         [getAllTeachers.fulfilled]: (state, action) => {
             state.TeacherData = action.payload
             state.isUpdated = true;
+        },
+        [setTeacherProfileAfterLggIn.fulfilled]: (state, action) => {
+          state.TeacherProfile= state.TeacherData.filter((element)=>{
+               return element._id === action.payload
+            })
+            state.isLoggedIn = true;
         },
         // edit teacher ------------------------------------------------
         [editTeacher.fulfilled]: (state, action) => {

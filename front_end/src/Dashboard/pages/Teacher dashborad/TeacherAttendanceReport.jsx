@@ -1,10 +1,10 @@
 import React from 'react'
-import Header from '../../components/Header';
+import Header from './../../components/Header';
 import { GridComponent, ColumnsDirective, ColumnDirective, Page, Sort, Edit, Toolbar, Search } from '@syncfusion/ej2-react-grids';
 import { Inject } from '@syncfusion/ej2-react-schedule';
-import {attendanceReprtGrid } from '../../data/dummy';
+import {attendanceReprtGrid } from './../../data/dummy';
 import { useEffect, useRef, useState } from 'react';
-import { add, del, get, put } from '../../helpers/Crud';
+import { add, del, get, put } from './../../helpers/Crud';
 export default function TeacherAttendanceReport() {
     const editOptions = {
         allowEditing: true,

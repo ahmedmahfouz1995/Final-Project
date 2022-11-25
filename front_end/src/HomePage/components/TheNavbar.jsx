@@ -2,10 +2,11 @@ import React from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import logo from "./../assets/logoE.png";
-
+import jwt_decode from "jwt-decode";
 export default function TheNavbar() {
+
   return (
     <>
       <Navbar collapseOnSelect className="headerOne" expand="lg" variant="dark">
@@ -13,8 +14,8 @@ export default function TheNavbar() {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="ms-auto">
-              <NavLink className="nav-link" to="/auth">Become An Instructor</NavLink>
-              <NavLink className="nav-link" to="/auth">Signin</NavLink>
+                {/* { id ? <button onClick={signOut} className="nav-link" to="/auth">Sign out</button> :   <NavLink className="nav-link" to="/auth">Sign In</NavLink>  } */}
+                <NavLink className="nav-link" to="/auth">Sign In</NavLink> 
             </Nav>
           </Navbar.Collapse>
         </Container>
@@ -48,12 +49,15 @@ export default function TheNavbar() {
               </NavLink>
             </Nav>
             <Nav>
-              <NavLink
+                {/* {Boolean(id) || */}
+            <NavLink
                 className="nav-link registerBtn text-light p-3 rounded hover:opacity-95 transtion"
                 to="/auth"
               >
                 Regester Now
               </NavLink>
+
+                {/* } */}
             </Nav>
           </Navbar.Collapse>
         </Container>

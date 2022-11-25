@@ -6,7 +6,6 @@ import { NavLink } from "react-router-dom";
 export default function Cards({ cardCom }) {
     // console.log({cardCom});
   const { teacher,endDate, startDate, title, Image_url,price ,_id} = cardCom;
-  console.log({title})
   return (
 <div className="col-md-4 col-sm-6 py-2 my-5">
               <Card className="courseCard">
@@ -14,10 +13,10 @@ export default function Cards({ cardCom }) {
                 <Card.Body>
                   <Card.Title className="fw-bold">{title}</Card.Title>
                   <Card.Text>
-                Teacher is {teacher.name}
+                Teacher is {teacher?.name}
                 </Card.Text>
                   <Card.Subtitle className="mb-2 text-muted">
-                    Start: {startDate} . End: {endDate}
+                    Start: {startDate.split("T")[0]} . End: {endDate.split("T")[0]}
                   </Card.Subtitle>
              
                   <NavLink to={`course-details`} state={cardCom} variant="btn btn-outline-primary" className="mt-3">

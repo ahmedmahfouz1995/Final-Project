@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import banner from "./../../assets/banner-img-1.png";
 import breaks from "./../../assets/333pn.png";
 import breaks2 from './../../assets/pg9.png'
@@ -6,15 +6,53 @@ import join from "./../../assets/pg5.png";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
-
+import jwt_decode from "jwt-decode";
 import Video from "./Video";
 import Courses from "./Courses";
 import Transform from "./Transform";
 import Students from "./Students ";
 import BecomeAnInstructor from "./BecomeAnInstructor";
 import Choose from "./Choose";
+import { useSelector, useDispatch } from 'react-redux';
+import { getAllTeachers } from "../../../Dashboard/store/reducer/TeacherSlice";
+import { getAllStudents } from "../../../Dashboard/store/reducer/StudentSlice";
+import { getAllclass } from "../../../Dashboard/store/reducer/classSlice";
+import { useNavigate } from 'react-router-dom';
+import { setTeacherProfileAfterLggIn } from './../../../Dashboard/store/reducer/TeacherSlice';
+import { setStudentProfileAfterLggIn } from './../../../Dashboard/store/reducer/StudentSlice';
 
 export default function Home() {
+    const token= sessionStorage.getItem("token")
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+  
+        
+        var authorize = ()=>{
+            if (token){
+                const decoded = jwt_decode(token);
+                const {id,role}=decoded
+            if (role==="teacher") {
+                dispatch(getAllTeachers())
+            dispatch(setTeacherProfileAfterLggIn(id))
+            navigate("/teacher")
+        }else if(role==="student"){
+            dispatch(getAllStudents())
+            dispatch(setStudentProfileAfterLggIn(id))
+            console.log(1);
+            navigate("/student")
+            
+        }else if(role==="admin") {
+                navigate("/AdminDashboard")
+                dispatch(getAllTeachers())
+                dispatch(getAllStudents())
+                dispatch(getAllclass())
+            }
+        }
+    }
+    useEffect(()=>{
+        authorize()
+
+    },[])
   return (
     <>
       <section className="homeSection">

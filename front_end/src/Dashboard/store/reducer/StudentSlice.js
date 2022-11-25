@@ -164,7 +164,26 @@ export const setStudentProfile = createAsyncThunk(
 
     }
 );
+export const setStudentProfileAfterLggIn = createAsyncThunk(
+    "Student/setStudentProfileAfterLggIn",
+    //   Teacher ----> name of Slice 
+    //  createTeacher----> name of fun
+    async (args, thunkAPI) => {
+        // {data}: paramaters use it to change state
 
+        const {
+            rejectWithValue
+        } = thunkAPI
+        try {
+            return args;
+        } catch (error) {
+
+            rejectWithValue(error.message)
+
+        }
+
+    }
+);
 
 
 // ----------------------------------------------------------------
@@ -197,6 +216,12 @@ const StudentSlice = createSlice({
             state.StudentData = action.payload
             state.isUpdated = true;
         },
+        [setStudentProfileAfterLggIn.fulfilled]: (state, action) => {
+           state.StudentProfile =state.StudentData.filter((element)=>{
+               return element._id === action.payload
+            })
+            state.isLoggedIn = true;
+        },
         // edit Student ------------------------------------------------
         [editStudent.fulfilled]: (state, action) => {
             const foundIndex = state.StudentData.indexOf(Studentdata => Studentdata.id === action.payload.id)
@@ -216,7 +241,6 @@ const StudentSlice = createSlice({
         },
         [setStudentProfile.fulfilled]: (state, action) => {
             state.StudentProfile=action.payload
-
         },
     },
 });
