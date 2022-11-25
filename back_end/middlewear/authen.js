@@ -17,7 +17,7 @@ const roles = {
 const authen = (accessRoles) => {
     return async (req, res, next) => {
         const headerToken = req.headers['authorization']
-
+        
         // if(!headerToken || headerToken == null || headerToken == undefined || !headerToken.startsWith(`${process.env.TOKEN} `)){
         if (!headerToken.startsWith(`Bearer `)) {
             res.status(400).json({
@@ -51,7 +51,7 @@ const authen = (accessRoles) => {
                             message: 'not auth account'
                         })
                     } else {
-                        req.user = findUser
+                        req.user = foundUser
                         next()
                     }
                 }

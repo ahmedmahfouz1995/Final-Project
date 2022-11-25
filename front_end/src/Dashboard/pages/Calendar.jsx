@@ -5,6 +5,7 @@ import { Header } from '../components'
 import { get, add, put, del } from '../helpers/Crud'
 import { Button } from '../components'
 import { getCookie } from '../helpers/cookieUtils'
+import jwt_decode from "jwt-decode";
 
 const Calendar = () => {
 
@@ -101,10 +102,20 @@ const Calendar = () => {
         .filter(([key, _]) => key !== "Id");
 
       const mapFromKeyValues = Object.fromEntries(keyValues);
+      mapFromKeyValues["topic"] = mapFromKeyValues["Subject"];
+      mapFromKeyValues["start_time"] = new Date(mapFromKeyValues["StartTime"]).toISOString();
+      mapFromKeyValues["end_time"] = new Date(mapFromKeyValues["EndTime"]).toISOString();
+
       add("http://localhost:8000/slot", mapFromKeyValues)
         .then((_) => refreshCalendar());
     } else if (state.requestType === "eventChanged") {
-      put(`http://localhost:8000/slot/${state.data[0].id}`, state.data[0]).then((_) => refreshCalendar());
+      const mapFromKeyValues = state.data[0];
+
+      mapFromKeyValues["topic"] = mapFromKeyValues["Subject"];
+      mapFromKeyValues["start_time"] = new Date(mapFromKeyValues["StartTime"]).toISOString();
+      mapFromKeyValues["end_time"] = new Date(mapFromKeyValues["EndTime"]).toISOString();
+
+      put(`http://localhost:8000/slot/${state.data[0].id}`, mapFromKeyValues).then((_) => refreshCalendar());
     } else if (state.requestType === "eventRemoved") {
       del(`http://localhost:8000/slot/${state.data[0].id}`).then((_) => refreshCalendar());
     } else {
@@ -188,22 +199,34 @@ const Calendar = () => {
     refreshCalendar();
   }, []);
   
-//   console.log(localStorage.get("auth_token"))
+  //console.log(localStorage.get("auth_token"))
+  const decodedToken = jwt_decode(sessionStorage.getItem("token"));
 
   return (<div className='m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl'>
     <Header category="App" title="Calendar" />
     {!eventData.status ?
       null :
       <>
+      {decodedToken.role === "teacher" ?
+      <>
         <Button
           bgColor="black" color="white" size="10px" text="Schedule Zoom Meeting" borderRadius="1px"
           onClick={onClickScheduleMeeting} />
-        <Button
+        { !eventData.meeting_id ? null :
+          <Button
           bgColor="black" color="white" size="10px" text="Start Zoom Meeting" borderRadius="1px"
           onClick={onClickStartMeeting} />
+        }
+      </>
+      : null}
+      {decodedToken.role === "student" ?
+      <>
         <Button
           bgColor="black" color="white" size="10px" text="Join Zoom Meeting" borderRadius="1px"
           onClick={onClickJoinMeeting} />
+      </>
+      : null
+      }
       </>
     }
     <ScheduleComponent

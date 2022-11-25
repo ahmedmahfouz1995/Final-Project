@@ -502,6 +502,7 @@ const deleteClass = async (req, res) => {
 // getAllTeachers---------------------------------------------------------------
 const getAllTeachers = async (req, res) => {
     const findTeachers = await get(teacherModel, ["subject"])
+    console.log({findTeachers})
     if (findTeachers.confirmEmail === false) res.json({ message: 'plz confirm u email' })
     res.status(200).json(findTeachers);
 }

@@ -14,7 +14,11 @@ export const getBooks = createAsyncThunk(
   async (args, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
-      const response = await axios.get("http://localhost:3030/books");
+      const response = await axios.get("http://localhost:3030/books", {
+        headers: {
+          "Authorization": `Bearer ${sessionStorage.getItem("token")}`
+        }
+      });
       console.log(response.data);
       return response.data;
     } catch (error) {
@@ -28,7 +32,11 @@ export const addBook = createAsyncThunk(
   async (book, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
-      const response = await axios.post("http://localhost:3030/books", book);
+      const response = await axios.post("http://localhost:3030/books", book, {
+        headers: {
+          "Authorization": `Bearer ${sessionStorage.getItem("token")}`
+        }
+      });
       // dispatch(getBooks());
       return response.data;
     } catch (error) {
@@ -44,7 +52,11 @@ export const deleteBook = createAsyncThunk(
     try {
       console.log(thunkAPI);
       const response = await axios.delete(
-        `http://localhost:3030/books/${bookId}`
+        `http://localhost:3030/books/${bookId}`, {
+          headers: {
+            "Authorization": `Bearer ${sessionStorage.getItem("token")}`
+          }
+        }
       );
       dispatch(getBooks());
       return response.data;
@@ -61,7 +73,11 @@ export const editBook = createAsyncThunk(
     try {
       console.log(thunkAPI);
       const response = await axios.put(
-        `http://localhost:3030/books/${bookId}`, newBook
+        `http://localhost:3030/books/${bookId}`, newBook, {
+          headers: {
+            "Authorization": `Bearer ${sessionStorage.getItem("token")}`
+          }
+        }
       );
       // dispatch(getBooks());
       return response.data;

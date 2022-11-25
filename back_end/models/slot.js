@@ -8,6 +8,10 @@ const slotSchema = mongoose.Schema({
     type: Date,
     required: true,
   },
+  end_time: {
+    type: Date,
+    required: true,
+  },
   meeting_id: {
     type: String
   },

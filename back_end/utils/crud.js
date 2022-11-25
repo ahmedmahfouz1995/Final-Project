@@ -34,6 +34,21 @@ async function getBy(criteria, model, fieldsToPopulate) {
   }
 }
 
+async function getAllBy(criteria, model, fieldsToPopulate) {
+  try {
+    const modelInstances = await model.find(criteria);
+    const promises = !fieldsToPopulate.length ? [] : modelInstances.map(
+      async (modelInst) => await modelInst.populate(fieldsToPopulate.join(" "))
+    );
+    await Promise.all(promises);
+    return modelInstances;
+  } catch (err) {
+    throw err;
+  }
+}
+
+
+
 async function add(modelWithData, fieldsToPopulate) {
   try {
     const savedModel = await modelWithData.save();
@@ -66,4 +81,4 @@ async function deleteById(id, model, fieldsToPopulate) {
   }
 }
 
-module.exports = { get, getById, getBy, add, editById, deleteById };
+module.exports = { get, getById, getBy, getAllBy, add, editById, deleteById };

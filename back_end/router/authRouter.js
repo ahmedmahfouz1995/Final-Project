@@ -3,31 +3,46 @@ const express = require("express");
 const bcrypt = require('bcrypt')
 const UserModel = require("../models/user");
 const { get, getById, getBy, add, editById, deleteById } = require("../utils/crud");
-const { signToken } = require('../utils/token')
+const { signToken, verifyToken } = require('../utils/token');
+const StudentModel = require("../models/student");
+const teacherModel = require("../models/teacher");
+const adminModel = require("../models/admin");
 
 const router = express.Router();
 
 router.post("/login", async (req, res, next) => {
-  const auth_token = req.header('Authorization');
+  const auth_token = req.headers['authorization'];
   // assumption!!! auth_token already verified
+  const rolesToModel = {"student": StudentModel, "teacher": teacherModel, "admin": adminModel};
   if (auth_token) {
-    return next()
+    try {
+      verifyToken(auth_token.split("Bearer ")[1]);
+      return res.json({token: auth_token.split("Bearer ")[1]});
+    } catch (e) {
+      console.log("invalid token", e)
+    }
   }
 
-  const { email, password } = req.body
-  const user = await getBy({ email }, UserModel, []);
+  // console.log("correct 1")
+  const { email, password, role } = req.body
+  const user = await getBy({ email }, rolesToModel[role], []);
+  
+  // console.log("correct 2")
   if (!user) {
-    return next(new Error("wrong user or password"));
+    return res.status(401).end();
   }
 
-  const { _id: id, password: userPassword, role } = user;
+  // console.log("correct 3")
+  const { _id: id, name, password: userPassword } = user;
   const match = await bcrypt.compare(password, userPassword);
   if (!match) {
-    return next(new Error("Wrong password"));
+    return res.status(401).end();
   }
-  const token = signToken({ id, role });
-  res.cookie('auth_token', token)
-    .redirect('/')
+
+  // console.log("correct 4")
+
+  const token = signToken({ id, name, role });
+  res.json({token});
 });
 
 router.post("/signup", async (req, res) => {

@@ -2,6 +2,9 @@
 // get
 export const get = (url) => fetch(url, {
     credentials: 'same-origin',
+    headers: {
+        "Authorization": `Bearer ${sessionStorage.getItem("token")}`
+    },
     mode: 'cors'
 }).then((res) => res.json());
 
@@ -10,7 +13,9 @@ export const add = (url, body) => fetch(url, {
     credentials: 'same-origin',
     mode: 'cors',
     method: "post",
-    headers: { "Content-Type": "application/json" },
+    headers: { 
+        "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
+        "Content-Type": "application/json" },
     body: JSON.stringify(body)
 }).then((res) => res.json());
 
@@ -20,7 +25,10 @@ export const put = (url, body) => fetch(url, {
     credentials: 'same-origin',
     mode: 'cors',
     method: "put",
-    headers: { "Content-Type": "application/json" },
+    headers: { 
+        "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
+        "Content-Type": "application/json" 
+    },
     body: JSON.stringify(body)
 }).then((res) => res.json());
 
@@ -29,6 +37,9 @@ export const put = (url, body) => fetch(url, {
 export const del = (url) => fetch(url, {
     credentials: 'same-origin',
     mode: 'cors',
+    headers: {
+        "Authorization": `Bearer ${sessionStorage.getItem("token")}`
+    },
     method: "delete"
 }).then((res) => res.json());
 

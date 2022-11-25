@@ -15,7 +15,11 @@ export const getParent = createAsyncThunk(
   async (id, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
-      const response = await axios.get(`http://localhost:8000/Parent/${id}`);
+      const response = await axios.get(`http://localhost:8000/Parent/${id}`, {
+        headers: {
+          "Authorization": `Bearer ${sessionStorage.getItem("token")}`
+        }
+      });
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -27,7 +31,11 @@ export const editParent = createAsyncThunk(
   async ({ParentId,mydata}, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
-      const response = await axios.put(`http://localhost:8000/Parent/${ParentId}`,mydata);
+      const response = await axios.put(`http://localhost:8000/Parent/${ParentId}`,mydata, {
+        headers: {
+          "Authorization": `Bearer ${sessionStorage.getItem("token")}`
+        }
+      });
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -40,7 +48,11 @@ export const creatParent = createAsyncThunk(
   async (parent, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
-      const response = await axios.post(`http://localhost:8000/Parent/`,parent);
+      const response = await axios.post(`http://localhost:8000/Parent/`,parent, {
+        headers: {
+          "Authorization": `Bearer ${sessionStorage.getItem("token")}`
+        }
+      });
       return response.data;
     } catch (error) {
       rejectWithValue(error.message);
@@ -52,7 +64,11 @@ export const getChildren = createAsyncThunk(
   async (id,thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
-      const response = await axios.get(`http://localhost:8000/Parent/child/${id}`);
+      const response = await axios.get(`http://localhost:8000/Parent/child/${id}`, {
+        headers: {
+          "Authorization": `Bearer ${sessionStorage.getItem("token")}`
+        }
+      });
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
@@ -65,7 +81,11 @@ export const creatChildren = createAsyncThunk(
   async (id,child, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
-      const response = await axios.post(`http://localhost:8000/Parent/child/${id}`,child);
+      const response = await axios.post(`http://localhost:8000/Parent/child/${id}`,child, {
+        headers: {
+          "Authorization": `Bearer ${sessionStorage.getItem("token")}`
+        }
+      });
       return response.data;
     } catch (error) {
       rejectWithValue(error.message);

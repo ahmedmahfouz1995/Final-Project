@@ -37,7 +37,7 @@ export default function Auth() {
                
               <Form className="col-12">
               <Form.Group className="my-4" controlId="formBasicEmail">
-                <Form.Control type="email" placeholder="Enter email" className="py-3"/>
+                <Form.Control type="email" placeholder="Enter firt Name" className="py-3"/>
               </Form.Group>
 
               <Form.Group className="my-4" controlId="formBasicEmail">
@@ -51,7 +51,7 @@ export default function Auth() {
               <Form.Group className="my-4" controlId="formBasicPassword">
                 <Form.Control type="password" placeholder="Password" className="py-3"/>
               </Form.Group>              
-
+    
               <Button variant="primary" type="submit" className="col-12 registerBtn text-light p-3 rounded hover:opacity-95 transtion myFormBtn">
                 Register Now
               </Button>
