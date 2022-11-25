@@ -6,7 +6,14 @@ import { NavLink, useNavigate } from "react-router-dom";
 import logo from "./../assets/logoE.png";
 import jwt_decode from "jwt-decode";
 export default function TheNavbar() {
-
+    const token= sessionStorage.getItem("token")
+    if (token){
+        const decoded = jwt_decode(token);
+        var {id,role}=decoded
+    }
+     const  signOut= ()=>{
+        sessionStorage.removeItem("token")
+     }
   return (
     <>
       <Navbar collapseOnSelect className="headerOne" expand="lg" variant="dark">
@@ -14,8 +21,8 @@ export default function TheNavbar() {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="ms-auto">
-                {/* { id ? <button onClick={signOut} className="nav-link" to="/auth">Sign out</button> :   <NavLink className="nav-link" to="/auth">Sign In</NavLink>  } */}
-                <NavLink className="nav-link" to="/auth">Sign In</NavLink> 
+                { id ? <button onClick={signOut} className="nav-link" to="/auth">Sign out</button> :   <NavLink className="nav-link" to="/auth">Sign In</NavLink>  }
+                {/* <NavLink className="nav-link" to="/auth">Sign In</NavLink>  */}
             </Nav>
           </Navbar.Collapse>
         </Container>

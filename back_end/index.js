@@ -17,6 +17,7 @@ const { add, get, getBy } = require("./utils/crud");
 const teacherModel = require("./models/teacher");
 const adminModel = require("./models/admin");
 const bcrypt = require('bcrypt');
+const attendrouter = require("./router/attendanceRouter");
 
 const app = express();
 var corsOptions = {
@@ -61,6 +62,8 @@ app.use('/Parent', ParentRouter);
 app.use("/teacher", teacherRouter);
 app.use("/admin", adminRouter);
 app.use("/auth", authRouter);
+app.use("/auth", authRouter);
+app.use("/attend", attendrouter);
 
 app.use((req, res, next) => {
   // res.sendFile(path.join(__dirname, "build", "index.html"));
