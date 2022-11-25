@@ -728,6 +728,12 @@ export const attendanceGrid = [
     { field: "attendenceStuts", headerText: "Attendance Status", width: "100", textAlign: "Center" ,editType:'dropdownedit', edit:ParentParam},
     
 ];
+export const attendanceReprtGrid = [
+    { field: "reportDate", headerText: "subject data", width: "170", textAlign: "Center",  allowEditing:false},
+    { field: "teacher.name", headerText: "teacher", width: "170", textAlign: "Center", allowEditing:false},
+    { field: "subject.title", headerText: "Subject", width: "170", textAlign: "Center", allowEditing:false},
+    { headerText: "view",textAlign: "Center" ,width: "100", template: viewButtonTwo ,isPrimaryKey: true},
+];
 export const integerParams = {
     params: {
       decimals: 0,

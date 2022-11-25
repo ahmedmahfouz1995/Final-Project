@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 const attendanceSchema = mongoose.Schema({
-    classTitle: {
-    type: String,
-    // required: true,
+    reportDate: {
+    type: Date,
+    required: true,
+    default: new Date()
   },
   teacher: { 
     type: mongoose.Schema.Types.ObjectId,
@@ -15,7 +16,6 @@ const attendanceSchema = mongoose.Schema({
     default: null
   },
   students : [
-  
       {
         _id:{
          type :  mongoose.Schema.Types.ObjectId,

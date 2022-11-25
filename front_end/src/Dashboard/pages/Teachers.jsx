@@ -90,10 +90,6 @@ const Teachers = (props) => {
             add("http://localhost:8000/admin/addTeacher", state.data).then(
                 (_) => refreshGrid()
             );}
-            else if (state.requestType === 'add') {
-                ref.current.hideSpinner();
-                console.log("editing");
-            }
         else if (state.action === "edit") {
             ref.current.hideSpinner();
             state.data.subject._id=state.data.subject.title
