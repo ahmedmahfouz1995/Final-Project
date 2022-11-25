@@ -601,12 +601,12 @@ console.log( {TeacherData});
 // ظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظ
         let ParentElem
         let ParentObj
-        let ParentData=[true,false]
+        let ParentData=[]
         // ////////////////////////////////////////////////
-        // get("http://localhost:8000/admin/getAllParents").then((newData) => {
-        //     ParentData.push(...newData);
-        // });
-        // console.log(ParentData);
+        get("http://localhost:8000/admin/getAllParents").then((newData) => {
+            ParentData.push(...newData);
+        });
+        console.log(ParentData);
      const ParentParam   = {
          create: () => {
             ParentElem = document.createElement('input');
@@ -623,7 +623,7 @@ console.log( {TeacherData});
                   dataSource: new DataManager(ParentData),
                   fields: {value:'_id',text:'Parent_name' },
                   floatLabelType: 'Never',
-                  placeholder: 'set status'
+                  placeholder: 'Select Parent'
               });
               ParentObj.appendTo( ParentElem);
           }
@@ -719,19 +719,6 @@ export const studentsGrid = [
     { field: "level", headerText: "Class", width: "170", textAlign: "Center",editType:'dropdownedit', edit : classParams},
     {field: "gender",headerText: "gender",width: "170",textAlign: "Center",   editType:'dropdownedit', edit : gendersParams },
     { field: "DOB", headerText: "Birth date", width: "170", textAlign: "Center" ,editType:'datePickerEdit', edit:birthDateParams },
-    { headerText: "view",textAlign: "Center" ,width: "100", template: viewButtonTwo ,isPrimaryKey: true},
-];
-export const attendanceGrid = [
-    { field: "_id.name", headerText: "Student Name", width: "170", textAlign: "Center",  allowEditing:false},
-    { field: "_id.email", headerText: "Student Email", width: "170", textAlign: "Center", allowEditing:false},
-    { field: "_id.phone", headerText: "Student Phone", width: "170", textAlign: "Center", allowEditing:false},
-    { field: "attendenceStuts", headerText: "Attendance Status", width: "100", textAlign: "Center" ,editType:'dropdownedit', edit:ParentParam},
-    
-];
-export const attendanceReprtGrid = [
-    { field: "reportDate", headerText: "subject data", width: "170", textAlign: "Center",  allowEditing:false},
-    { field: "teacher.name", headerText: "teacher", width: "170", textAlign: "Center", allowEditing:false},
-    { field: "subject.title", headerText: "Subject", width: "170", textAlign: "Center", allowEditing:false},
     { headerText: "view",textAlign: "Center" ,width: "100", template: viewButtonTwo ,isPrimaryKey: true},
 ];
 export const integerParams = {

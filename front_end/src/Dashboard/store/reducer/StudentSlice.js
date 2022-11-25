@@ -31,7 +31,11 @@ export const createStudent = createAsyncThunk(
             //     const navigate = useNavigate()
             //     navigate("logIn")
             // }
-            const response = await axios.post(`http://localhost:8000/admin/addStudent`, data);
+            const response = await axios.post(`http://localhost:8000/admin/addStudent`, data, {
+                headers: {
+                  "Authorization": `Bearer ${sessionStorage.getItem("token")}`
+                }
+              });
             return response.data;
         } catch (error) {
             rejectWithValue(error.message);
@@ -51,7 +55,11 @@ export const getAllStudents = createAsyncThunk(
             rejectWithValue
         } = thunkAPI
         try {
-            const response = await axios.get(`http://localhost:8000/admin/getAllStudents`)
+            const response = await axios.get(`http://localhost:8000/admin/getAllStudents`, {
+                headers: {
+                  "Authorization": `Bearer ${sessionStorage.getItem("token")}`
+                }
+              })
             return response.data;
         } catch (error) {
 
@@ -76,7 +84,11 @@ export const editStudent = createAsyncThunk(
             rejectWithValue
         } = thunkAPI;
         try {
-            const response = await axios.put(`http://localhost:8000/admin/editStudent/${id}`, data);
+            const response = await axios.put(`http://localhost:8000/admin/editStudent/${id}`, data, {
+                headers: {
+                  "Authorization": `Bearer ${sessionStorage.getItem("token")}`
+                }
+              });
             return response.data;
         } catch (error) {
             rejectWithValue(error.message);
@@ -97,7 +109,11 @@ export const deleteStudent = createAsyncThunk(
         } = thunkAPI;
         try {
 
-            const response = await axios.delete(`http://localhost:8000/admin/deleteStudent/${id}`);
+            const response = await axios.delete(`http://localhost:8000/admin/deleteStudent/${id}`, {
+                headers: {
+                  "Authorization": `Bearer ${sessionStorage.getItem("token")}`
+                }
+              });
             return response.data;
         } catch (error) {
             rejectWithValue(error.message);

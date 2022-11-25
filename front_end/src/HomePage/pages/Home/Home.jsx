@@ -85,7 +85,7 @@ export default function Home() {
     </div> */}
 <div className="col-lg-7 flex justify-center items-center laptopSectionConntent  ">
               <img
-                className="homeImg homeImgForJoin col-12 w-75 rounded-full relative z-50 hover:mb-3 transition  laptopSectionConntentImg"
+                className="homeImg homeImgForJoin col-12 w-65 rounded-full relative z-50 hover:mb-3 transition  laptopSectionConntentImg"
                 src={join}
                 alt=""
               />

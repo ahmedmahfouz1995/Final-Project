@@ -13,7 +13,10 @@ const path = require('path');
 const cookieParser = require('cookie-parser')
 const { verifyToken } = require('./utils/token')
 const bodyParser = require('body-parser');
-const attendrouter = require("./router/attendanceRouter");
+const { add, get, getBy } = require("./utils/crud");
+const teacherModel = require("./models/teacher");
+const adminModel = require("./models/admin");
+const bcrypt = require('bcrypt');
 
 const app = express();
 var corsOptions = {
@@ -44,25 +47,47 @@ app.use(cookieParser())
 //   }
 // })
 
+
 app.use(express.json());
+app.use((req, res, next) => {
+  console.log("request received:", req.method, req.url, req.headers, req.body)
+  next()
+})
+
 app.use("/class", classRouter);
 app.use("/slot", slotRouter);
 app.use("/zoomapi", zoomRouter);
-app.use('/Parent',ParentRouter);
+app.use('/Parent', ParentRouter);
 app.use("/teacher", teacherRouter);
 app.use("/admin", adminRouter);
-app.use("/attend", attendrouter);
+app.use("/auth", authRouter);
+
 app.use((req, res, next) => {
   // res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 app.use((err, req, res, next) => {
   console.error(err)
-  // res.status(500).redirect('/login.html')
+  res.status(500).end();
 })
 
 mongoose.connect("mongodb://127.0.0.1:27017/elearning", (err) => {
-  if (!err) return console.log("DB Connected Successfully");
-  console.log(err, "now");
+  if (err) {
+    return console.log(err, "now");
+  }
+
+  console.log("DB Connected Successfully");
+  bcrypt.hash("12345678", 8) // test admin
+    .then((password) => {
+      console.log("we are adding a new admin")
+      add(new adminModel({
+        name: "testadmin",
+        email: "testadmin@dafs.com",
+        password: password,
+        confirmEmail: true
+      }), [])
+      .catch(err => console.log("error happened", err))
+    })
+
 });
 
 app.listen(8000, () => {
