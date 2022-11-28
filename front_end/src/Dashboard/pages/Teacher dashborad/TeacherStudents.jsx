@@ -42,7 +42,7 @@ export default function TeacherStudents() {
             
          : myData?.map((student)=>{
          return ( 
-            <div className="col-md-4 text-center" key= {student._id}>
+            <div className="col-md-4 text-center p-2" key= {student._id}>
          <Card className="px-5">
             <Card.Img 
              className="w-100 h-50 rounded-full"

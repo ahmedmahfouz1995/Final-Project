@@ -163,7 +163,7 @@ function App() {
                 <Route path="/AdminDashboard/students" element={<StudentDashbord/>}/>
           </Route>
           <Route path="/teacher" element={<Teacher/>}>
-          {/* <Route path="/teacher/" element={<Teacher/>}/> */}
+          {/* <Route path="/teacher/" element={<Teacher/>}/>     */}
           <Route path="/teacher/students" element={<TeacherStudents/>}/>
                 {/* <Route path="/teacher/courses" element={<TeacherCourses/>}/> */}
                 <Route path="/teacher/meetings" element={<Calendar/>}/>

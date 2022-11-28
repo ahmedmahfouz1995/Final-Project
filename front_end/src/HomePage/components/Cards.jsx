@@ -19,7 +19,7 @@ export default function Cards({ cardCom }) {
                     Start: {startDate.split("T")[0]} . End: {endDate.split("T")[0]}
                   </Card.Subtitle>
              
-                  <NavLink to={`course-details`} state={cardCom} variant="btn btn-outline-primary" className="mt-3">
+                  <NavLink to={`course-details`} state={cardCom} style={{textDecoration:"none"}} className="inline-block px-6 py-2 border-2 border-green-600 text-green-600 font-medium text-xs leading-tight uppercase rounded-full hover:bg-black hover:bg-opacity-5  hover:text-red-600 hover:border-red-600 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">
                     Details
                   </NavLink>
                   <p className="coursePrice py-2 px-3 text-light">{price} $</p>

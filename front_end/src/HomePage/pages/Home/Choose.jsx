@@ -4,7 +4,8 @@ import emdy2 from "../../assets/edmy2.png";
 import emdy3 from "../../assets/edmy3.png";
 import emdy4 from "../../assets/edmy4.png";
 import breaks2 from './../../assets/pg9.png'
-
+import { Slide,Fade,direction  } from "react-awesome-reveal";
+import 'animate.css';
 export default function Choose() {
   return (
     <>
@@ -18,6 +19,7 @@ export default function Choose() {
 
 
       </div>
+      <Slide casecade>
       <div className="container choose">
         <div className="row mb-5">
           <h1 className="text-center my-5 font-bold">
@@ -55,7 +57,7 @@ export default function Choose() {
           </div>
         </div>
       </div>
-
+      </Slide>
     </div>
     
     </> );

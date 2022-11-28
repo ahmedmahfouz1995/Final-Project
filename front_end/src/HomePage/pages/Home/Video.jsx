@@ -4,21 +4,17 @@ import React from "react";
 // import videoSrc from "./../assets/video.mp4";
 // import videoSrc from "./../assets/video.mp4";
 import breaks from './../../assets/pg9.png'
+import { Slide,Fade,direction  } from "react-awesome-reveal";
+import 'animate.css';
 
 export default function Video() {
     return (
         <>
-        
+        <Slide casecade >
         <div className=" my-5">
-            <div className="videoContainer  m-auto text-center">
+            <div className="  m-auto text-center">
                 {/* <h2>video</h2> */}
-
-                  <video autoPlay  controls width="100%"> 
-                     <source src="./../assets/video.mp4" type="video/webm" />
-                    <source src="./../assets/video.mp4" type="video/mp4" />
-                    Sorry, your browser doesn't support videos.
-                </video>  
-                {/* Background Video */}
+                
         {/* <video id="home-bg-video" poster="./assets/solo.jpg" autoplay loop muted>
             <source src="video/solo.mp4" type="video/mp4" />
             <source src="video/solo.ogv" type="video/ogg" />
@@ -36,6 +32,7 @@ export default function Video() {
                 ></iframe> */}
             </div>
         </div>
+        </Slide>
             <div className="breaksColors conatiner-fluid flex justify-center">
 
 <img className="breaksBooksImg " src={breaks} />

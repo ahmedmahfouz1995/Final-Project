@@ -10,6 +10,9 @@ import paper from "./../../assets/pg8888.png"
 import { useSelector, useDispatch } from 'react-redux'
 import { getAllclass } from "../../../Dashboard/store/reducer/classSlice";
 import { getAllTeachers } from "../../../Dashboard/store/reducer/TeacherSlice";
+import { Slide,Fade,direction  } from "react-awesome-reveal";
+import 'animate.css';
+
 
 export default function Courses() {
 
@@ -28,6 +31,7 @@ dispatch(getAllTeachers())
     <section className="courseSection mb-5 ">
 
              <img className="col-12 flex justify-content-center items-center relative" src={paper} alt="" />
+            < Slide casecade >
       <div className="container corsesSection">
         <div className="row">
           <div className="flex justify-center items-center my-5 ">
@@ -57,6 +61,7 @@ return  <Cards cardCom={course}  key={course._id} />
   
         </div>
       </div>
+      </Slide>
     </section>
 
  
@@ -64,3 +69,4 @@ return  <Cards cardCom={course}  key={course._id} />
   </>
   );
 }
+

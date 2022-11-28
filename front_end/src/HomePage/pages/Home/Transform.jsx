@@ -1,11 +1,15 @@
 import React from "react";
 import banner from "./../../assets/transform-img.png";
 import breaks from "./../../assets/333pn.png";
+import { Slide,Fade,direction  } from "react-awesome-reveal";
+import 'animate.css';
 
 
 export default function Transform() {
   return (
     <>
+   
+
       <div className="breaksColors conatiner-fluid flex justify-center breaksColorsTransForm ">
 
 
@@ -17,13 +21,14 @@ export default function Transform() {
 
 
       </div>
+      <Slide casecade>
     <div className="TransformSection my-5">
       <div className="container">
         <div className="row">
           <div className="col-md-6 flex flex-col justify-center items-center ">
             <div className="TransformLeft">
               <h1 className="font-bold">
-               <span className="text-lower-third-about"> Enroll </span> now to our Courses and learn More
+               <span className="text-lower-third-about "> Enroll </span> now to our Courses and learn More
               </h1>
             </div>
 
@@ -43,6 +48,6 @@ export default function Transform() {
         </div>
       </div>
     </div>
-
+    </Slide>
  </> );
 }

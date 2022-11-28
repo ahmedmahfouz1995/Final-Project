@@ -1,9 +1,12 @@
 import React from "react";
 import banner from "./../../assets/testimonial-1.png";
-
+import { Slide,Fade,direction  } from "react-awesome-reveal";
+import 'animate.css';
 
 export default function Students() {
   return (
+    <>
+    <Slide casecade >
     <div className="TransformSection ">
       <div className="container">
         <div className="row">
@@ -28,5 +31,7 @@ export default function Students() {
         </div>
       </div>
     </div>
+    </Slide>
+    </>
   );
 }

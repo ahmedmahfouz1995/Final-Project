@@ -10,12 +10,13 @@ import { add } from "../../../Dashboard/helpers/Crud";
 import { createStudent } from "../../../Dashboard/store/reducer/StudentSlice";
 import { createTeacher } from "../../../Dashboard/store/reducer/TeacherSlice";
 import AuthBanner from "./AuthBanner";
+import { Slide,Fade,direction  } from "react-awesome-reveal";
+import 'animate.css';
 
 export default function Auth() {
 
   const { StudentData } = useSelector(state => state.Studentcontx)
   const navigate = useNavigate();
-
   const [formValues, setFormValues] = useState({
     role: "student",
     name: null,
@@ -139,7 +140,7 @@ export default function Auth() {
         console.log("we are logged in")
       } catch (exception) {
         console.log("exception happened during login: ", exception)
-        alert("Login was unsuccessful")
+       setErrLogin("log in was unSuccessful")
       }
     } else {
       console.log("errors")
@@ -275,6 +276,9 @@ export default function Auth() {
                   <Form.Group className="my-4" controlId="Password">
                     <Form.Control type="password" placeholder="Password" className="py-3" name="password"/>
                   </Form.Group>
+                  {
+                    errLogin==="log in was unSuccessful" ? <div className="text-danger border-2 p-3 border-danger animate__animated animate__bounce animate__delay-.7s animate__repeat-3" > log in was unSuccessful</div> : null 
+                  }
                   {['radio'].map((type) => (
                     <div key={`inline-${type}`} className="mb-3">
                       <Form.Check

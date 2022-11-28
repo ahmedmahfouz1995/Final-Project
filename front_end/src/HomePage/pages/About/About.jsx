@@ -6,12 +6,15 @@ import banner3 from "./../../assets/undraw_Professor_re_mj1s.png";
 import OurTeam from "../../components/OurTeam";
 import paper from "./../../assets/pg8888.png"
 import breaks from "./../../assets/333pn.png";
+import { Slide,Fade,direction  } from "react-awesome-reveal";
+import 'animate.css';
 
 // import banner4 from "./../../assets/undraw_Online_learning_re_qw08.png";
 
 export default function About() {
     return (
         <>
+            <Slide cascade>
             <section className="slideCourseBg blog-details-p">
                 <div className="row d-flex align-items-center justify-content-center">
                     <div className=" col-lg-12 text-center">
@@ -20,6 +23,7 @@ export default function About() {
                     </div>
                 </div>
             </section>
+            </Slide>
       <div className="breaksColors container flex justify-center">
 
 <img className="breaksColorsImg " src={breaks} />
@@ -30,6 +34,7 @@ export default function About() {
 
 
       </div>
+          <Slide cascade> 
             <div className="container-fluid">
                 <div className="row my-5 pt-3 mb-3">
                     <div className="col-md-6 flex flex-col justify-center items-center ">
@@ -118,9 +123,11 @@ export default function About() {
 </div>
 </div>
 </section>
-
+<Slide cascade>
                 <OurTeam />
+     </Slide>
             </div>
+          </Slide>
         </>
     );
 }

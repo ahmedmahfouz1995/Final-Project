@@ -5,14 +5,15 @@ import breaks from "./../../assets/333pn.png";
 
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import { useSelector } from 'react-redux';
 
-export default function AllCourses() {
-  const courses = [
-    { name: "course1", instructor: "Ahmed", price: 100 },
-    { name: "course2", instructor: "Mohamed", price: 70 },
-    { name: "course3", instructor: "Ali", price: 80 },
-    { name: "course4", instructor: "Omar", price: 90 },
-  ];
+export default function AllclassData() {
+ 
+    const {classData}=useSelector(state=>state.classcontx)
+    const {StudentProfile}=useSelector(state=>state.Studentcontx)
+ const classDataFilter=classData.filter((course)=>{
+        return course.level===StudentProfile.level
+    })
 
   return (
     <>
@@ -29,23 +30,22 @@ export default function AllCourses() {
 
       </div>
     <div className="container py-5">
-    <h1 className="relative text-center  ">
-            <span className="text-lower-left">My </span> <span className="text-lower-right">COURSES</span>
+    <h1 className="relative text-center ">
+            <span className="text-lower-left">My </span> <span className="text-lower-right">classData</span>
             </h1>
           
       <div className="row">
-        {courses &&
-          courses.map((course) => (
+        {classData &&
+         classDataFilter.map((course) => (
             <div className="course my-3 col-10 m-auto d-md-flex bg-light rounded">
               <div className="col-md-2">
-                <img alt="..." src="holder.js/100px180" className="col-12 rounded" />
+                <img alt="..." src={course.Image_url} className="col-12 rounded" />
               </div>
 
               <div className="col-md-7 px-4 pt-5">
-                <h4>{course.name}</h4>
-                <p>By {course.instructor}</p>
+                <h4>{course.title}</h4>
+                <p>By {course?.teacher?.name}</p>
               </div>
-
               <div className="col-md-3 d-flex align-items-center">
                 <button className="btn mx-4 themeColor">Details</button>
                 <i className="bx bx-video fs-2 meetIcon"></i>

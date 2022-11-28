@@ -572,13 +572,13 @@ text-shadow:
 
   }
   .imgBackgroundHomeForJoin .rightWelcome .rightWelcomeSecondSpan{
-margin-left: 16.5rem;
+margin-left: 10.5rem;
 
   }
   .imgBackgroundHomeForJoin .leftWelcome{
 
     margin-top: 200px;
-margin-left: 415px;
+margin-left: 510px;
 width:500px;
 font-size:5rem;
 color: white;
@@ -596,6 +596,11 @@ margin:10px 0;
   }
   .laptopSectionConntent{
     transition: all 1s;
+  }
+  .rightWelcomeFirstSpan{
+
+margin-left: -5rem;
+
   }
   .rightWelcomeFirstSpan,.rightWelcomeSecondSpanTwo{
     transition: all .3s;
