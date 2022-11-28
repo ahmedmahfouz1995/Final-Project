@@ -36,11 +36,7 @@ export default function Home() {
             dispatch(setTeacherProfileAfterLggIn(id))
             navigate("/teacher")
         }else if(role==="student"){
-            dispatch(getAllStudents())
-            dispatch(setStudentProfileAfterLggIn(id))
-            console.log(1);
-            navigate("/student")
-            
+            navigate("/student")    
         }else if(role==="admin") {
                 navigate("/AdminDashboard")
                 dispatch(getAllTeachers())
@@ -84,10 +80,10 @@ export default function Home() {
       <div className="breaksColors conatiner-fluid flex justify-center">
 
 
-<img className="breaksColorsImg " src={breaks} />
-<img className="breaksColorsImg " src={breaks} />
-<img className="breaksColorsImg " src={breaks} />
-<img className="breaksColorsImg " src={breaks} />
+<img alt="...."  className="breaksColorsImg " src={breaks} />
+<img  alt="...." className="breaksColorsImg " src={breaks} />
+<img  alt="...." className="breaksColorsImg " src={breaks} />
+<img  alt="...." className="breaksColorsImg " src={breaks} />
 
 
 

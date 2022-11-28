@@ -18,6 +18,7 @@ const teacherModel = require("./models/teacher");
 const adminModel = require("./models/admin");
 const bcrypt = require('bcrypt');
 const attendrouter = require("./router/attendanceRouter");
+const studentrouter = require("./router/student");
 
 const app = express();
 var corsOptions = {
@@ -61,6 +62,7 @@ app.use("/zoomapi", zoomRouter);
 app.use('/Parent', ParentRouter);
 app.use("/teacher", teacherRouter);
 app.use("/admin", adminRouter);
+app.use("/student", studentrouter);
 app.use("/auth", authRouter);
 app.use("/auth", authRouter);
 app.use("/attend", attendrouter);

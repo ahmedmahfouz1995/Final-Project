@@ -6,7 +6,7 @@ import axios from "axios";
 // import { useDispatch } from "react-redux";
 import {
     useNavigate
-} from 'react-router-dom';
+} from 'react-router-dom'; 
 
 const initialState = {
     StudentData: [],
@@ -14,6 +14,7 @@ const initialState = {
     isLoading: false,
     error: null,
     isUpdated: false,
+    Enrolled: false,
     isAdmin: true,
 };
 
@@ -24,7 +25,6 @@ export const createStudent = createAsyncThunk(
     //  createStudent----> name of fun
     async (data, thunkAPI) => {
         // {data}: paramaters use it to change state
-
         const {rejectWithValue} = thunkAPI;
         try {
             // if (isAdmin === false) {
@@ -70,6 +70,32 @@ export const getAllStudents = createAsyncThunk(
     }
 );
 
+export const editEnrollStudent = createAsyncThunk(
+    "Student/editEnrollStudent",
+    //   Student ----> name of Slice
+    //  createStudent----> name of fun
+    async ({
+        data,
+        id
+    }, thunkAPI) => {
+        // {data}: paramaters use it to change state
+
+        const {
+            rejectWithValue
+        } = thunkAPI;
+        try {
+            console.log(id);
+            const response = await axios.put(`http://localhost:8000/admin/editEnrollStudent/${id}`, data, {
+                headers: {
+                  "Authorization": `Bearer ${sessionStorage.getItem("token")}`
+                }
+              });
+            return response.data;
+        } catch (error) {
+            rejectWithValue(error.message);
+        }
+    }
+);
 export const editStudent = createAsyncThunk(
     "Student/editStudent",
     //   Student ----> name of Slice
@@ -84,6 +110,7 @@ export const editStudent = createAsyncThunk(
             rejectWithValue
         } = thunkAPI;
         try {
+            console.log(id);
             const response = await axios.put(`http://localhost:8000/admin/editStudent/${id}`, data, {
                 headers: {
                   "Authorization": `Bearer ${sessionStorage.getItem("token")}`
@@ -108,7 +135,6 @@ export const deleteStudent = createAsyncThunk(
             rejectWithValue
         } = thunkAPI;
         try {
-
             const response = await axios.delete(`http://localhost:8000/admin/deleteStudent/${id}`, {
                 headers: {
                   "Authorization": `Bearer ${sessionStorage.getItem("token")}`
@@ -185,6 +211,27 @@ export const setStudentProfileAfterLggIn = createAsyncThunk(
     }
 );
 
+export const EnrollStudent = createAsyncThunk(
+    "Student/EnrollStudent",
+    //   Teacher ----> name of Slice 
+    //  createTeacher----> name of fun
+    async (args, thunkAPI) => {
+        // {data}: paramaters use it to change state
+
+        const {
+            rejectWithValue
+        } = thunkAPI
+        try {
+            return args;
+        } catch (error) {
+
+            rejectWithValue(error.message)
+
+        }
+
+    }
+);
+
 
 // ----------------------------------------------------------------
 
@@ -217,13 +264,20 @@ const StudentSlice = createSlice({
             state.isUpdated = true;
         },
         [setStudentProfileAfterLggIn.fulfilled]: (state, action) => {
-           state.StudentProfile =state.StudentData.filter((element)=>{
-               return element._id === action.payload
+            let filter=state.StudentData.filter((std)=>{
+                return std._id === action.payload
             })
+            state.StudentProfile=filter[0]
             state.isLoggedIn = true;
         },
         // edit Student ------------------------------------------------
         [editStudent.fulfilled]: (state, action) => {
+            const foundIndex = state.StudentData.indexOf(Studentdata => Studentdata.id === action.payload.id)
+            const filteredData = state.StudentData.filter(Studentdata => Studentdata.id !== action.payload.id)
+            state.StudentData = filteredData.splice(foundIndex, 0, action.payload)
+            state.isUpdated = true;
+        },
+        [editEnrollStudent.fulfilled]: (state, action) => {
             const foundIndex = state.StudentData.indexOf(Studentdata => Studentdata.id === action.payload.id)
             const filteredData = state.StudentData.filter(Studentdata => Studentdata.id !== action.payload.id)
             state.StudentData = filteredData.splice(foundIndex, 0, action.payload)
@@ -240,7 +294,15 @@ const StudentSlice = createSlice({
             state.StudentData=action.payload
         },
         [setStudentProfile.fulfilled]: (state, action) => {
-            state.StudentProfile=action.payload
+           let filter=state.StudentData.filter((std)=>{
+                return std._id= action.payload
+            })
+            state.StudentProfile=filter[0]
+            console.log("here ",state.StudentProfile);
+        },
+        [EnrollStudent.fulfilled]: (state, action) => {
+            state.StudentProfile.subjects.push(action.payload)
+            state.Enrolled= true
         },
     },
 });

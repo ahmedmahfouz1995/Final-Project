@@ -1,45 +1,71 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import CourseBanner from "./CourseBanner";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Footer from "../../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllclass } from "../../../Dashboard/store/reducer/classSlice";
+import { classDatasetter, EnrollClass, getAllclass } from "../../../Dashboard/store/reducer/classSlice";
 import { NavLink } from "react-router-dom";
-
+import { editEnrollStudent, EnrollStudent, getAllStudents, setStudentProfileAfterLggIn } from "../../../Dashboard/store/reducer/StudentSlice";
+import jwt_decode from "jwt-decode";
 export default function CourseDetails() {
-
-    const {classData}=useSelector(state=>state.classcontx)
+        var courseEnrolled = false
+    const token= sessionStorage.getItem("token")
+    const navigate= useNavigate()
+    const {StudentProfile}=useSelector(state=>state.Studentcontx)
     const dispatch=useDispatch()
   const {state} = useLocation();
-  console.log("state-----------",state);
-//   const {title,startDate,endDate} = state
-// console.log("title sate=====================",title)
-//   //   console.log(state.name);
-// const {id}=useParams()
+  let {Enrolledclass,Enrolled}=useSelector(state=>state.classcontx)    
+  console.log("adddddcadaedff",Enrolledclass);  
+  const Enroll =async (e)=>{
+        if (!token) {
+            navigate("/auth")
+            console.log("go sign in");
+        }
+            const decoded = jwt_decode(token);
+            const {id}=decoded   
+         dispatch(setStudentProfileAfterLggIn(id))
+        if (StudentProfile) {
+            let stdId = StudentProfile._id
+            dispatch(EnrollStudent(state._id))
+            let subjectID= state._id
+             let id = StudentProfile._id
+            let data = [StudentProfile,subjectID]
+            dispatch(editEnrollStudent({data,id}))
+             id = state._id
+             data = [Enrolledclass,stdId]
+            dispatch(EnrollClass({data,id}))
+            console.log("enroleed");
+        }
 
-// // const classToShow=classData.filter(class => class._id === id )
-// const classToShow = classData.filter(theClass => theClass._id === id);
-
-const diffTime = Math.abs( state.endDate- state.startDate );
-const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-console.log("start date---------",state.startDate.split("T")[0])
-console.log("endDate------------",state.endDate.split("T")[0])
-
-console.log(diffTime);
-console.log(diffDays);
-
-useEffect(()=>{
-
-    dispatch(getAllclass())
-
-
+    }
+    let falg = false
+    Enrolled.forEach(element => {
+        if (element.courseId=== state._id && element.Enroll===true) {
+           falg= true 
+        }else {
+            courseEnrolled =false
+            return
+        }
+    })
+    if (falg===true) {
+        courseEnrolled=true
+    }
+console.log(Enrolled);
+    useEffect(()=>{
+        const token= sessionStorage.getItem("token")
+        if (token) {
+            const decoded = jwt_decode(token);
+           var {id}=decoded   
+            dispatch(setStudentProfileAfterLggIn(id))
+        }
+        dispatch(getAllclass())
+        dispatch(getAllStudents())
+        dispatch(classDatasetter(state))
 },[])
-// console.log("classToShow--------->",classToShow);
-// console.log("classData--------->",classData);
   return (
     <div>
       <CourseBanner Title={state.title}></CourseBanner>
@@ -73,6 +99,7 @@ useEffect(()=>{
                     <li className="text-secondary my-1">
                       We will learn why warm up is important
                     </li>
+
                     <li className="text-secondary my-1">
                       Improved fitness through exercises
                     </li>
@@ -138,11 +165,11 @@ useEffect(()=>{
                 <ListGroup.Item>Enrolled</ListGroup.Item>
               </ListGroup>
               <Card.Body>
-                <Card.Link href="#">
-                    <NavLink to={"/admin/enroll/:classid"}>
-                  <button className="btn btn-primary registerBtn py-3 buy col-12">Enroll Now</button>
+                <Card.Link>
+                    {/* <NavLink to={`/student/${state._id}`}> */}
+                  <button className="btn btn-primary registerBtn py-3 buy col-12" onClick={Enroll}>{courseEnrolled ? "Enrolled" : "Enroll Now"}</button>
 
-                    </NavLink>
+                    {/* </NavLink> */}
                 </Card.Link>
               </Card.Body>
             </Card>

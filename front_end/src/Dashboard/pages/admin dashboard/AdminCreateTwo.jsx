@@ -33,11 +33,11 @@ export default function AdminCreateTwo() {
     console.log("StudentData", StudentData);
     console.log("idddddddddddd", id);
     const subjectToShow = classData.filter(
-        (course) => course.title === StudentProfile[0].subject
+        (course) => course.title === StudentProfile.subject
     );
 
     // -------------------------------------
-    const [formValues, setFormValues] = useState(StudentProfile[0]);
+    const [formValues, setFormValues] = useState(StudentProfile);
 
     // handleChange---------------------------------------------
 
@@ -108,7 +108,7 @@ export default function AdminCreateTwo() {
                             >
                                 <Form.Control
                                     type="text"
-                                    defaultValue={StudentProfile[0]?.name}
+                                    defaultValue={StudentProfile?.name}
                                     placeholder="Enter Your Name"
                                     className="py-3"
                                     name="name"
@@ -121,7 +121,7 @@ export default function AdminCreateTwo() {
                             >
                                 <Form.Control
                                     type="email"
-                                    defaultValue={StudentProfile[0]?.email}
+                                    defaultValue={StudentProfile?.email}
                                     placeholder="Enter Your Email"
                                     className="py-3"
                                     name="email"
@@ -135,7 +135,7 @@ export default function AdminCreateTwo() {
                             >
                                 <Form.Control
                                     type="password"
-                                    defaultValue={StudentProfile[0]?.password}
+                                    defaultValue={StudentProfile?.password}
                                     placeholder="Enter Your Password"
                                     className="py-3"
                                     name="password"
@@ -149,7 +149,7 @@ export default function AdminCreateTwo() {
                             >
                                 <Form.Control
                                     type="text"
-                                    defaultValue={StudentProfile[0]?.phone}
+                                    defaultValue={StudentProfile?.phone}
                                     placeholder="Enter Your Phone"
                                     className="py-3"
                                     name="phone"
@@ -167,13 +167,13 @@ export default function AdminCreateTwo() {
                                     name="DOB"
                                     id="DOB"
                                     defaultValue={
-                                        StudentProfile[0]?.DOB?.split("T")[0]
+                                        StudentProfile?.DOB?.split("T")[0]
                                     }
                                     autoComplete="street-address"
                                     className="mt-1 mr-2  w-100 h-10 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                 />
                                 {console.log(
-                                    StudentProfile[0]?.DOB?.split("T")[0]
+                                    StudentProfile?.DOB?.split("T")[0]
                                 )}
                                 <p className="text-red-400">{err.DOB}</p>
 
@@ -182,7 +182,7 @@ export default function AdminCreateTwo() {
                                 </label>
                                 <select
                                     name="gender"
-                                    defaultValue={StudentProfile[0]?.gender}
+                                    defaultValue={StudentProfile?.gender}
                                     className="form-select appearance-non w-100 px-3 py-1.5 text-base font normal text-gray-700
       bg-white bg-clip-padding bg-no-repeat
       border border-solid border-gray-300

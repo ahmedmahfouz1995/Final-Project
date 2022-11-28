@@ -118,7 +118,7 @@ export default function Auth() {
 
     if (Object.keys(err).length === 0) {
       dispatch(createStudent(formValues))
-      navigate('/')
+    //   navigate('/')
     }
   };
 
@@ -157,7 +157,7 @@ export default function Auth() {
 
   // }
   useEffect(() => {
-    dispatch(createStudent(formValues))
+    // dispatch(createStudent(formValues))
     console.log(StudentData);
   }, [])
 

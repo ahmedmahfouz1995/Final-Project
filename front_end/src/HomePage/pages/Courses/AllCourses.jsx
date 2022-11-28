@@ -20,10 +20,10 @@ export default function AllCourses() {
       <div className="breaksColors conatiner-fluid flex justify-center">
 
 
-<img className="breaksColorsImg " src={breaks} />
-<img className="breaksColorsImg " src={breaks} />
-<img className="breaksColorsImg " src={breaks} />
-<img className="breaksColorsImg " src={breaks} />
+<img  alt="....." className="breaksColorsImg " src={breaks} />
+<img alt="....." className="breaksColorsImg " src={breaks} />
+<img  alt="....."className="breaksColorsImg " src={breaks} />
+<img  alt="....."className="breaksColorsImg " src={breaks} />
 
 
 
@@ -38,7 +38,7 @@ export default function AllCourses() {
           courses.map((course) => (
             <div className="course my-3 col-10 m-auto d-md-flex bg-light rounded">
               <div className="col-md-2">
-                <img src="holder.js/100px180" className="col-12 rounded" />
+                <img alt="..." src="holder.js/100px180" className="col-12 rounded" />
               </div>
 
               <div className="col-md-7 px-4 pt-5">

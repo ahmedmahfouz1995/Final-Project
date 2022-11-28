@@ -431,33 +431,35 @@ const editStudent = async (req, res) => {
 
     }
 }
-
-const Enroll = async (req, res) => {
+const editEnrollStudent = async (req, res) => {
     try {
-        const token= sessionStorage.getItem("token")
-        if (token){
-            var decoded = jwt_decode(token);
-            var {id,role}=decoded
-        }
 
-        const { classid } = req.params
 
-        const findStudent = await studentModel.findById({ _id: id })
-
-        if (!findStudent) return res.json({ message: "Student not found" })
-        
-        const foundclass = await classModel.findById({ _id: classid })
-        
-        if (!foundclass) return res.json({ message: "class not found" })
-
-        res.status(200).json({ message: "enrolled", foundclass })
+        const { id } = req.params
+       let [StudentProfile,subjectID]= req.body
+       let exist = StudentProfile.subjects.indexOf(subjectID)
+       console.log("daaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafaaaaaaaaaaaaaaaaaaaaaa",exist);
+       if (exist<0) {
+           StudentProfile.subjects.push(subjectID)
+           const findStudent = await studentModel.findById({ _id: id })
+   
+           if (!findStudent) return res.json({ message: "Student not found" })
+   
+           const updateTeacher = await studentModel.findByIdAndUpdate({ _id: id }, StudentProfile)
+   
+           res.status(200).json({ message: "Teacher updated", updateTeacher })
+        }else{
+            res.status(200).json({ message: "subject exist" })
+            
+       }
 
     } catch (err) {
 
-        res.json({ message: "Catch Enroll Error" })
+        res.json({ message: "Catch editStudent Error" })
 
     }
 }
+
 
 //editClass  -----------------------------------------------------------------------------
 
@@ -466,21 +468,27 @@ const editClass = genericPutEndpointHandler(classModel,teacherModel, "teacher" ,
         return res.status(500).json({ message: "Error", e })
     }
 )
-// const editClass = async (req, res) => {
-//     try {
-//         console.log("aho aho");
-//         console.log(req.body);
-//         const { id } = req.params
-//         const editTheClass = req.body
-//         const findClass = await classModel.findById({ _id: id })
-//         if (!findClass) return res.json({ message: "Class not found" })
-//         const updateClass = await classModel.findByIdAndUpdate({ _id: id }, editTheClass)
-//         await teacherModel.findByIdAndUpdate({ _id: findClass.teacher }, { $set: { subject: findClass._id } })
-//         res.status(200).json({ message: "Teacher updated", updateClass })
-//     } catch (err) {
-//         res.json({ message: "Catch editStudent Error" })
-//     }
-// }
+const EnrollClass = async (req, res) => {
+    try {
+        const { id } = req.params
+       let  [Enrolledclass,stdId] = req.body
+       console.log(stdId);
+       let exist = Enrolledclass.students.indexOf(stdId)
+       console.log("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkaaaaaaaaaafaaaaaaaaaaaaaaaaaaaaaa",exist);
+       if (exist<0) {
+           Enrolledclass.students.push(stdId)
+            const editTheClass =Enrolledclass
+            const findClass = await classModel.findById({ _id: id })
+            if (!findClass) return res.json({ message: "Class not found" })
+            const updateClass = await classModel.findByIdAndUpdate({ _id: id }, editTheClass)
+            res.status(200).json({ message: "class updated", updateClass })
+        }else{
+           res.status(200).json({ message: "class exist" })
+       }
+    } catch (err) {
+        res.json({ message: "Catch editStudent Error" })
+    }
+}
 
 // deleteTeacher----------------------------------
 const deleteTeacher = async (req, res) => {
@@ -652,5 +660,6 @@ module.exports = {
     getClassById,
     getAllParents,
     addParent ,
-    Enroll,
+    EnrollClass,
+    editEnrollStudent,
 }

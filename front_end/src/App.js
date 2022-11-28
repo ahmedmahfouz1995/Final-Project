@@ -60,11 +60,13 @@ import Profile from './Dashboard/pages/student dashboard/components/Profile/Prof
 import Exams from './Dashboard/pages/student dashboard/components/Exams/Exams';
 import Meetings from './Dashboard/pages/student dashboard/components/Meetings/Meetings';
 import Matirals from './Dashboard/pages/student dashboard/components/Matirals/Matirals';
-import Courses from './Dashboard/pages/student dashboard/components/MyCourses/MyCourses';
+import Courses from './HomePage/pages/Home/Courses';
+import MyCourses from "./HomePage/pages/Home/MCourses";
+import Details from "./Dashboard/pages/admin dashboard/Details";
 
 function App() {
   // const { activeMenu } = useStateContext();
-  const { activeMenu } = useSelector(state => state.context);
+  const { StudentProfile } = useSelector(state => state.Studentcontx);
   const booksProps = useSelector(state => state.booksList);
 
   return (
@@ -149,6 +151,7 @@ function App() {
           <Route path="/calendar" element={<Calendar/>}/>
           <Route path="/auth" element={<Auth />} />
           <Route path="/AdminDashboard" element={<AdminDashbord/>}>
+                <Route path="/AdminDashboard/" element={<StudentDashbord/>}/>
                 <Route path="/AdminDashboard/teachers" element={<Teachers/>}/>
                 <Route path="/AdminDashboard/courses" element={<AdminViewCourses/>}/>
                 <Route path="/AdminDashboard/attendance" element={<TeacherAttendance/>}/>
@@ -161,11 +164,14 @@ function App() {
                 <Route path="/teacher/attendance" element={<TeacherAttendance/>}/>
                 <Route path="/teacher/exams" element={<TeacherExams/>}/>
           </Route>
+            <Route path="/studentDetails/:id" element={<Details/>}/>
           <Route path="/student" element={<Navigation/>}>
+          <Route path="/student/" element={<Profile/>}/>
             <Route path="/student/profile" element={<Profile/>}/>
                 <Route path="/student/calender" element={<Calendar/>}/>
-                <Route path="/student/courses" element={<Courses/>}/>
-                <Route path="/student/all-courses" element={<AllCourses/>}/>
+                <Route path="/student/courses" element={<MyCourses/>}/>
+                <Route path="/student/all-courses" element={<Courses/>}></Route>
+                <Route  path="/student/all-courses/course-details" element={<CourseDetails/>}></Route>
                 <Route path="/student/exams" element={<Exams/>}/>
                 <Route path="/student/meetings" element={<Meetings/>}/>
                 <Route path="/student/matirals" element={<Matirals/>}/>

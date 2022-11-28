@@ -15,14 +15,15 @@ import { Header } from "./../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { get, add, put, del } from "./../../helpers/Crud";
 import {getAllclass} from "./../../store/reducer/classSlice";
-import { classGrid } from './../../data/dummy';
+import { classGrid, filterTeacherData } from './../../data/dummy';
 import { getAllTeachers } from "../../store/reducer/TeacherSlice";
 
 export default function AdminViewCourses (props) {
     const editOptions = {
         allowEditing: true,
         allowAdding: true,
-        allowDeleting: true,    
+        allowDeleting: true,  
+        mode : "Dialog" 
     };
     const toolbarOptions = [
         "Add",
@@ -66,6 +67,7 @@ export default function AdminViewCourses (props) {
     const dispatch = useDispatch();
     const [data, setData] = useState();
     const refreshGrid = () => {
+        filterTeacherData()
         get("http://localhost:8000/admin/getAllClasses").then((newData) => {
             for (let index = 0; index < newData.length; index++) {
                 const element = newData[index];
@@ -78,32 +80,41 @@ export default function AdminViewCourses (props) {
             setData({ result: newData, count: newData.length });
         });
         dispatch(getAllTeachers());
-    
+        ref.current.hideSpinner();
     }
 
     const dataSourceChanged = (state) => {
         if (state.action === "add") {
             state.data.teacher._id=state.data.teacher.name
             state.data.teacher.name=""
-            add("http://localhost:8000/admin/addclass", state.data).then(
-                (_) => refreshGrid()
-                );
+            add("http://localhost:8000/admin/addclass", state.data).then((_) => {
+                ref.current.hideSpinner()
+                state.endEdit()
+                refreshGrid()
+            });
                 console.log(state.data);
-        } else if (state.action === "edit") {
+          }  else if (state.requestType === 'add') {
+                    ref.current.hideSpinner();
+                    console.log("editing");
+            } else if (state.action === "edit") {
             ref.current.hideSpinner();
             state.data.teacher._id=state.data.teacher.name
             put(
                 `http://localhost:8000/admin/editclass/${state.data._id}`,state.data
                 )
                 .then((_) => {
+                    ref.current.hideSpinner()
+                    state.endEdit()
                     refreshGrid()
-                })
-                
-            .then(() => ref.current.hideSpinner());
+                });
         } else if (state.requestType === "delete") {
             del(
                 `http://localhost:8000/admin/deleteclass/${state.data[0]._id}`
-            ).then((_) => refreshGrid());
+            ).then((_) => {
+                ref.current.hideSpinner()
+                state.endEdit()
+                refreshGrid()
+            });
         } else {
             console.log(state.action);
         }

@@ -36,21 +36,24 @@ const StudentDashbord = () => {
             // name
             required: true,
             regex: ["^[A-Za-z ]+$","name can not contain numbers or special characters"],
-        }
-        // ,{ 
-        //     minLength: [5,"name length must be longer than four letters "]
-        // }
-        ,
-        {
-            // email
-            required: true,
-            // regex: ["/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/","please enter a valide Email "],
-        },
-        {
-        //    phone 
-            required: true,
-            // regex: ["/^(1\s|1|)?((\(\d{3}\))|\d{3})(\-|\s)?(\d{3})(\-|\s)?(\d{4})$/","inValid phone number"],
-           number :[true ,"Phone can not contain letters"]
+                minLength: [5,"name length must be longer than four letters "]
+            }
+            // ,{ 
+                //     minLength: [5,"name length must be longer than four letters "]
+                // }
+                ,
+                {
+                    // email
+                    required: true,
+                    // regex: ["/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/","please enter a valide Email "],
+                    minLength: [5,"name length must be longer than four letters "]
+                },
+                {
+                    //    phone 
+                    required: true,
+                    // regex: ["/^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g","inValid phone number"],
+                    number :[true ,"Phone can not contain letters"],
+                    minLength: [11,"phone length must be 11 numbers"]
         },
         {
             // gender
@@ -79,34 +82,42 @@ console.log(StudentData);
     };
     const dataSourceChanged = (state) => {
         if (state.action === "add") {
-            add("http://localhost:8000/admin/addStudent", state.data).then(
-                (_) => refreshGrid()
-            );}
+            add("http://localhost:8000/admin/addStudent", state.data).then((_) => {
+                ref.current.hideSpinner()
+                state.endEdit()
+                refreshGrid()
+            });
+        }
             else if (state.requestType === 'add') {
                 ref.current.hideSpinner();
+                state.endEdit()
                 console.log("editing");
             }
         else if (state.action === "edit") {
-            ref.current.hideSpinner();
             put(
                 `http://localhost:8000/admin/editStudent/${state.data._id}`,
                 state.data
-            )
-            .then((_) => refreshGrid())
-            .then(() => ref.current.hideSpinner());
+            ).then(() => {ref.current.hideSpinner()
+                refreshGrid()
+                state.endEdit()
+            });
         } else if (state.requestType === "delete") {
             del(
                 `http://localhost:8000/admin/deleteStudent/${state.data[0]._id}`
-            ).then((_) => refreshGrid());
+            ).then((_) => {
+                ref.current.hideSpinner()
+                state.endEdit()
+                refreshGrid()
+            });
         } else {
             console.log(state.action);
         }
     };
-    const actionBegienHandler= (args) => {
-        if (args.requestType==="add") {
-        }
+    const actionBegienHandler= (e) => {
+        console.log(e);
     }
     const actionEndHandler= (e)=>{
+        console.log(e);
 }
 
 const ref = useRef();

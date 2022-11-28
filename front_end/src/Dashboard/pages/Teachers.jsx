@@ -46,14 +46,14 @@ const Teachers = (props) => {
         {
             // email
             required: true,
-            regex: [" /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g", "Email is not correct"],
+            // regex: [" /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g", "Email is not valid Email"],
         },
         {
             //    phone 
             required: true,
-            regex: ["/^(1\s|1|)?((\(\d{3}\))|\d{3})(\-|\s)?(\d{3})(\-|\s)?(\d{4})$/","inValid phone number"],
-
-            number: [true, "price can not contain letters"]
+            // regex: ["/^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g","inValid phone number"],
+            number: [true, "phone can not contain letters"],
+            minLength: [11, "phone length must be 11 numbers "],
         },
         {
             // gender
@@ -80,19 +80,20 @@ const Teachers = (props) => {
             setData({ result: newData, count: newData.length });
             console.log("newData", { newData });
         });
+        ref.current.hideSpinner();
     };
-
 
     const dataSourceChanged = (state) => {
         console.log("stateee", state);
         if (state.action === "add") {
             state.data.subject._id = state.data.subject.title
             state.data.subject.title = ""
-            add("http://localhost:8000/admin/addTeacher", state.data).then(
-                (_) => refreshGrid()
-            );
-        }
-        else if (state.requestType === 'add') {
+            add("http://localhost:8000/admin/addTeacher", state.data).then((_) => {
+                ref.current.hideSpinner()
+                state.endEdit()
+                refreshGrid()
+            });
+        } else if (state.requestType === 'add') {
             ref.current.hideSpinner();
             console.log("editing");
         }
@@ -104,12 +105,22 @@ const Teachers = (props) => {
                 `http://localhost:8000/admin/editTeacher/${state.data._id}`,
                 state.data
             )
-                .then((_) => refreshGrid())
-                .then(() => ref.current.hideSpinner());
-        } else if (state.requestType === "delete") {
+            .then((_) => {
+                ref.current.hideSpinner()
+                state.endEdit()
+                refreshGrid()
+            });}else if (state.requestType === 'edit') {
+                ref.current.hideSpinner();
+                console.log("editing");
+            }
+            else if (state.requestType  === "delete") {
             del(
                 `http://localhost:8000/admin/deleteTeacher/${state.data[0]._id}`
-            ).then((_) => refreshGrid());
+            ).then((_) => {
+                ref.current.hideSpinner()
+                state.endEdit()
+                refreshGrid()
+            });
         } else {
             console.log(state.action);
         }
@@ -141,11 +152,11 @@ const Teachers = (props) => {
                 ref={ref
                 }
             >
-                <ColumnsDirective>
+                <ColumnsDirective >
                     {teachersGrid.map((item, index) => (
                         <ColumnDirective validationRules={customIDRules[index]} key={index} {...item} />
                     ))}
-                </ColumnsDirective>
+                </ColumnsDirective >
                 <Inject services={[Page, Sort, Edit, Toolbar, Search]} />
             </GridComponent>
         </div>

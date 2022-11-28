@@ -30,7 +30,7 @@ export default function Profile() {
   return (
     <>
 <div className="max-w-sm w-full lg:max-w-full lg:flex py-6" style={{height:"450px"}}>
-  <div className="lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden" style={{backgroundImage: `url(${StudentProfile[0]?.profile_image})`,height:"400px",width:"400px" }}title="Woman holding a mug">
+  <div className="lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden" style={{backgroundImage: `url(${StudentProfile?.profile_image})`,height:"400px",width:"400px" }}title="Woman holding a mug">
   </div>
   <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
     <div className="mb-2">
@@ -40,11 +40,11 @@ export default function Profile() {
         </svg>
         Members only
       </p>
-      <div className="text-gray-900 font-bold text-xl mb-2">{StudentProfile[0]?.name}</div>
+      <div className="text-gray-900 font-bold text-xl mb-2">{StudentProfile?.name}</div>
       <p className="text-gray-700 text-base">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, Lorem ipsum dolor sit, amet consectetur adipisicing elit. Placeat non aliquam rerum eius omnis ipsum cumque fuga inventore adipisci ea. exercitationem praesentium nihil.</p>
     <div className="px-6">
-    <span className="inline-block bg-gray-200 rounded-full px-3 my-5 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Phone : {StudentProfile[0]?.phone}</span>
-    <span className="inline-block bg-gray-200 rounded-full px-3 my-5 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Email :{StudentProfile[0]?.email}</span>
+    <span className="inline-block bg-gray-200 rounded-full px-3 my-5 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Phone : {StudentProfile?.phone}</span>
+    <span className="inline-block bg-gray-200 rounded-full px-3 my-5 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Email :{StudentProfile?.email}</span>
   </div>
     </div>
     {/* {

@@ -518,14 +518,14 @@ export const viewButton = (props) => (
   
   export const viewButtonTwo = (props) => (
     <div>
-        <NavLink to={`/studentDetails/${props._id}`} className="decoraction-none btn btn-outline-danger" id={props._id} >
+        <NavLink to={`/studentDetails/${props._id}`}  className="decoraction-none btn btn-outline-danger" id={props._id} >
             View 
         </NavLink>
     </div>
   );
 export const viewClassButton = (props) => (
     <div>
-           <NavLink to={`/adminCourse/${props._id}`} className="decoraction-none btn btn-outline-danger" id={props._id} >
+           <NavLink  to={`/adminCourse/${props._id}`} className="decoraction-none btn btn-outline-danger" id={props._id} >
             View 
         </NavLink>
     </div>
@@ -535,14 +535,17 @@ export const viewClassButton = (props) => (
   let countryObj
   let TeacherData=[]
   // ////////////////////////////////////////////////
-  get("http://localhost:8000/admin/getAllTeachers").then((newData) => {
-   let filterData= newData.filter((teacher)=>{
-        return teacher.subject === null || teacher.subject === "" || teacher.subject === undefined
-    })
-        TeacherData.push(...filterData)
-
-  });
-console.log( {TeacherData});
+export  const filterTeacherData = ()=>{
+      get("http://localhost:8000/admin/getAllTeachers").then((newData) => {
+       let filterData= newData.filter((teacher)=>{
+            return teacher.subject === null || teacher.subject === "" || teacher.subject === undefined
+        })
+        TeacherData=[]
+            TeacherData.push(...filterData)
+    
+      });
+  }
+  filterTeacherData()
      const countryParams = {
          create: () => {
              countryElem = document.createElement('input');
