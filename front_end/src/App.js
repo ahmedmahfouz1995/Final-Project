@@ -63,6 +63,11 @@ import Matirals from './Dashboard/pages/student dashboard/components/Matirals/Ma
 import Courses from './HomePage/pages/Home/Courses';
 import MyCourses from "./HomePage/pages/Home/MCourses";
 import Details from "./Dashboard/pages/admin dashboard/Details";
+import AdminCourses from './Dashboard/pages/admin dashboard/AdminCourses';
+import AdminTeacher from './Dashboard/pages/admin dashboard/AdminTeacher';
+import CreateTeacherAttendance from "./Dashboard/pages/Teacher dashborad/CreateTeacherAttendance.jsx";
+import ShowTeacher from './Dashboard/pages/Teacher dashborad/ShowTeacher';
+import ViewTeacherAttendance from "./Dashboard/pages/Teacher dashborad/ViewTeacherAttendance";
 
 function App() {
   // const { activeMenu } = useStateContext();
@@ -158,13 +163,19 @@ function App() {
                 <Route path="/AdminDashboard/students" element={<StudentDashbord/>}/>
           </Route>
           <Route path="/teacher" element={<Teacher/>}>
+          {/* <Route path="/teacher/" element={<Teacher/>}/> */}
           <Route path="/teacher/students" element={<TeacherStudents/>}/>
-                <Route path="/teacher/courses" element={<TeacherCourses/>}/>
+                {/* <Route path="/teacher/courses" element={<TeacherCourses/>}/> */}
                 <Route path="/teacher/meetings" element={<Calendar/>}/>
-                <Route path="/teacher/attendance" element={<TeacherAttendance/>}/>
+                <Route path="/teacher/CreateTeacherAttendance" element={<CreateTeacherAttendance/>}/>
+                <Route path="/teacher/showTeacherAttendance" element={<TeacherAttendance/>}/>
+                <Route path="/teacher/attendance" element={<TeacherAttendanceReport/>}/>
                 <Route path="/teacher/exams" element={<TeacherExams/>}/>
           </Route>
             <Route path="/studentDetails/:id" element={<Details/>}/>
+            <Route path="/Report/:id" element={<ViewTeacherAttendance/>}/>
+            <Route path="/adminCourse/:id" element={<AdminCourses/>}/>
+            <Route path="/teacherDetails/:id" element={<AdminTeacher/>}/>
           <Route path="/student" element={<Navigation/>}>
           <Route path="/student/" element={<Profile/>}/>
             <Route path="/student/profile" element={<Profile/>}/>
@@ -175,7 +186,7 @@ function App() {
                 <Route path="/student/exams" element={<Exams/>}/>
                 <Route path="/student/meetings" element={<Meetings/>}/>
                 <Route path="/student/matirals" element={<Matirals/>}/>
-                <Route path="/student/attendance" element={<TeacherAttendance/>}/>
+                {/* <Route path="/student/attendance" element={<TeacherAttendance/>}/> */}
           </Route>
         </Routes>
        

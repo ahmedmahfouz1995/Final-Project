@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getAllTeachers } from '../../store/reducer/TeacherSlice';
-export default function Courses() {
+export default function AdminCourses() {
+    let [show,setShow] =useState(false) 
+const change =()=>{
+    setShow(true)
+}
+
     const {classData}=useSelector(state=>state.classcontx)
     console.log(classData);
     const {TeacherData}=useSelector(state=>state.Teachercontx)
@@ -27,10 +32,13 @@ export default function Courses() {
                             <img className="h-auto w-full mx-auto"
                                 src={myClass[0]?.Image_url ||"https://imgk.timesnownews.com/story/english.png"}
                                 alt=""/>
-                                <div>
-                                <label className='text-blue-900' htmlFor="Image_url"> Update Course Image</label>
-                                <input name='Image_url' id='Image_url' type="file" />
-                                </div>
+                               {
+                            show &&
+                          <div >
+                          <label className='text-blue-900' htmlFor="Image_url"> Update Course Image</label>
+                          <input className="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm py-2 text-center" name='Image_url' id='Image_url' type="file" />
+                          </div>
+                          }
                         </div>
                         <h1 className="text-gray-900 text-center font-bold text-xl leading-8 my-1">{myClass[0]?.title}</h1>
                     </div>
@@ -47,7 +55,7 @@ export default function Courses() {
                             </span>
                             <span className="tracking-wide">Detailes</span>
                         </div>
-                        <form className="text-gray-700">
+                        <form className="text-gray-700" onChange={change}>
                             <div className="grid md:grid-cols-2 text-sm">
                                 <div className="grid grid-cols-2">
                                     <div className="px-4 py-2 font-semibold">Course title</div>
@@ -93,8 +101,11 @@ export default function Courses() {
                                 </div>
                             </div>
                         </form>
-                        <button type='submit'
-                            className="block w-full text-blue-800 text-sm font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4">submit edit</button>
+                        {
+                    
+                    show &&<button type='submit'
+                    className="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">submit edit</button>
+                    }
                     </div>
                 </div>
             </div>

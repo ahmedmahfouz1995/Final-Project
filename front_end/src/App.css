@@ -57,11 +57,11 @@
   border: none;
 }
 .present{
-    background-color: #09dd09c4;
+    background-color: #09dd0979;
     color: antiquewhite;
 }
 .absent{
-    background-color: #ff0202ea;
+    background-color: #ff02028e;
     color: rgb(255, 238, 0);
 }
 

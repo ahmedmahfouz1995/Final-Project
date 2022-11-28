@@ -45,7 +45,7 @@ const studentSchema = mongoose.Schema({
   },
   profile_image:{
     type: String,
-    default:"https://th.bing.com/th/id/R.6b0022312d41080436c52da571d5c697?rik=ejx13G9ZroRrcg&riu=http%3a%2f%2fpluspng.com%2fimg-png%2fuser-png-icon-young-user-icon-2400.png&ehk=NNF6zZUBr0n5i%2fx0Bh3AMRDRDrzslPXB0ANabkkPyv0%3d&risl=&pid=ImgRaw&r=0"
+    default:"https://th.bing.com/th/id/R.6652f3c2e0d15e58a2df0a4652bfa19b?rik=uQPa1KGpBV2jgw&pid=ImgRaw&r=0"
   }
 });
 

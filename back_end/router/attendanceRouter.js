@@ -2,9 +2,10 @@ const express = require('express');
 const   attendenceController = require('../controllers/attendanceController');
 const attendrouter = express.Router();
 
-attendrouter.route('/').get(attendenceController.getAllreports)
+// attendrouter.route('/').get(attendenceController.getAllreports)
 attendrouter.route('/').post(attendenceController.creatReport);
-attendrouter.route('/:id').get(attendenceController.getReport).post(attendenceController.creatReport).put(attendenceController.editReport).delete(attendenceController.deleteReport);
+attendrouter.route('/').get(attendenceController.getAllreports);
+attendrouter.route('/:id').get(attendenceController.getReport).put(attendenceController.editReport).delete(attendenceController.deleteReport);
 
 
   attendrouter.get('*', (req, res) => {

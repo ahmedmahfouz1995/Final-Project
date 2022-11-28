@@ -523,6 +523,13 @@ export const viewButton = (props) => (
         </NavLink>
     </div>
   );
+  export const viewButtonThree = (props) => (
+    <div>
+        <NavLink to={`/Report/${props._id}`}  className="decoraction-none btn btn-outline-danger" id={props._id} >
+            View 
+        </NavLink>
+    </div>
+  );
 export const viewClassButton = (props) => (
     <div>
            <NavLink  to={`/adminCourse/${props._id}`} className="decoraction-none btn btn-outline-danger" id={props._id} >
@@ -862,8 +869,9 @@ export const links = [
     
 ];
 export const attendanceReprtGrid = [
+    { field: "_id", headerText: "Report ID", width: "170", textAlign: "Center",isPrimaryKey:true , allowEditing:false},
     { field: "reportDate", headerText: "subject data", width: "170", textAlign: "Center",  allowEditing:false},
     { field: "teacher.name", headerText: "teacher", width: "170", textAlign: "Center", allowEditing:false},
     { field: "subject.title", headerText: "Subject", width: "170", textAlign: "Center", allowEditing:false},
-    { headerText: "view",textAlign: "Center" ,width: "100", template: viewButtonTwo ,isPrimaryKey: true},
+    { headerText: "view",textAlign: "Center" ,width: "100", template: viewButtonThree ,isPrimaryKey: true},
 ];

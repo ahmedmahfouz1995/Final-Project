@@ -47,6 +47,8 @@ export default function ShowTeacher(props) {
     <div className="px-6">
     <span className="inline-block bg-gray-200 rounded-full px-3 my-5 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Phone : {data?.phone}</span>
     <span className="inline-block bg-gray-200 rounded-full px-3 my-5 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Email : {data?.email}</span>
+    <span className="inline-block bg-gray-200 rounded-full px-3 my-5 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Subject : {data?.subject?.title}</span>
+    <span className="inline-block bg-gray-200 rounded-full px-3 my-5 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Birthday: {data?.DOB.split("T")[0]}</span>
   </div>
     </div>
     {/* {

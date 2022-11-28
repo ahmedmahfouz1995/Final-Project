@@ -1,10 +1,11 @@
 
 const { get }= require("./../utils/crud");
 const attendanceModel = require("../models/attendance");
+const teacherModel = require("../models/teacher");
 
 
 // Get All
-const getAllreports = ("/", async (req, res) => {
+const getAllreports =async (req, res) => {
   try {
     const report= await attendanceModel.find({}).populate("teacher").populate("subject").populate("students._id")
     res.json(report);
@@ -12,28 +13,33 @@ const getAllreports = ("/", async (req, res) => {
     console.log(error);
    res.json({ msg:error });
   }
-});
+};
 console.log(attendanceModel.length);
 //Get By Ida
 
-const getReport = ("/:id",async (req, res, next) => {
+const getReport = async (req, res, next) => {
   // try {
     const {id}  = req.params;
     console.log(id);
-    const report= await attendanceModel.find({teacher:id}).populate("teacher").populate("subject").populate("students._id")
+    const report= await attendanceModel.find({_id:id}).populate("teacher").populate("subject").populate("students._id")
     console.log("here",report);
     res.json(report);
   // } catch (error) {
   //   res.json({ msg: "Error getting parent" });
   // }
-});
+};
 
 const creatReport = ("/", async (req, res, next) => {
   // try {
-    let newReport = new attendanceModel(req.body);
+    const {id,myData}= req.body
+    const teacher = await teacherModel.findById(id)
+    const subjectId = teacher.subject
+
+    let newReport = new attendanceModel({teacher:id,subject:subjectId ,students:myData});
     await get(attendanceModel,["teacher","subject","students._id"])
+    console.log(newReport)
     await newReport.save();
-    res.json(newReport);
+    res.json(newReport._id);
     // } catch (error) {
     //   res.json({ msg: "Error creating report" });
     //   }

@@ -4,11 +4,16 @@ import Header from './../../components/Header';
 import { GridComponent, ColumnsDirective, ColumnDirective, Page, Sort, Edit, Toolbar, Search } from '@syncfusion/ej2-react-grids';
 import { Inject } from '@syncfusion/ej2-react-schedule';
 import { attendanceGrid } from '../../data/dummy';
-import { axios } from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import { add, del, get, put } from '../../helpers/Crud';
+import jwt_decode from "jwt-decode";
 import { getValue } from '@syncfusion/ej2-base';
 import TeacherAttendanceReport from './TeacherAttendanceReport';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { getAllclass } from '../../store/reducer/classSlice';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 export default function TeacherAttendance() {
     // validationRules={customIDRules[index]} 
     const editOptions = {
@@ -17,9 +22,9 @@ export default function TeacherAttendance() {
         allowDeleting: true,
     };
     const toolbarOptions = [
-        // "add",
+        "add",
         "Edit",
-        "Delete",
+        // "Delete",
         "Update",
         "Cancel",
         "Search",
@@ -45,26 +50,30 @@ export default function TeacherAttendance() {
             required: true,
         },
     ]
+   
+    const {classData ,AttendenceRepID}=useSelector(state=>state.classcontx)
+    console.log(classData);
+    console.log(AttendenceRepID);
+    const navigate = useNavigate()
+
+    const [details,setDetails]=useState()
+    const dispach = useDispatch()
+    useEffect(()=>{
+        dispach(getAllclass())
+        refreshGrid()
+    },[])
 const [data,setData]=useState()
-const [view,setView]=useState(false)
-const [viewallreport,setAllView]=useState(false)
-const [details,setDetails]=useState()
 
     const refreshGrid = () => {
-        get("http://localhost:8000/attend/637d373630607008f751039f").then((newData) => {
-            console.log(newData);
+        console.log("daaaaaaaakhlna");
+        get(`http://localhost:8000/attend/${AttendenceRepID}`).then((newData) => {
+            console.log({newData});
             const students =newData[0].students
             console.log(students);
             setData({ result:students, count: students?.length });
-            setDetails(newData);
-            console.log(details);
+            setDetails(newData)
         });
     };
-    const ShowNewReport=(id)=>{
-        setView(true)
-        setAllView(false)
-        refreshGrid()
-    }
    const rowDataBound=(args)=> {
         if (args.row) {
           if (getValue('attendenceStuts', args.data) ===true){
@@ -90,8 +99,6 @@ const [details,setDetails]=useState()
                     return 0
                 }
              })
-             setDetails(...details)
-             console.log(details);
             put(`http://localhost:8000/attend/${details[0]._id}`,details[0])
                 .then((_) => refreshGrid())
                 .then(() => ref.current.hideSpinner());
@@ -108,11 +115,8 @@ const [details,setDetails]=useState()
                     ).then((_) => refreshGrid());
              
             }
-        else if (state.action === "add") {
-                    add("http://localhost:8000/admin/attend", state.data).then(
-                        (_) => refreshGrid()
-                        );
-                        console.log(state.data)
+        else if (state.requestType === "add") {
+                 navigate("/teacher/")
                  } else {
                     console.log(state.action);
             }
@@ -120,13 +124,10 @@ const [details,setDetails]=useState()
             
     const actionBegienHandler= (args) => {
         if (args.requestType==="add") {
+            navigate("/teacher/")
         }
     }
     const actionEndHandler= (e)=>{
-}
-const viewallreports =()=>{
-    setAllView(true)
-    setView(false)
 }
 
 const ref = useRef();
@@ -134,55 +135,33 @@ const ref = useRef();
         refreshGrid();
     }, []);
   return (
-    <>
-
-  
-      <div className="mb-4 border-b border-gray-200 dark:border-gray-700">
-          <ul className="flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
-              <li className="mr-2 mx-9" role="presentation">
-                  <button onClick={()=>{ShowNewReport("id")}} className="inline-block p-4 rounded-t-lg border-b-2" id="profile-tab">Create new report  </button>
-              </li>
-              <li className="mr-2 mx-9" role="presentation">
-                  <button className="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="dashboard-tab" data-tabs-target="#dashboard" type="button" role="tab" aria-controls="dashboard" aria-selected="false"  onClick={viewallreports}>View reports</button>
-              </li>
-          </ul>
-      </div>
-      {
-          view &&
-             <>
-             
-             <div className="m-2 md:m-10 p-4 md:p-10 bg-white rounded-3xl">
-              { <h3 className="text-green-900">Lesson Date : {details?.reportDate?.split("T")[0]}</h3> }
-              { <p className="text-grey-300">by : {details?.teacher?.name}</p> }
-                     <Header title="Attendance sheet" />
-                     <GridComponent
-                          actionComplete={actionEndHandler}
-                          actionBegin={actionBegienHandler}
-                          dataSource={data}
-                          allowPaging={true}
-                          allowEditing={true}
-                          editSettings={editOptions}
-                          toolbar={toolbarOptions}
-                          rowDataBound={rowDataBound}
-                          dataSourceChanged={dataSourceChanged}
-                          width="auto"
-                          ref={ref}
-                     >
-                         <ColumnsDirective>
-                             {attendanceGrid.map((item, index) => (
-                                 <ColumnDirective validationRules={customIDRules[index]} key={index} {...item} />
-                             ))}
-                         </ColumnsDirective>
-                         <Inject services={[Page, Sort, Edit, Toolbar, Search]} />
-                     </GridComponent>
-                 </div>
-             </>
-      } 
-      {
-          viewallreport &&
-            <TeacherAttendanceReport></TeacherAttendanceReport>
-      } 
-             </>
-
-  )
+    details?  <div className="m-2 md:m-10 p-4 md:p-10 bg-white rounded-3xl">
+                   { <h4 className="text-green-900">Lesson Date : { details[0]?.reportDate?.split("T")[0] || ""}</h4> }
+                   { <h5 className="text-red-900">Report number : { details[0]?._id?.split("T")[0] || ""}</h5> }
+                   { <p className="text-grey-300">by : {details[0]?.teacher?.name || ""}</p> }
+                          <Header title="Attendance sheet" />
+                          <GridComponent
+                               actionComplete={actionEndHandler}
+                               actionBegin={actionBegienHandler}
+                               dataSource={data}
+                               allowPaging={true}
+                               allowEditing={true}
+                               editSettings={editOptions}
+                               toolbar={toolbarOptions}
+                               rowDataBound={rowDataBound}
+                               dataSourceChanged={dataSourceChanged}
+                               width="auto"
+                               ref={ref}
+                          >
+                              <ColumnsDirective>
+                                  {attendanceGrid.map((item, index) => (
+                                      <ColumnDirective validationRules={customIDRules[index]} key={index} {...item} />
+                                  ))}
+                              </ColumnsDirective>
+                              <Inject services={[Page, Sort, Edit, Toolbar, Search]} />
+                          </GridComponent>
+                      </div>
+                      :<></>
+                 
+    )
 }

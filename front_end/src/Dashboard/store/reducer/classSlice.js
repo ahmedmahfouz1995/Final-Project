@@ -11,6 +11,7 @@ const initialState = {
     error: null,
     isUpdated: false,
     isAdmin: true,
+    AttendenceRepID : "",
     Enrolled : [ {
         courseId: "",
         Enroll : false
@@ -34,6 +35,21 @@ export const createclass = createAsyncThunk(
                 }
               });
             return response.data;
+        } catch (error) {
+            rejectWithValue(error.message);
+        }
+    }
+);
+export const AttendenceRep = createAsyncThunk(
+    "class/AttendenceRep",
+    //   class ----> name of Slice
+    //  createclass----> name of fun
+    async (args, thunkAPI) => {
+        // {data}: paramaters use it to change state
+
+        const {rejectWithValue} = thunkAPI;
+        try {
+            return args;
         } catch (error) {
             rejectWithValue(error.message);
         }
@@ -261,6 +277,9 @@ const classSlice = createSlice({
         // showAllclasss------------------------------------------------------
         [showAllclass.fulfilled]: (state, action) => {
             state.classData=action.payload
+        },
+        [AttendenceRep.fulfilled]: (state, action) => {
+            state.AttendenceRepID=action.payload
         },
         [EnrollClass.fulfilled]: (state, action) => {
             state.Enrolledclass =action.payload.updateClass
